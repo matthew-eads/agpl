@@ -1,0 +1,24 @@
+//defn of Tic Tac Toe
+//Abstract Syntax:
+
+TTT = Game([], Player (X | O)
+
+TicTacToe: Game
+
+Gamestate:
+        Board: Matrix[3][3]
+        Piece: X | O | nil
+        Turn:  X | O
+Player: X | O
+//Type Coord: (Int, Int)
+Move: (Player, Int, Int)
+//Move: (Player, Coord)
+
+isValid (player, i, j) = (Game.Turn == player) && (i < 3) && (j < 3) &&
+                         (i >= 0) && (j >= 0) && (Game.Board[i][j] == nil)
+
+//possMoves....
+
+outcome (player, i, j) = Win (Player) //...
+
+initialState = Game.Turn = x; SetBoard nil
