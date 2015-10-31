@@ -2,11 +2,12 @@ module Agpl_syntax where
 import Language.Haskell.TH.Syntax
 
 data Game = Game ([GameState], Move, IsValidFun, PossMovesFun, OutcomeFun, InitState,
-                  Player, [CustomDataType]) deriving Show
+                  Player, [CustomDataType]) | NIL deriving Show
 
 data GameState = Board (Dec) | Piece (Dec) | Hand (Dec) | Turn (Dec) |
                  CustomData (Dec) deriving Show
 
+type GameID = String
 data Move = Move (Dec) deriving Show
 data Player = Player (Dec) deriving Show
 data IsValidFun = IsValidFun (Exp) deriving Show
