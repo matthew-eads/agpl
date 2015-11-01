@@ -1,10 +1,20 @@
 module Parser where
 
 import Agpl_syntax
-import Text.ParserCombinators.Parsec
+import Text.ParserCombinators.Parsec hiding (try)
 import Text.ParserCombinators.Parsec.Language
-import Text.Parsec
+import Text.Parsec (try)
 import Text.Parsec.Token
+import Language.Haskell.TH
+import Language.Haskell.TH.Syntax
+import Language.Haskell.Meta.Parse
+import Language.Haskell.Meta.Syntax.Translate
+import Data.Functor.Identity
+
+
+m_reservedNames = ["Gamestate", "Board", "Piece", "Turn", "Move",
+                   "isValid", "possMoves", "Hand", "outcome",
+                   "initialState", "Game", "end"]
 
 def :: LanguageDef st
 def = emptyDef{ commentStart = "{-",
@@ -15,9 +25,7 @@ def = emptyDef{ commentStart = "{-",
                 identLetter = alphaNum,
                 opStart = oneOf "$=:|",
                 opLetter = oneOf "$=:|",
-                reservedNames = ["Gamestate", "Board", "Piece", "Turn", "Move",
-                                 "isValid", "possMoves", "Hand", "outcome",
-                                 "initialState", "Game"],
+                reservedNames = m_reservedNames,
                 reservedOpNames = ["(", ")", ":", ",", "."],
                 caseSensitive = True}
 
@@ -32,32 +40,158 @@ TokenParser{ parens = m_parens,
 gameParser :: Parser Game
 gameParser = do {
                id <- gameIDParser;
-               m_whiteSpace;
+               ws;
                m_reserved "Gamestate";
                m_reservedOp ":";
-               gamestate <- many1 parseGameState;
-               
-               return NIL;
+               gamestate <- (manyTill parseGameState (m_reserved "end"));
+               move <- parseMove;
+               isValid <- parseIsValid;
+               possMoves <- parsePossMoves;
+               outcome <- parseOutcome;
+               initState <- parseInitState;
+               player <- parsePlayer;
+               return (Game (gamestate, move, isValid, possMoves, outcome, 
+                            initState, player, []));
              }
+
+parsePlayer :: Parser Player
+parsePlayer = do {
+              ws;
+              m_reserved "Player";
+              ws;
+              m_reservedOp ":";
+              ws;
+              playerDec <- decParser;
+              return (Player playerDec);
+}
+
+parsePossMoves :: Parser PossMovesFun
+parsePossMoves = do {
+                   ws;
+                   m_reserved "possMoves"; ws;
+                   m_reservedOp ":"; ws;
+                   possFun <- expParser;
+                   return (PossMovesFun possFun);
+                 }
+                   
+parseOutcome :: Parser OutcomeFun
+parseOutcome = do {
+                   ws;
+                   m_reserved "outcome"; ws;
+                   m_reservedOp ":"; ws;
+                   outcomeFun <- expParser;
+                   return (OutcomeFun outcomeFun);
+                 }
+
+parseIsValid :: Parser IsValidFun
+parseIsValid = do {
+                   ws;
+                   m_reserved "isValid"; ws;
+                   m_reservedOp ":"; ws;
+                   isValidF <- expParser;
+                   return (IsValidFun isValidF);
+                 }
+
+parseInitState :: Parser InitState
+parseInitState = do {
+                   ws;
+                   m_reserved "initialState"; ws;
+                   m_reservedOp ":"; ws;
+                   initState <- expParser;
+                   return (InitState initState);
+                 }
+
+
+
+parseMove :: Parser Move
+parseMove = do {
+              ws;
+              m_reserved "Move";
+              ws;
+              m_reservedOp ":";
+              ws;
+              moveDec <- decParser;
+              return (Move moveDec);
+            }
 
 gameIDParser :: Parser GameID
 gameIDParser = do {
-                 m_whiteSpace;
-               id <- many (noneOf " :");
-               m_whiteSpace;
-               m_reservedOp ":";
-               m_whiteSpace;
-               m_reserved "Game";
-               return id;
+                 ws;
+                 id <- many (noneOf " :");
+                 ws;
+                 m_reservedOp ":";
+                 ws;
+                 m_reserved "Game";
+                 return id;
                }
 
+decParser :: Parser Type
+decParser = do {
+              ws;
+              ty <- (m_parens (many (noneOf ")")));
+              case parseType ty of
+                (Left err) -> do {return undefined}
+                (Right typ) -> do {return typ}
+            } 
+
+expParser :: Parser Exp
+expParser = do {
+              ws;
+              e <- (m_parens (many (noneOf ")")));
+              case parseExp e of
+                (Left err) -> do {return undefined}
+                (Right exp) -> do {return exp}
+            }
+              
+
+
 parseGameState :: Parser GameState 
-parseGameState = undefined
+parseGameState = ws >> 
+                 (do {
+                   m_reserved "Board";
+                   ws;
+                   m_reservedOp ":";
+                   ws;
+                   typedec <- decParser;
+                   return (Board typedec) } <|>
+                 (do {
+                   m_reserved "Piece";
+                   ws;
+                   m_reservedOp ":";
+                   ws;                   
+                   typedec <- decParser;
+                   ws;
+                   return (Piece typedec) }) <|>
+                 (do {
+                   m_reserved "Turn";
+                   ws;
+                   m_reservedOp ":";
+                   ws;
+                   typedec <- decParser;
+                   return (Turn typedec) }) <|>
+                 (do {
+                   m_reserved "Hand";
+                   ws;
+                   m_reservedOp ":";
+                   ws;
+                   typedec <- decParser;
+                   ws;
+                   return (Hand typedec) }) {-<|>
+                 do { 
+                   custID <- many (noneOf " :");
+                   ws;
+                   m_reservedOp ":";
+                   ws;
+                   typedec <- decParser;
+                   ws;
+                   return (CustomData typedec) }-})
+                
 
 testparser = do {
-               m_whiteSpace;
+               ws;
 --               res <- m_stringLiteral;
-               res <- many (noneOf " ,\n\0");
+               res <- many (try (string "dog"));
+--               res <- m_reserved;
                return res;}
 
 test :: String -> IO ()
@@ -71,3 +205,11 @@ parseGame input = case parse gameParser "" input of
                     { Left err -> do {print err; return NIL};
                       Right ans -> return ans;}
                     
+ws = m_whiteSpace;
+
+main :: IO ()
+main = do {
+         line <- getLine;
+         parseGame line;
+         return ();
+       }
