@@ -26,7 +26,7 @@ def = emptyDef{ commentStart = "{-",
                 opStart = oneOf "$=:|",
                 opLetter = oneOf "$=:|",
                 reservedNames = m_reservedNames,
-                reservedOpNames = ["(", ")", ":", ",", "."],
+                reservedOpNames = ["(", ")", ":", ",", ".", "{", "}"],
                 caseSensitive = True}
 
 TokenParser{ parens = m_parens,
@@ -128,7 +128,9 @@ gameIDParser = do {
 decParser :: Parser Type
 decParser = do {
               ws;
-              ty <- (m_parens (many (noneOf ")")));
+              m_reservedOp "{";
+              ty <- (many (noneOf "}"));
+              m_reservedOp "}";
               case parseType ty of
                 (Left err) -> do {return undefined}
                 (Right typ) -> do {return typ}
@@ -137,7 +139,9 @@ decParser = do {
 expParser :: Parser Exp
 expParser = do {
               ws;
-              e <- (m_parens (many (noneOf ")")));
+              m_reservedOp "{";
+              e <- (many (noneOf "}"));
+              m_reservedOp "}";
               case parseExp e of
                 (Left err) -> do {return undefined}
                 (Right exp) -> do {return exp}
