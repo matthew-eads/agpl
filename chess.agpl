@@ -1,0 +1,15 @@
+Chess : Game
+
+  Gamestate: {
+               Board: {Matrix[8][8]}
+               ChessPiece: {Rook|Knight|etc}
+               Piece: {Player (ChessPiece)}
+  }
+  
+  Player: {White | Black}
+  Move: {(Player, (Int, Int), (Int, Int))}
+  isValid: {\(p, (x1, y1), (x2, y2)) -> if p != Game.Turn then False
+                                        else case Game.Board[x1][y1] of
+                                               (_ Rook) -> (x1 == x2) xor (y1 == y2)
+                                                           etc}
+  

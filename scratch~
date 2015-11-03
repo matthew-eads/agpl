@@ -1,0 +1,24 @@
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+user enters:
+isValid: {\(player, i, j) -> (Game.Turn == player) && (i < 3) && (j < 3) &&
+                         (i >= 0) && (j >= 0) && (Game.Board[i][j] == nil)}
+
+:: Move -> Bool
+in order to add the gamestate
+Gamestate -> Move -> Bool
+or even
+Board -> Piece -> Turn -> Move -> Bool
+
+so we just need to add, at the beginning of the function
+\(game) ->
+then we should be ok
+
+in haskell, we can declare data Dog = Dog {name :: String, age :: Int}
+and declare with diesel = Dog{name="diesel", age=10}
+then access with (name diesel) and (age diesel)
+
+so we can have
+data Gamestate = Gamestate { board :: Board, piece :: Piece, turn :: Turn }
+then in functions, replace Game.Turn (or whatever) with (turn game)

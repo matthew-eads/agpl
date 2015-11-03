@@ -1,0 +1,10 @@
+module Main where
+
+import Parser
+
+main :: IO ()
+main = do {
+         line <- getLine;
+         parseGame line;
+         return ();
+       }

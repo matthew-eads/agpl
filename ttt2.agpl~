@@ -1,0 +1,26 @@
+TicTacToe: Game
+ 
+Gamestate: {
+           Board: {[[Int]]}
+           Piece: {Char}
+           Turn:  {Int}
+}
+
+Player: {Char}
+Move: {(Int, Int)}
+
+--Type Coord: (Int, Int)
+--Move: (Player, Coord)
+
+{-isValid: {\(player, i, j) -> (Game.Turn == player) && (i < 3) && (j < 3) &&
+                         (i >= 0) && (j >= 0) && (Game.Board[i][j] == nil)}-}
+isValid: {undefined}
+possMoves: {\() -> []}
+--outcome: {\(Move (i, j)) -> 1}
+outcome: {undefined}
+--possMoves....
+
+
+
+--initialState: {Game.Turn = x; SetBoard nil}
+initialState: {undefined}

@@ -14,7 +14,7 @@ import Data.Functor.Identity
 
 m_reservedNames = ["Gamestate", "Board", "Piece", "Turn", "Move",
                    "isValid", "possMoves", "Hand", "outcome",
-                   "initialState", "Game", "end"]
+                   "initialState", "Game"]
 
 def :: LanguageDef st
 def = emptyDef{ commentStart = "{-",
@@ -30,6 +30,7 @@ def = emptyDef{ commentStart = "{-",
                 caseSensitive = True}
 
 TokenParser{ parens = m_parens,
+             braces = m_braces,
              identifier = m_identifier,
              reservedOp = m_reservedOp,
              reserved = m_reserved,
@@ -39,17 +40,19 @@ TokenParser{ parens = m_parens,
 
 gameParser :: Parser Game
 gameParser = do {
+               ws;
                id <- gameIDParser;
                ws;
                m_reserved "Gamestate";
                m_reservedOp ":";
-               gamestate <- (manyTill parseGameState (m_reserved "end"));
+               ws; m_reservedOp "{";
+               gamestate <- (manyTill parseGameState (m_reserved "}"));
+               player <- parsePlayer;
                move <- parseMove;
                isValid <- parseIsValid;
                possMoves <- parsePossMoves;
                outcome <- parseOutcome;
                initState <- parseInitState;
-               player <- parsePlayer;
                return (Game (gamestate, move, isValid, possMoves, outcome, 
                             initState, player, []));
              }
@@ -207,13 +210,7 @@ test inp = case parse testparser "" inp of
 parseGame :: String -> IO Game
 parseGame input = case parse gameParser "" input of
                     { Left err -> do {print err; return NIL};
-                      Right ans -> return ans;}
+                      Right ans -> do {print "succ"; return ans}}
                     
 ws = m_whiteSpace;
 
-main :: IO ()
-main = do {
-         line <- getLine;
-         parseGame line;
-         return ();
-       }

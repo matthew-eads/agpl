@@ -1,0 +1,35 @@
+TicTacToe: Game
+ 
+Gamestate: {
+           Board: {Matrix[3][3]}
+           Piece: {X | O | NIL}
+}
+
+Player: {X | O}
+Type Coord: (Int, Int)
+Move: (Coord)
+
+isValid: {\(i, j) -> (i < 3) && (j < 3) &&
+                         (i >= 0) && (j >= 0) && (Game.Board[i][j] == nil)}
+
+possMoves: {\() -> mfold (\(acc) -> \((i, j), piece) -> if piece == NIL then ((i, j):acc)
+                                                        else acc) [] Game.Board
+
+$fun ne (x, y) = (x+1,y+1)
+ fun e  (x, y) = (x+1, y)
+ fun se (x, y) = (x+1, y-1)
+ fun s  (x, y) = (x, y-1)
+ fun sw (x, y) = (x-1, y-1)
+ fun w  (x, y) = (x-1, y)
+ fun nw (x, y) = (x-1, y+1)
+ fun n  (x, y) = (x, y+1)$
+
+outcome: {\(x) -> if ((Game.Board[fst (n x)][snd (n x)] ==
+                      Game.Board[fst (s x)][snd (s x)]) &&
+                      (Game.Board[fst (n x)][snd (n x)] ==
+                      Game.Board[fst x][snd x])) then Fin(Game.Board[fst x][snd x], 2)
+                   etc
+
+
+initialState: {Game.Turn = X; mmap \((i, j), _) -> Game.Board[i][j] = 0}
+
