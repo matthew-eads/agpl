@@ -1,0 +1,4 @@
+HUnit -any
+happy -any
+haskell-src-exts -any
+haskell-src-meta -any

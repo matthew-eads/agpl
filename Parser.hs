@@ -211,6 +211,11 @@ parseGame :: String -> IO Game
 parseGame input = case parse gameParser "" input of
                     { Left err -> do {print err; return NIL};
                       Right ans -> do {print "succ"; return ans}}
+
+parseToS :: String -> String
+parseToS input = case parse gameParser "" input of
+                (Left err) -> (show NIL)
+                (Right ans) -> (show ans)
                     
 ws = m_whiteSpace;
 

@@ -2,8 +2,30 @@
 \usepackage{syntax}
 
 \begin{document}
+\paragraph{}
 \paragraph{AGPL Syntax}
 \begin{grammar}
-<statement> ::= <ident> `=' `int'
+<game> ::= `Gamestate:{' <gamestatelist> `}'\\
+           `Move:{' <Dec> `}'\\
+           `isVailid:{' <Exp> `}'\\
+           `possMoves:{' <Exp> `}'\\
+           `outcome:{' <Exp> `}'\\
+           `initialState:{' <Exp> `}'\\
+           `Type:{' <Dec> `}'
+
+<gamestatelist> ::= <gamestate> <gamestatelist>
+\alt <empty>
+
+
+<gamestate> ::= `Board:{' <Dec>
+\alt `Piece:{' <Dec>
+\alt `Hand:{' <Dec>
+\alt `Turn:{' <Dec>
+\alt <string>`:{' <Dec>
+
+<Exp> ::= <Template Haskell Expression>
+
+<Dec> ::= <Template Haskell Declaration>
+
 \end{grammar}
 \end{document}

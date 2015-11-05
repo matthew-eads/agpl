@@ -1,0 +1,4 @@
+Test suite test: RUNNING...
+Cases: 1  Tried: 0  Errors: 0  Failures: 0                                          Cases: 1  Tried: 1  Errors: 0  Failures: 0
+Test suite test: PASS
+Test suite logged to: dist/test/Agpl-0.1.0.0-test.log
