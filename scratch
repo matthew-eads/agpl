@@ -30,3 +30,12 @@ fun outcome :: move -> Outcome
 type Matrix = ST s (STArray s (Int, Int) Piece)
 
 fun mfold f acc matrix :: (a -> Piece -> a) a Matrix -> a
+
+
+nilParser should return: (DataD [] NULL [] [NormalC NULL []] [])
+
+parsegamestate returns return GameState 
+                           {board=btypedec, piece=ptypedec,
+                            hand=htypedec, turn=ttypedec, 
+                            customData=ctypedec};}
+                 

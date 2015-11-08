@@ -1,22 +1,24 @@
 TicTacToe: Game
- 
+
 Gamestate: {
            Board: {Matrix}
            Piece: {X | O | NIL}
 }
 
 Player: {X | O}
+
 --Type Coord: {Coord (Int, Int)}
 --Move: {Move (Coord)}
+
 Move: {(Int, Int)}
 isValid: { (\(i, j) -> ((i < 3) && (j < 3) &&
-                         (i >= 0) && (j >= 0) && ((board game) ! (i,j)) == nil))))}
+                         (i >= 0) && (j >= 0) && ((board game) ! (i,j)) == nil))}
 
 
 possMoves: {\() -> mfold (\((i, j), piece, acc) -> if piece == NIL then ((i, j):acc)
-                                                        else acc) [] (board game)
+                                                        else acc) [] (board game)}
 
-{-$fun ne (x, y) = (x+1,y+1)
+{- $fun ne (x, y) = (x+1,y+1)
  fun e  (x, y) = (x+1, y)
  fun se (x, y) = (x+1, y-1)
  fun s  (x, y) = (x, y-1)
@@ -34,5 +36,5 @@ outcome: {\(x) -> if (((board game) ! ((fst (n x)), (snd (n x))) ==
                   else 0
          }
 
-initialState: {\() -> 1}--{Game.Turn = X; mmap \((i, j), _) -> Game.Board[i][j] = 0}
-
+initialState:{Board: {matrix 3 3 (\(i,j) -> NIL)}
+              Turn: {X}}

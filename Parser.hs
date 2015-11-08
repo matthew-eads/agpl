@@ -57,20 +57,28 @@ TokenParser{ parens = m_parens,
 gameParser :: Parser Game
 gameParser = do {
                ws;
-               id <- gameIDParser;
-               ws;
-               m_reserved "Gamestate";
-               m_reservedOp ":";
-               ws; m_reservedOp "{";
+               id <- gameIDParser; ws; 
+               -- (trace ("id is: " ++ id) ws);
+               
+               m_reserved "Gamestate"; ws;
+               m_reservedOp ":"; ws;
+               m_reservedOp "{";
 --               gamestate <- (manyTill parseGameState (m_reserved "}"));
-               gamestate <- parseGameState; ws;
+               gamestate <- parseGameState;
+               -- (trace ("gs: " ++ (show gamestate)) ws);
                m_reservedOp "}"; ws;
-               player <- parsePlayer;
-               move <- parseMove;
-               isValid <- parseIsValid;
-               possMoves <- parsePossMoves;
+               player <- parsePlayer; 
+               -- (trace ("\n\nplayer: " ++ (show player)) ws);
+               move <- parseMove; 
+               -- (trace ("\n\nmove: " ++ (show move)) ws);
+               isValid <- parseIsValid; 
+               -- (trace ("\n\nisValid: " ++ (show isValid)) ws);
+               possMoves <- parsePossMoves; 
+               -- (trace ("\n\npossmoves: " ++ (show possMoves)) ws);
                outcome <- parseOutcome;
-               initState <- parseInitState;
+               -- (trace ("\n\noutcome: " ++ (show outcome)) ws);
+               initState <- parseInitState gamestate;
+               -- (trace ("init: " ++ (show initState)) ws);
                return (Game (gamestate, move, isValid, possMoves, outcome, 
                             initState, player, []));
              }
@@ -113,13 +121,22 @@ parseIsValid = do {
                    return (IsValidFun isValidF);
                  }
 
-parseInitState :: Parser InitState
-parseInitState = do {
+parseInitState :: GameState -> Parser InitState
+parseInitState gs = do {
                    ws;
                    m_reserved "initialState"; ws;
                    m_reservedOp ":"; ws;
-                   initState <- expParser;
-                   return (InitState initState);
+                   m_reservedOp "{"; ws;
+                   m_reserved "Board"; ws;
+                   m_reservedOp ":"; ws;
+                   boardDec <- expParser; ws;
+                   m_reserved "Turn"; ws;
+                   m_reservedOp ":"; ws;
+                   turnDec <- decParser "Turn"; ws;
+                   m_reservedOp "}";
+                   --  initState <- expParser;                 
+                   -- return (InitState initState); 
+                   return InitState{boardInit=boardDec, turnInit=turnDec};
                  }
 
 
@@ -351,10 +368,10 @@ test inp = case parse testparser "" inp of
                Right ans -> print ans
              }
 
-parseGame :: String -> IO Game
+parseGame :: String -> Game
 parseGame input = case parse gameParser "" input of
-                    { Left err -> do {print err; return NIL};
-                      Right ans -> do {print "succ"; return ans}}
+                    Left err -> (trace "parseGame" NIL)
+                    Right ans -> (trace "succ"  ans)
 
 parseToS :: String -> String
 parseToS input = case parse gameParser "" input of

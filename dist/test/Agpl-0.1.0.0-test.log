@@ -2,7 +2,7 @@ Test suite test: RUNNING...
 Cases: 1  Tried: 0  Errors: 0  Failures: 0                                          ### Failure in: 0:TTT Test
 Tic Tac Toe
 expected: "Game ([Board (AppT ListT (AppT ListT (ConT Int))),Piece (ConT Char),Turn (ConT Int)],Move (AppT (AppT (TupleT 2) (ConT Int)) (ConT Int)),IsValidFun (VarE undefined),PossMovesFun (VarE undefined),OutcomeFun (VarE undefined),InitState (VarE undefined),Player (ConT Char),[])"
- but got: "Game (GameState {board = DataD [] Board [] [NormalC Board [(NotStrict,AppT ListT (AppT ListT (ConT Int)))]] [], piece = DataD [] Piece [] [NormalC Char []] [], hand = DataD [] NULL [] [NormalC NULL []] [], turn = DataD [] Turn [] [NormalC Int []] [], customData = DataD [] NULL [] [NormalC NULL []] []},Move (DataD [] Move [] [NormalC Move [(NotStrict,AppT (AppT (TupleT 2) (ConT Int)) (ConT Int))]] []),IsValidFun (SigE (ParensE (LamE [VarP game] (VarE undefined))) (AppT (AppT ArrowT (ConT Gamestate)) (AppT (AppT ArrowT (AppT (AppT (TupleT 2) (ConT Int)) (ConT Int))) (ConT Int)))),PossMovesFun (SigE (ParensE (LamE [VarP game] (VarE undefined))) (AppT (AppT ArrowT (ConT Gamestate)) (AppT (AppT ArrowT (AppT (AppT (TupleT 2) (ConT Int)) (ConT Int))) (ConT Int)))),OutcomeFun (SigE (ParensE (LamE [VarP game] (VarE undefined))) (AppT (AppT ArrowT (ConT Gamestate)) (AppT (AppT ArrowT (AppT (AppT (TupleT 2) (ConT Int)) (ConT Int))) (ConT Int)))),InitState (SigE (ParensE (LamE [VarP game] (VarE undefined))) (AppT (AppT ArrowT (ConT Gamestate)) (AppT (AppT ArrowT (AppT (AppT (TupleT 2) (ConT Int)) (ConT Int))) (ConT Int)))),Player (DataD [] Player [] [NormalC Char []] []),[])"
+ but got: "NIL"
 Cases: 1  Tried: 1  Errors: 0  Failures: 1
 Test suite test: FAIL
 Test suite logged to: dist/test/Agpl-0.1.0.0-test.log

@@ -6,7 +6,7 @@ main :: IO ()
 main = do {
          args <- getArgs;
          lines <- readFile (head args);
-         res <- parseGame lines;
+         let res = (parseGame lines) in
          print res;
          return ();
        }

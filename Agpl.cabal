@@ -17,25 +17,28 @@ cabal-version:       >=1.10
 
 library
   GHC-Options: -ddump-splices
-  exposed-modules:     Parser, Agpl_syntax
+  default-extensions: TemplateHaskell, QuasiQuotes
+  exposed-modules:     Parser, Agpl_syntax, Quote, CodeGen
   --other-modules:	Agpl_tests      
   -- other-extensions:    
-  build-depends:       base >=4.6 && <4.7, parsec >=3.1 && <3.2, template-haskell >=2.8 && <2.9, haskell-src-meta >=0.6 && <0.7, transformers >=0.4 && <0.5, array, matrix, vector
+  build-depends:       base >=4.6, parsec >=3.1, template-haskell >=2.8, haskell-src-meta >=0.6 , transformers >=0.4 , array, matrix, vector
   -- hs-source-dirs:      
   default-language:    Haskell2010
 
 executable main
   GHC-Options: -ddump-splices
+  default-extensions: TemplateHaskell
   main-is:	Main.hs
-  build-depends:       base >=4.6 && <4.7, parsec >=3.1 && <3.2, template-haskell >=2.8 && <2.9, haskell-src-meta >=0.6 && <0.7, transformers >=0.4 && <0.5, array, matrix, vector
+  build-depends:       base >=4.6, parsec >=3.1, template-haskell >=2.8, haskell-src-meta >=0.6, transformers >=0.4, array, matrix, vector
  
   default-language:	Haskell2010
 
 Test-Suite test
   GHC-Options: -ddump-splices
+  default-extensions: TemplateHaskell
   type: exitcode-stdio-1.0
   main-is: tests.hs
-  build-depends:       base >=4.6 && <4.7, parsec >=3.1 && <3.2, template-haskell >=2.8 && <2.9, haskell-src-meta >=0.6 && <0.7, transformers >=0.4 && <0.5, HUnit, array, matrix, vector
+  build-depends:       base >=4.6, parsec >=3.1 && <3.2, template-haskell >=2.8, haskell-src-meta >=0.6 && <0.7, transformers >=0.4, HUnit, array, matrix, vector
   default-language:	Haskell2010
 
 
