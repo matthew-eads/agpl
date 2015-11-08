@@ -1,3 +1,4 @@
+matrix -any
 HUnit -any
 happy -any
 haskell-src-exts -any

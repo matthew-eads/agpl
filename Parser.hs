@@ -10,11 +10,27 @@ import Language.Haskell.TH.Syntax
 import Language.Haskell.Meta.Parse
 import Language.Haskell.Meta.Syntax.Translate
 import Data.Functor.Identity
+import Data.Matrix (Matrix, nrows, ncols, toList)
+import Debug.Trace
 
+iToC :: Int -> Int -> Int-> (Int, Int)
+iToC rows cols i = let c = if (i `mod` cols) == 0 then cols else (i `mod` cols) 
+                       r = ceiling ((realToFrac i) / (realToFrac rows))
+                   in (r, c)
+
+lfoldi :: (Int -> (Int, Int)) -> Int -> (((Int, Int), a, b) -> b) -> b -> [a] -> b
+lfoldi toC i f b [] = b
+lfoldi toC i f b (x:xs) = f ((toC i), x, (lfoldi toC (i-1) f b xs)) 
+
+mfold :: (((Int, Int), a, b) -> b) -> b -> Matrix a -> b
+mfold f b m = let nr = (nrows m)
+                  nc = (ncols m)
+                  l  = (toList m)
+              in lfoldi (iToC nr nc) (length l) f b l
 
 m_reservedNames = ["Gamestate", "Board", "Piece", "Turn", "Move",
                    "isValid", "possMoves", "Hand", "outcome",
-                   "initialState", "Game"]
+                   "initialState", "Game", "Matrix"]
 
 def :: LanguageDef st
 def = emptyDef{ commentStart = "{-",
@@ -46,7 +62,9 @@ gameParser = do {
                m_reserved "Gamestate";
                m_reservedOp ":";
                ws; m_reservedOp "{";
-               gamestate <- (manyTill parseGameState (m_reserved "}"));
+--               gamestate <- (manyTill parseGameState (m_reserved "}"));
+               gamestate <- parseGameState; ws;
+               m_reservedOp "}"; ws;
                player <- parsePlayer;
                move <- parseMove;
                isValid <- parseIsValid;
@@ -64,7 +82,7 @@ parsePlayer = do {
               ws;
               m_reservedOp ":";
               ws;
-              playerDec <- decParser;
+              playerDec <- decParser "Player";
               return (Player playerDec);
 }
 
@@ -113,7 +131,7 @@ parseMove = do {
               ws;
               m_reservedOp ":";
               ws;
-              moveDec <- decParser;
+              moveDec <- decParser "Move";
               return (Move moveDec);
             }
 
@@ -128,14 +146,14 @@ gameIDParser = do {
                  return id;
                }
 
-decParser :: Parser Type
-decParser = do {
+typeParser :: Parser Type
+typeParser = do {
               ws;
               m_reservedOp "{";
               ty <- (many (noneOf "}"));
               m_reservedOp "}";
               case parseType ty of
-                (Left err) -> do {return undefined}
+                (Left err) -> do {trace "typeParser" (return undefined)}
                 (Right typ) -> do {return typ}
             } 
 
@@ -145,28 +163,111 @@ expParser = do {
               m_reservedOp "{";
               e <- (many (noneOf "}"));
               m_reservedOp "}";
-              case parseExp e of
-                (Left err) -> do {return undefined}
+--              trace ("parsing from: " ++ "(\\game -> " ++ e ++ ") :: Gamestate -> (Int, Int) -> Int") ws;
+              case parseExp ("(\\game -> " ++ e ++ ") :: Gamestate -> (Int, Int) -> Int") of
+                (Left err) -> do {trace ("expParser: " ++ err) (return undefined)}
                 (Right exp) -> do {return exp}
             }
               
+decParser :: String -> Parser Dec
+decParser str = do {
+              ws;
+              m_reservedOp "{";
+              dec <- (many (noneOf "}"));
+              m_reservedOp "}";
+              case parseDecs ("data " ++ str ++ " = " ++ dec) of
+                (Right d) -> do {return (head d)}
+                (Left err) -> case parseDecs ("data " ++ str ++ " = " ++ str ++ "(" ++ dec ++ ")") of
+                                (Right d) -> do {return (head d)}
+                                (Left err) -> do {trace "decParser" (return undefined)}
+                }
+
+matrixParser :: Parser Dec 
+matrixParser = do {
+                ws;
+                m_reservedOp "{";
+                m_reserved "Matrix";
+                m_reservedOp "}";
+                
+                case  parseDecs ("data Board = Board (Matrix Piece)") of
+                  (Right d) -> do {return (head d)}
+                  (Left err) -> do {trace "matrixParser" (return undefined)} 
+               }
+
+boardParser :: Parser Dec
+boardParser = do {
+                ws;
+                m_reserved "Board"; ws;
+                m_reservedOp ":"; ws;
+                t <- (try matrixParser <|> decParser "Board");
+                return t;
+}
+
+pieceParser :: Parser Dec
+pieceParser = do {
+                ws;
+                m_reserved "Piece"; ws;
+                m_reservedOp ":"; ws;
+                t <- decParser "Piece";
+                return t;
+}
+
+
+handParser :: Parser Dec
+handParser = do {
+                ws;
+                m_reserved "Hand"; ws;
+                m_reservedOp ":"; ws;
+                t <- decParser "Hand";
+                return t;
+}
+
+turnParser :: Parser Dec
+turnParser = do {
+                ws;
+                m_reserved "Turn"; ws;
+                m_reservedOp ":"; ws;
+                t <- decParser "Turn";
+                return t;
+}
+
+customDParser :: Parser Dec
+customDParser = do {
+                ws;
+                m_reserved "NOTSUPPORTED"; ws;
+                m_reservedOp ":"; ws;
+                t <- (try matrixParser <|> decParser "Board");
+                return t;
+}
+
+nilParser :: Parser Dec
+nilParser = case parseDecs "data NULL = NULL" of
+              (Right d) -> do {return (head d)}
+              (Left err) -> do {trace "nilParser" (return undefined)}
 
 
 parseGameState :: Parser GameState 
-parseGameState = ws >> 
-                 (do {
-                   m_reserved "Board";
-                   ws;
-                   m_reservedOp ":";
-                   ws;
-                   typedec <- decParser;
-                   return (Board typedec) } <|>
+parseGameState = do {
+                   btypedec <- boardParser <|> nilParser;
+                   nilT <- nilParser;
+                   ptypedec <- pieceParser <|> nilParser;
+                   htypedec <- handParser <|> nilParser;
+                   ttypedec <- turnParser <|> nilParser;
+                   ctypedec <- customDParser <|> nilParser;
+                   return GameState 
+                           {board=btypedec, piece=ptypedec,
+                            hand=htypedec, turn=ttypedec, 
+                            customData=ctypedec};}
+                 
+--                   ws;
+--                   m_reserved "Piece
+{-
                  (do {
                    m_reserved "Piece";
                    ws;
                    m_reservedOp ":";
                    ws;                   
-                   typedec <- decParser;
+                   typedec <- decParser "Piece";
                    ws;
                    return (Piece typedec) }) <|>
                  (do {
@@ -174,14 +275,14 @@ parseGameState = ws >>
                    ws;
                    m_reservedOp ":";
                    ws;
-                   typedec <- decParser;
+                   typedec <- decParser "Turn";
                    return (Turn typedec) }) <|>
                  (do {
                    m_reserved "Hand";
                    ws;
                    m_reservedOp ":";
                    ws;
-                   typedec <- decParser;
+                   typedec <- decParser "Hand";
                    ws;
                    return (Hand typedec) }) {-<|>
                  do { 
@@ -192,6 +293,49 @@ parseGameState = ws >>
                    typedec <- decParser;
                    ws;
                    return (CustomData typedec) }-})
+-}
+{-parseGameState :: Parser GameState 
+parseGameState = ws >> 
+                 (do {
+                   m_reserved "Board";
+                   ws;
+                   m_reservedOp ":";
+                   ws;
+                   typedec <- boardParser;
+                   return (Board typedec) } <|>
+                 (do {
+                   m_reserved "Piece";
+                   ws;
+                   m_reservedOp ":";
+                   ws;                   
+                   typedec <- decParser "Piece";
+                   ws;
+                   return (Piece typedec) }) <|>
+                 (do {
+                   m_reserved "Turn";
+                   ws;
+                   m_reservedOp ":";
+                   ws;
+                   typedec <- decParser "Turn";
+                   return (Turn typedec) }) <|>
+                 (do {
+                   m_reserved "Hand";
+                   ws;
+                   m_reservedOp ":";
+                   ws;
+                   typedec <- decParser "Hand";
+                   ws;
+                   return (Hand typedec) }) {-<|>
+                 do { 
+                   custID <- many (noneOf " :");
+                   ws;
+                   m_reservedOp ":";
+                   ws;
+                   typedec <- decParser;
+                   ws;
+                   return (CustomData typedec) }-})-}
+
+
                 
 
 testparser = do {

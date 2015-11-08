@@ -1,21 +1,22 @@
 TicTacToe: Game
  
 Gamestate: {
-           Board: {Matrix[3][3]}
+           Board: {Matrix}
            Piece: {X | O | NIL}
 }
 
 Player: {X | O}
-Type Coord: (Int, Int)
-Move: (Coord)
+--Type Coord: {Coord (Int, Int)}
+--Move: {Move (Coord)}
+Move: {(Int, Int)}
+isValid: { (\(i, j) -> ((i < 3) && (j < 3) &&
+                         (i >= 0) && (j >= 0) && ((board game) ! (i,j)) == nil))))}
 
-isValid: {\(i, j) -> (i < 3) && (j < 3) &&
-                         (i >= 0) && (j >= 0) && (Game.Board[i][j] == nil)}
 
-possMoves: {\() -> mfold (\(acc) -> \((i, j), piece) -> if piece == NIL then ((i, j):acc)
-                                                        else acc) [] Game.Board
+possMoves: {\() -> mfold (\((i, j), piece, acc) -> if piece == NIL then ((i, j):acc)
+                                                        else acc) [] (board game)
 
-$fun ne (x, y) = (x+1,y+1)
+{-$fun ne (x, y) = (x+1,y+1)
  fun e  (x, y) = (x+1, y)
  fun se (x, y) = (x+1, y-1)
  fun s  (x, y) = (x, y-1)
@@ -23,13 +24,15 @@ $fun ne (x, y) = (x+1,y+1)
  fun w  (x, y) = (x-1, y)
  fun nw (x, y) = (x-1, y+1)
  fun n  (x, y) = (x, y+1)$
+-}
+outcome: {\(x) -> if (((board game) ! ((fst (n x)), (snd (n x))) ==
+                      (board game) ! ((fst (s x)), (snd (s x)))) &&
+                     ((board game) ! ((fst (n x)), (snd (n x))) ==
+                      (board game) ! ((fst x), (snd x))))   
+                  then 1 --Fin(Game.Board[fst x][snd x], 2)
+                   --etc
+                  else 0
+         }
 
-outcome: {\(x) -> if ((Game.Board[fst (n x)][snd (n x)] ==
-                      Game.Board[fst (s x)][snd (s x)]) &&
-                      (Game.Board[fst (n x)][snd (n x)] ==
-                      Game.Board[fst x][snd x])) then Fin(Game.Board[fst x][snd x], 2)
-                   etc
-
-
-initialState: {Game.Turn = X; mmap \((i, j), _) -> Game.Board[i][j] = 0}
+initialState: {\() -> 1}--{Game.Turn = X; mmap \((i, j), _) -> Game.Board[i][j] = 0}
 
