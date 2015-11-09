@@ -1,11 +1,16 @@
-module Quote (agpl) where
+module Quote (agpl, agpl_f, aparse) where
 import Parser
 import CodeGen
 import Language.Haskell.TH
 import Language.Haskell.TH.Quote
-
+import Agpl_syntax
+import Debug.Trace
 agpl :: QuasiQuoter
-agpl = QuasiQuoter undefined undefined undefined aparse
+agpl = QuasiQuoter (trace "exp" undefined) (trace "pat" undefined) (trace "type" undefined) 
+                   (trace "decs" aparse)
 
 aparse :: String -> Q [Dec]
-aparse s = makeAGPLDecs (parseGame s)
+aparse s = (trace "hello" (makeAGPLDecs NIL))
+
+agpl_f :: QuasiQuoter
+agpl_f = quoteFile agpl

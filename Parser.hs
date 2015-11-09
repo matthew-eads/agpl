@@ -58,7 +58,7 @@ gameParser :: Parser Game
 gameParser = do {
                ws;
                id <- gameIDParser; ws; 
-               -- (trace ("id is: " ++ id) ws);
+               (trace ("id is: " ++ id) ws);
                
                m_reserved "Gamestate"; ws;
                m_reservedOp ":"; ws;
