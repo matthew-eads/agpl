@@ -1,3 +1,4 @@
+cabal-uninstall -any
 matrix -any
 HUnit -any
 happy -any

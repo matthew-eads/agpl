@@ -73,33 +73,45 @@ gameParser = do {
                -- (trace ("\n\nmove: " ++ (show move)) ws);
                isValid <- parseIsValid; 
                -- (trace ("\n\nisValid: " ++ (show isValid)) ws);
-               possMoves <- parsePossMoves; 
+               possMoves <- try parsePossMoves <|> nilPM; 
                -- (trace ("\n\npossmoves: " ++ (show possMoves)) ws);
                outcome <- parseOutcome;
                -- (trace ("\n\noutcome: " ++ (show outcome)) ws);
                initState <- parseInitState gamestate;
-               -- (trace ("init: " ++ (show initState)) ws);
-               return (Game (gamestate, move, isValid, possMoves, outcome, 
+               (trace ("init: " ++ (show initState)) ws);
+               customData <- many parseCustomData;
+               return (Game (id, gamestate, move, isValid, possMoves, outcome, 
                             initState, player, []));
              }
 
+parseCustomData :: Parser CustomDataType
+parseCustomData = do {
+                    ws;
+                    name <- many (noneOf ": ");
+                    ws;
+                    m_reservedOp ":"; ws;
+                    dataDec <- decParser name;
+                    return (CustomDataType dataDec);
+                  }
+                    
+
 parsePlayer :: Parser Player
 parsePlayer = do {
-              ws;
-              m_reserved "Player";
-              ws;
-              m_reservedOp ":";
-              ws;
-              playerDec <- decParser "Player";
-              return (Player playerDec);
-}
+                ws;
+                m_reserved "Player";
+                ws;
+                m_reservedOp ":";
+                ws;
+                playerDec <- decParser "Player";
+                return (Player playerDec);
+              }
 
 parsePossMoves :: Parser PossMovesFun
 parsePossMoves = do {
                    ws;
                    m_reserved "possMoves"; ws;
                    m_reservedOp ":"; ws;
-                   possFun <- expParser;
+                   possFun <- expParser "[Move]";
                    return (PossMovesFun possFun);
                  }
                    
@@ -108,7 +120,7 @@ parseOutcome = do {
                    ws;
                    m_reserved "outcome"; ws;
                    m_reservedOp ":"; ws;
-                   outcomeFun <- expParser;
+                   outcomeFun <- expParser "Move -> Int";
                    return (OutcomeFun outcomeFun);
                  }
 
@@ -117,7 +129,7 @@ parseIsValid = do {
                    ws;
                    m_reserved "isValid"; ws;
                    m_reservedOp ":"; ws;
-                   isValidF <- expParser;
+                   isValidF <- expParser "Move -> Bool";
                    return (IsValidFun isValidF);
                  }
 
@@ -129,10 +141,10 @@ parseInitState gs = do {
                    m_reservedOp "{"; ws;
                    m_reserved "Board"; ws;
                    m_reservedOp ":"; ws;
-                   boardDec <- expParser; ws;
+                   boardDec <- expParser ""; ws;
                    m_reserved "Turn"; ws;
                    m_reservedOp ":"; ws;
-                   turnDec <- decParser "Turn"; ws;
+                   turnDec <- simpleExpParser "Player"; ws;
                    m_reservedOp "}";
                    --  initState <- expParser;                 
                    -- return (InitState initState); 
@@ -163,41 +175,63 @@ gameIDParser = do {
                  return id;
                }
 
-typeParser :: Parser Type
-typeParser = do {
+typeParser :: String -> Parser Dec
+typeParser name = do {
               ws;
               m_reservedOp "{";
               ty <- (many (noneOf "}"));
               m_reservedOp "}";
-              case parseType ty of
+              case parseDecs ("type " ++ name ++ " = " ++ ty) of
                 (Left err) -> do {trace "typeParser" (return undefined)}
-                (Right typ) -> do {return typ}
+                (Right typ) -> do {return (head typ)}
             } 
 
-expParser :: Parser Exp
-expParser = do {
+simpleExpParser :: String -> Parser Exp
+simpleExpParser typeS = do {
+                          ws; m_reservedOp "{";
+                          e <- (many (noneOf "}"));
+                          m_reservedOp "}";
+                          case parseExp e {-++ " :: " ++ typeS-} of
+                            (Left err) -> do {trace ("expParser: " ++ err) (return undefined)}
+                            (Right exp) -> do {return exp}
+                        }               
+
+expParser :: String -> Parser Exp
+expParser "" = do {
+                 ws;
+                 m_reservedOp "{";
+                 e <- (many (noneOf "}"));
+                 m_reservedOp "}";
+                 case parseExp ("(\\game -> " ++ e ++ ")") of
+                   (Left err) -> do {trace ("expParser: " ++ e ++ "\n error: " ++err) (return undefined)}
+                   (Right exp) -> do {return exp}
+            }
+                 
+expParser typeS = do {
               ws;
               m_reservedOp "{";
               e <- (many (noneOf "}"));
               m_reservedOp "}";
---              trace ("parsing from: " ++ "(\\game -> " ++ e ++ ") :: Gamestate -> (Int, Int) -> Int") ws;
-              case parseExp ("(\\game -> " ++ e ++ ") :: Gamestate -> (Int, Int) -> Int") of
+              --trace ("parsing from: " ++ "(\\game -> " ++ e ++ ") :: Gamestate -> (Int, Int) -> Int") ws;
+              case parseExp ("(\\game -> " ++ e ++ ") :: GameState -> " ++ typeS) of
                 (Left err) -> do {trace ("expParser: " ++ err) (return undefined)}
                 (Right exp) -> do {return exp}
             }
-              
+
+         
 decParser :: String -> Parser Dec
 decParser str = do {
               ws;
               m_reservedOp "{";
               dec <- (many (noneOf "}"));
               m_reservedOp "}";
-              case parseDecs ("data " ++ str ++ " = " ++ dec) of
+              case parseDecs ("data " ++ str ++ " = " ++ dec ++ " deriving (Eq, Show)") of
                 (Right d) -> do {return (head d)}
                 (Left err) -> case parseDecs ("data " ++ str ++ " = " ++ str ++ "(" ++ dec ++ ")") of
                                 (Right d) -> do {return (head d)}
                                 (Left err) -> do {trace "decParser" (return undefined)}
                 }
+
 
 matrixParser :: Parser Dec 
 matrixParser = do {
@@ -206,7 +240,7 @@ matrixParser = do {
                 m_reserved "Matrix";
                 m_reservedOp "}";
                 
-                case  parseDecs ("data Board = Board (Matrix Piece)") of
+                case  parseDecs ("type Board = Matrix Piece") of
                   (Right d) -> do {return (head d)}
                   (Left err) -> do {trace "matrixParser" (return undefined)} 
                }
@@ -216,7 +250,7 @@ boardParser = do {
                 ws;
                 m_reserved "Board"; ws;
                 m_reservedOp ":"; ws;
-                t <- (try matrixParser <|> decParser "Board");
+                t <- (try matrixParser <|> typeParser "Board");
                 return t;
 }
 
@@ -262,6 +296,10 @@ nilParser = case parseDecs "data NULL = NULL" of
               (Right d) -> do {return (head d)}
               (Left err) -> do {trace "nilParser" (return undefined)}
 
+nilPM :: Parser PossMovesFun
+nilPM = case parseExp "nil" of
+           (Right e) -> do {return (PossMovesFun e)}
+           (Left err) -> do {trace "nilExp" (return undefined)}
 
 parseGameState :: Parser GameState 
 parseGameState = do {
@@ -370,7 +408,7 @@ test inp = case parse testparser "" inp of
 
 parseGame :: String -> Game
 parseGame input = case parse gameParser "" input of
-                    Left err -> (trace "parseGame" NIL)
+                    Left err -> (trace "parseGameFail" NIL)
                     Right ans -> (trace "succ"  ans)
 
 parseToS :: String -> String

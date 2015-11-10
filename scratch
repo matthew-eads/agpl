@@ -1,3 +1,16 @@
+we need to define a GameState data, different from that in Agpl_syntax
+
+data GameState = GameState {board :: BDec, piece :: PDec, hand :: HDec, turn :: TDec, 
+                            customData :: CDec}
+
+DataD [] GameState [] [] []
+[DataD [] GameState [] [RecC GameState [(board,NotStrict,ConT Board),(piece,NotStrict,ConT Piece)]] []]
+
+
+
+
+
+
 
 user enters:
 isValid: {\(player, i, j) -> (Game.Turn == player) && (i < 3) && (j < 3) &&

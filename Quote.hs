@@ -10,7 +10,7 @@ agpl = QuasiQuoter (trace "exp" undefined) (trace "pat" undefined) (trace "type"
                    (trace "decs" aparse)
 
 aparse :: String -> Q [Dec]
-aparse s = (trace "hello" (makeAGPLDecs NIL))
+aparse s = (makeAGPLDecs (parseGame s))
 
 agpl_f :: QuasiQuoter
 agpl_f = quoteFile agpl
