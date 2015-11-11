@@ -11,22 +11,26 @@ nilD = (DataD [] (mkName "NULL") [] [NormalC (mkName "NULL") []] [])
 makeAGPLDecs :: Game -> Q [Dec]
 makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, cd)) = 
     do {
-      gsdecs <- gamestateDec gs;
-      gsdec <- gsDec [boardT,pieceT];
-      initStateDecs <- initStateDec is;
+      gsdecs <- (trace "gs" (gamestateDec gs));
+      ttype <- (trace "ttype" turnTypeDec);
+      gsdec <- (trace "gsdec" (gsDec [boardT,turnT]));
+      initStateDecs <- (trace "initState" (initStateDec is));
       move <- moveDec m;
       player <- playerDec p;
       isValid <- isValidDec ivf;
       possMoves <- possmovesDec pmf;
       outcome <- outcomeDec ocf;
-      return (gsdecs ++ initStateDecs ++ move ++ player ++ isValid ++ gsdec ++ outcome ++ possMoves);
+      return (gsdecs ++ initStateDecs ++ ttype ++ move ++ player ++ isValid ++ gsdec ++ outcome ++ possMoves ++ cd);
     }
 
-makeAGPLDecs _ = [d| bar y = y * y|]
+makeAGPLDecs x = (trace (show x) undefined)
 
 gsDec :: [VarStrictType] -> Q [Dec]
-gsDec types = do {return [DataD [] (mkName "GameState") [] [RecC (mkName "GameState") 
-                         types] []]}
+gsDec types = do {return [DataD [] (mkName "GameState") [] 
+                [(RecC (mkName "GameState")types),
+                 (NormalC (mkName "Win") [(NotStrict,ConT (mkName "Player"))]),
+                 (NormalC (mkName "Tie") [])] []]}
+
 boardT :: VarStrictType
 boardT = ((mkName "board"), NotStrict, ConT (mkName "Board")) 
 
@@ -37,7 +41,11 @@ handT :: VarStrictType
 handT = ((mkName "hand"), NotStrict, ConT (mkName "Hand"))
 
 turnT :: VarStrictType
-turnT = ((mkName "turn"), NotStrict, ConT (mkName "Turn"))
+turnT = ((mkName "currentTurn"), NotStrict, ConT (mkName "Turn"))
+
+turnTypeDec :: Q [Dec]
+turnTypeDec = do {return [TySynD (mkName "Turn") [] 
+                          (ConT (mkName "Player"))]}
 
 gamestateDec :: GameState -> Q [Dec]
 gamestateDec gs =

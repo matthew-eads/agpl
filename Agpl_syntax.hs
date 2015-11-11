@@ -2,7 +2,7 @@ module Agpl_syntax where
 import Language.Haskell.TH.Syntax
 
 data Game = Game (GameID, GameState, Move, IsValidFun, PossMovesFun, 
-                  OutcomeFun, InitState, Player, [CustomDataType]) 
+                  OutcomeFun, InitState, Player, [Dec]) 
           | NIL deriving Show
 
 

@@ -11,30 +11,44 @@ Player: {PX | PO}
 --Move: {Move (Coord)}
 
 Move: {(Int, Int)}
-isValid: { (\(Move (i, j)) -> ((i < 3) && (j < 3) &&
-                         (i >= 0) && (j >= 0) && ((board game) ! (i,j)) == Nil))}
+isValid: { (\(Move (i, j)) -> ((i <= 3) && (j <= 3) &&
+                         (i > 0) && (j > 0) && ((board game) ! (i,j)) == Nil))}
 
 
 possMoves: {mfold (\((i, j), piece, acc) -> if piece == Nil then (Move(i, j):acc)
                                                         else acc) [] (board game)}
 
-{- $fun ne (x, y) = (x+1,y+1)
- fun e  (x, y) = (x+1, y)
- fun se (x, y) = (x+1, y-1)
- fun s  (x, y) = (x, y-1)
- fun sw (x, y) = (x-1, y-1)
- fun w  (x, y) = (x-1, y)
- fun nw (x, y) = (x-1, y+1)
- fun n  (x, y) = (x, y+1)$
--}
 outcome: {\(Move(x, y)) -> if (((board game) ! (x, y+1)) ==
                       ((board game) ! (x, y-1))) &&
                      (((board game) ! (x, y+1)) ==
                       ((board game) ! (x, y)))   
-                  then 1 --Fin(Game.Board[x][y], 2)
-                   --etc
-                  else 0
+                  then (Win (pieceToPlayer ((board game) ! (x,y))), 1) 
+                  else let t = otherPlayer (currentTurn game)
+                           b = setElem(playerToPiece (currentTurn game))
+                                                    (x, y) (board game)
+                       in (GameState{board=b, currentTurn = t}, 0)
+         -- (game, 1)
          }
 
 initialState:{Board: {matrix 3 3 (\(i,j) -> Nil)}
-              Turn: {X}}
+              Turn: {PX}}
+
+$
+ne (x, y) = (x+1,y+1)
+e  (x, y) = (x+1, y)
+se (x, y) = (x+1, y-1)
+s  (x, y) = (x, y-1)
+sw (x, y) = (x-1, y-1)
+w  (x, y) = (x-1, y)
+nw (x, y) = (x-1, y+1)
+n  (x, y) = (x, y+1)
+pieceToPlayer :: Piece -> Player
+pieceToPlayer X = PX
+pieceToPlayer O = PO
+playerToPiece :: Player -> Piece
+playerToPiece PX = X
+playerToPiece PO = O
+otherPlayer :: Player -> Player
+otherPlayer PX = PO
+otherPlayer PO = PX
+$

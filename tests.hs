@@ -12,6 +12,7 @@ import Data.Matrix
 [agpl_f|ttt.agpl|]
 
 
+
 --[agpl_f|chess.agpl|]
 
 -- chessT = chess 2
@@ -20,13 +21,22 @@ expected = "Game ([Board (AppT ListT (AppT ListT (ConT Int))),Piece (ConT Char),
 
 
 m = matrix 3 3 $ \(i, j) -> Nil
+gs = GameState {board = tttT, currentTurn = turn}
 
+--expectedOutcome = 
 
-tttTest = TestCase (assertEqual "Tic Tac Toe" m tttT )
+tttTest1 = TestCase (assertEqual "Nil Matrix not formed" m tttT )
+tttTest2 = TestCase (assertBool "isValid (1, 3) fails" 
+                     (isValid gs (Move (1, 3))))
+tttTest3 = TestCase (assertBool "isValid (0, 4) succeeds" 
+                     (not (isValid gs (Move (0, 4)))))
+
 -- chessTest = TestCase (assertEqual "Tic Tac Toe" 4 chessT )
 
 -- tests = TestList [(TestLabel "TTT Test" tttTest), (TestLabel "Chess Test" chessTest)]
-tests = TestList [(TestLabel "TTT Test" tttTest)]
+tests = TestList [(TestLabel "TTT Test" tttTest1), 
+                  (TestLabel "isValid Test" tttTest2),
+                  (TestLabel "isValid Test 2" tttTest3)]
 main :: IO Counts
 main = do {
         cs@(Counts _ _ errs fails) <- runTestTT tests;

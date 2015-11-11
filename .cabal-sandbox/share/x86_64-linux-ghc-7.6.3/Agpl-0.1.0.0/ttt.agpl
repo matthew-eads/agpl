@@ -15,7 +15,7 @@ isValid: { (\(Move (i, j)) -> ((i < 3) && (j < 3) &&
                          (i >= 0) && (j >= 0) && ((board game) ! (i,j)) == Nil))}
 
 
-possMoves: {mfold (\((i, j), piece, acc) -> if piece == Nil then ((i, j):acc)
+possMoves: {mfold (\((i, j), piece, acc) -> if piece == Nil then (Move(i, j):acc)
                                                         else acc) [] (board game)}
 
 {- $fun ne (x, y) = (x+1,y+1)
@@ -27,13 +27,12 @@ possMoves: {mfold (\((i, j), piece, acc) -> if piece == Nil then ((i, j):acc)
  fun nw (x, y) = (x-1, y+1)
  fun n  (x, y) = (x, y+1)$
 -}
-outcome: {\(x) -> if (((board game) ! ((fst (n x)), (snd (n x))) ==
-                      (board game) ! ((fst (s x)), (snd (s x)))) &&
-                     ((board game) ! ((fst (n x)), (snd (n x))) ==
-                      (board game) ! ((fst x), (snd x))))   
-                  then 1 --Fin(Game.Board[fst x][snd x], 2)
-                   --etc
-                  else 0
+outcome: {\(Move(x, y)) -> if (((board game) ! (x, y+1)) ==
+                      ((board game) ! (x, y-1))) &&
+                     (((board game) ! (x, y+1)) ==
+                      ((board game) ! (x, y)))   
+                  then ((Win PX), 1) 
+                  else (game, 0)
          }
 
 initialState:{Board: {matrix 3 3 (\(i,j) -> Nil)}
