@@ -56,12 +56,12 @@
   (major1) == 0 && (major2) <  11 || \
   (major1) == 0 && (major2) == 11 && (minor) <= 0)
 
-/* package HUnit-1.3.0.0 */
-#define VERSION_HUnit "1.3.0.0"
-#define MIN_VERSION_HUnit(major1,major2,minor) (\
-  (major1) <  1 || \
-  (major1) == 1 && (major2) <  3 || \
-  (major1) == 1 && (major2) == 3 && (minor) <= 0)
+/* package split-0.2.2 */
+#define VERSION_split "0.2.2"
+#define MIN_VERSION_split(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  2 || \
+  (major1) == 0 && (major2) == 2 && (minor) <= 2)
 
 /* tool cpphs-1.19.3 */
 #define TOOL_VERSION_cpphs "1.19.3"

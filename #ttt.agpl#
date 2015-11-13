@@ -1,0 +1,57 @@
+TicTacToe: Game
+
+Gamestate: {
+           Board: {Matrix}
+           Piece: {X | O | Nil}
+}
+
+Player: {PX | PO}
+
+--Type Coord: {Coord (Int, Int)}
+--Move: {Move (Coord)}
+
+Move: {(Int, Int)}
+isValid: { (\(Move (i, j)) -> ((i <= 3) && (j <= 3) &&
+                         (i > 0) && (j > 0) && ((board game) ! (i,j)) == Nil))}
+
+
+possMoves: {mfold (\((i, j), piece, acc) -> if piece == Nil then (Move(i, j):acc)
+                                                        else acc) [] (board game)}
+
+outcome: {\(Move move) -> 
+  let t = otherPlayer (currentTurn game)
+      b = if isFull (board game) 
+            then (board game) 
+            else setElem (playerToPiece (currentTurn game)) move (board game)
+      g = (GameState{board=b, currentTurn = t})
+  in               
+    if ((b ! (1,1)) == (b ! (1,2)) && ((b ! (1,2)) == (b ! (1,3))))   
+      then (Win (pieceToPlayer (b ! (1,1))), 1) 
+      else (Win (pieceToPlayer (b ! (1,1))), 1)
+}
+
+
+initialState:{Board: {matrix 3 3 (\(i,j) -> Nil)}
+              Turn: {PX}}
+
+$
+isFull :: board -> Bool
+isFull b = mfold (\((i, j), piece, acc) -> if piece == Nil then False else (True && acc)) True b
+ne (x, y) = (x+1,y+1)
+e  (x, y) = (x+1, y)
+se (x, y) = (x+1, y-1)
+s  (x, y) = (x, y-1)
+sw (x, y) = (x-1, y-1)
+w  (x, y) = (x-1, y)
+nw (x, y) = (x-1, y+1)
+n  (x, y) = (x, y+1)
+pieceToPlayer :: Piece -> Player
+pieceToPlayer X = PX
+pieceToPlayer O = PO
+playerToPiece :: Player -> Piece
+playerToPiece PX = X
+playerToPiece PO = O
+otherPlayer :: Player -> Player
+otherPlayer PX = PO
+otherPlayer PO = PX
+$

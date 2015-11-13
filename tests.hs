@@ -23,7 +23,7 @@ expected = "Game ([Board (AppT ListT (AppT ListT (ConT Int))),Piece (ConT Char),
 m = matrix 3 3 $ \(i, j) -> Nil
 gs = GameState {board = tttT, currentTurn = turn}
 
---expectedOutcome = 
+expectedOutcome = (Win PX, 1)
 
 tttTest1 = TestCase (assertEqual "Nil Matrix not formed" m tttT )
 tttTest2 = TestCase (assertBool "isValid (1, 3) fails" 
@@ -31,12 +31,17 @@ tttTest2 = TestCase (assertBool "isValid (1, 3) fails"
 tttTest3 = TestCase (assertBool "isValid (0, 4) succeeds" 
                      (not (isValid gs (Move (0, 4)))))
 
--- chessTest = TestCase (assertEqual "Tic Tac Toe" 4 chessT )
+tttTest4 = TestCase (assertEqual "bad outcome" expectedOutcome 
+                                     (outcome gs (Move (1,1))))
 
--- tests = TestList [(TestLabel "TTT Test" tttTest), (TestLabel "Chess Test" chessTest)]
+
+
+
+
 tests = TestList [(TestLabel "TTT Test" tttTest1), 
                   (TestLabel "isValid Test" tttTest2),
-                  (TestLabel "isValid Test 2" tttTest3)]
+                  (TestLabel "isValid Test 2" tttTest3),
+                  (TestLabel "outcome test" tttTest4)]
 main :: IO Counts
 main = do {
         cs@(Counts _ _ errs fails) <- runTestTT tests;

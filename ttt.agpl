@@ -18,22 +18,24 @@ isValid: { (\(Move (i, j)) -> ((i <= 3) && (j <= 3) &&
 possMoves: {mfold (\((i, j), piece, acc) -> if piece == Nil then (Move(i, j):acc)
                                                         else acc) [] (board game)}
 
-outcome: {\(Move(x, y)) -> if (((board game) ! (x, y+1)) ==
-                      ((board game) ! (x, y-1))) &&
-                     (((board game) ! (x, y+1)) ==
-                      ((board game) ! (x, y)))   
-                  then (Win (pieceToPlayer ((board game) ! (x,y))), 1) 
-                  else let t = otherPlayer (currentTurn game)
-                           b = setElem(playerToPiece (currentTurn game))
-                                                    (x, y) (board game)
-                       in (GameState{board=b, currentTurn = t}, 0)
-         -- (game, 1)
-         }
+outcome: {\(Move move) -> 
+  let t = otherPlayer (currentTurn game)
+      b = if isFull (board game) 
+            then (board game) 
+            else setElem (playerToPiece (currentTurn game)) move (board game)
+      g = (GameState{board=b, currentTurn = t})
+  in               
+    if ((b ! (1,1)) == (b ! (1,2)) && ((b ! (1,2)) == (b ! (1,3))))   
+      then (Win (pieceToPlayer (b ! (1,1))), 1) 
+      else (Win (pieceToPlayer (b ! move)), 1)
+}
+
 
 initialState:{Board: {matrix 3 3 (\(i,j) -> Nil)}
               Turn: {PX}}
 
 $
+isFull b = mfold (\((i, j), piece, acc) -> if piece == Nil then False else (True && acc)) True b
 ne (x, y) = (x+1,y+1)
 e  (x, y) = (x+1, y)
 se (x, y) = (x+1, y-1)

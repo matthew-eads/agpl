@@ -29,7 +29,7 @@ gsDec :: [VarStrictType] -> Q [Dec]
 gsDec types = do {return [DataD [] (mkName "GameState") [] 
                 [(RecC (mkName "GameState")types),
                  (NormalC (mkName "Win") [(NotStrict,ConT (mkName "Player"))]),
-                 (NormalC (mkName "Tie") [])] []]}
+                 (NormalC (mkName "Tie") [])] [(mkName "Show"), (mkName "Eq")]]}
 
 boardT :: VarStrictType
 boardT = ((mkName "board"), NotStrict, ConT (mkName "Board")) 
