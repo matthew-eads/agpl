@@ -61,27 +61,27 @@ gameParser :: Parser Game
 gameParser = do {
                ws;
                id <- gameIDParser; ws; 
-               (trace ("id is: " ++ id) ws);
+               -- (trace ("id is: " ++ id) ws);
                
                m_reserved "Gamestate"; ws;
                m_reservedOp ":"; ws;
                m_reservedOp "{";
 --               gamestate <- (manyTill parseGameState (m_reserved "}"));
                gamestate <- parseGameState;
-               (trace ("gs: " ++ (show gamestate)) ws);
+               -- (trace ("gs: " ++ (show gamestate)) ws);
                m_reservedOp "}"; ws;
                player <- parsePlayer; 
-               (trace ("\n\nplayer: " ++ (show player)) ws);
+               -- (trace ("\n\nplayer: " ++ (show player)) ws);
                move <- parseMove; 
-               (trace ("\n\nmove: " ++ (show move)) ws);
+               -- (trace ("\n\nmove: " ++ (show move)) ws);
                isValid <- parseIsValid; 
-               (trace ("\n\nisValid: " ++ (show isValid)) ws);
+               -- (trace ("\n\nisValid: " ++ (show isValid)) ws);
                possMoves <- try parsePossMoves <|> nilPM; 
-               (trace ("\n\npossmoves: " ++ (show possMoves)) ws);
+               -- (trace ("\n\npossmoves: " ++ (show possMoves)) ws);
                outcome <- parseOutcome;
-               (trace ("\n\noutcome: " ++ (show outcome)) ws);
+               -- (trace ("\n\noutcome: " ++ (show outcome)) ws);
                initState <- parseInitState gamestate;
-               (trace ("init: " ++ (show initState)) ws);
+               -- (trace ("init: " ++ (show initState)) ws);
                customData <- parseCustomData;
                return (Game (id, gamestate, move, isValid, possMoves, outcome, 
                             initState, player, customData));
@@ -207,16 +207,18 @@ simpleExpParser typeS = do {
 sParser :: Parser String
 sParser = do {
             s <- (many (noneOf "{}"));
-            (trace ("parsed: " ++ s)
+            -- (trace ("parsed: " ++ s)
             try (do {
                    m_reservedOp "{";
                    nested <- sParser;
                    m_reservedOp "}";
                    rest <- sParser;
                    return (s ++ "{" ++ nested ++ "}" ++ rest);
-                 })) <|>
-            (trace ("returning s") (return s));
+                 }) <|>
+            -- (trace ("returning s") (return s));
+                return s;
           }
+
 
 expParser :: String -> Parser Exp
 expParser "" = do {
@@ -354,7 +356,7 @@ test inp = case parse testparser "" inp of
 parseGame :: String -> Game
 parseGame input = case parse gameParser "" input of
                     Left err -> (trace "parseGameFail" NIL)
-                    Right ans -> (trace "succ"  ans)
+                    Right ans ->  ans
 
 parseToS :: String -> String
 parseToS input = case parse gameParser "" input of

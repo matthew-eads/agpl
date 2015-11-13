@@ -11,10 +11,10 @@ nilD = (DataD [] (mkName "NULL") [] [NormalC (mkName "NULL") []] [])
 makeAGPLDecs :: Game -> Q [Dec]
 makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, cd)) = 
     do {
-      gsdecs <- (trace "gs" (gamestateDec gs));
-      ttype <- (trace "ttype" turnTypeDec);
-      gsdec <- (trace "gsdec" (gsDec [boardT,turnT]));
-      initStateDecs <- (trace "initState" (initStateDec is));
+      gsdecs <- gamestateDec gs;
+      ttype <- turnTypeDec;
+      gsdec <- gsDec [boardT,turnT];
+      initStateDecs <- initStateDec is;
       move <- moveDec m;
       player <- playerDec p;
       isValid <- isValidDec ivf;

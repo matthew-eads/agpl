@@ -6,8 +6,7 @@ import Language.Haskell.TH.Quote
 import Agpl_syntax
 import Debug.Trace
 agpl :: QuasiQuoter
-agpl = QuasiQuoter (trace "exp" undefined) (trace "pat" undefined) (trace "type" undefined) 
-                   (trace "decs" aparse)
+agpl = QuasiQuoter undefined undefined undefined aparse
 
 aparse :: String -> Q [Dec]
 aparse s = (makeAGPLDecs (parseGame s))

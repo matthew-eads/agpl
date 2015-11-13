@@ -32,11 +32,16 @@ tie = do {
 playGame :: GameState -> IO ()
 playGame gs = do {
                 m <- getMove gs;
-                let (result, i) = outcome gs m in
-                case result of 
-                  (Win p) -> (won p)
-                  (Tie) -> do tie
-                  x -> (playGame x)
+                if isValid gs m then
+                    let (result, i) = outcome gs m 
+                    in (case result of 
+                           (Win p) -> (won p)
+                           (Tie) -> tie
+                           x -> (trace (show (board x)) (playGame x)))
+                else do {
+                       putStrLn "Invalid move, try again.";
+                       (playGame gs);
+                     }
 }
 
 main :: IO ()
