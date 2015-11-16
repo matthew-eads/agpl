@@ -1,0 +1,178 @@
+
+==================== FINAL INTERFACE ====================
+2015-11-16 17:36:45.557829 UTC
+
+interface main@main:Quote 7102
+  interface hash: 57008afbc87c113f32205f0724c90045
+  ABI hash: 83f6c4435fa50694303ea01392395eb3
+  export-list hash: d0ec02e763329704e7da15c6df5027d3
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 1e433d0ebc6754f04665631962e57d78
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Quote.agpl
+  Quote.agpl_f
+  Quote.aparse
+module dependencies: Agpl_syntax CodeGen Parser
+package dependencies: array-0.5.1.0@array_E0sTtauuKsGDLZoT7lTbgZ
+                      base-4.8.1.0 binary-0.7.5.0@binar_IvYoLp9H6Xy3zEH13MmZwd
+                      bytestring-0.10.6.0@bytes_6elQVSg5cWdFrvRnfxTUrH
+                      containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN
+                      deepseq-1.4.1.1@deeps_LbCWUlehDDeLxurARKDH5o ghc-prim-0.4.0.0
+                      haskell-src-exts-1.16.0.1@haske_2mzIFu6itP1JzQr9p1IAHT
+                      haskell-src-meta-0.6.0.11@haske_DSABzgEPWpw1dF6z3BP4C8
+                      integer-gmp-1.0.0.0 loop-0.2.0@loop_804hhNK9LSY6FgJQJ2wKvV
+                      matrix-0.3.4.4@matri_AtloKBQ0sJh0fVbfwJdXPl
+                      mtl-2.2.1@mtl_KMpng31YRYc5JfMWFZ3FCU
+                      parsec-3.1.9@parse_8fSmqig53hOL2SEu1k9Tv0
+                      pretty-1.1.2.0@prett_7UQTOB05U7lIYPkFOVraeR
+                      primitive-0.6.1.0@primi_5Jnw7oEuYtM9dmKXelGXVb
+                      template-haskell-2.10.0.0 text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh
+                      transformers-0.4.2.0@trans_3eG64VdP2vzGjP6wJiCp5X
+                      vector-0.10.12.3@vecto_JrQt7SYKOQF2foH4Ugm8MQ
+orphans: base-4.8.1.0:GHC.Base base-4.8.1.0:GHC.Float
+         binary-0.7.5.0@binar_IvYoLp9H6Xy3zEH13MmZwd:Data.Binary.Generic
+         bytestring-0.10.6.0@bytes_6elQVSg5cWdFrvRnfxTUrH:Data.ByteString.Builder
+         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text
+         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text.Lazy
+         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text.Show
+         transformers-0.4.2.0@trans_3eG64VdP2vzGjP6wJiCp5X:Control.Monad.Trans.Error
+         vector-0.10.12.3@vecto_JrQt7SYKOQF2foH4Ugm8MQ:Data.Vector.Fusion.Stream
+family instance modules: base-4.8.1.0:Control.Applicative
+                         base-4.8.1.0:Data.Either base-4.8.1.0:Data.Functor.Identity
+                         base-4.8.1.0:Data.Monoid base-4.8.1.0:Data.Type.Equality
+                         base-4.8.1.0:Data.Void base-4.8.1.0:GHC.Exts
+                         base-4.8.1.0:GHC.Generics
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.IntMap.Base
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.IntSet.Base
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.Map.Base
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.Sequence
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.Set.Base
+                         haskell-src-exts-1.16.0.1@haske_2mzIFu6itP1JzQr9p1IAHT:Language.Haskell.Exts.Annotated.Syntax
+                         haskell-src-exts-1.16.0.1@haske_2mzIFu6itP1JzQr9p1IAHT:Language.Haskell.Exts.SrcLoc
+                         haskell-src-exts-1.16.0.1@haske_2mzIFu6itP1JzQr9p1IAHT:Language.Haskell.Exts.Syntax
+                         pretty-1.1.2.0@prett_7UQTOB05U7lIYPkFOVraeR:Text.PrettyPrint.HughesPJ
+                         primitive-0.6.1.0@primi_5Jnw7oEuYtM9dmKXelGXVb:Control.Monad.Primitive
+                         template-haskell-2.10.0.0:Language.Haskell.TH.Syntax
+                         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text
+                         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text.Lazy
+                         vector-0.10.12.3@vecto_JrQt7SYKOQF2foH4Ugm8MQ:Data.Vector
+import  -/  base-4.8.1.0:Debug.Trace 7cf679861c4b1d69175105437aae1212
+import  -/  base-4.8.1.0:GHC.Base 1db77db5dae73d8c424c85b09fbadb89
+import  -/  base-4.8.1.0:Prelude 518f762991bc287d78f21a73c974da1f
+import  -/  Agpl_syntax 42f44a9b7c06e56d8735a0773af521f2
+  exports: 7fcbc9434e651b8819f98adc2072f221
+import  -/  CodeGen 696bac01b02802a29d9c7da65c163f64
+  exports: d610f34a3750dc83fca41edff6e34f45
+  makeAGPLDecs d5552d1f4444c17d10edd6df0eb962a1
+import  -/  Parser f64c1c97d5ba8479c540137e486b34be
+  exports: 33d7dbc22874718da19af563b84c9525
+  parseGame a4804fa113c39566d16e1bc9903a73e5
+import  -/  template-haskell-2.10.0.0:Language.Haskell.TH cce81ae8a1596a0252bdcb72179c2937
+import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Quote 7a74e3dce88866c160fffb1503661817
+import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Syntax afcf64bad3773d231089a8ce432131ab
+fc642ec646917fc91d4efdd67e0671da
+  agpl :: Language.Haskell.TH.Quote.QuasiQuoter
+  {- Strictness: m,
+     Unfolding: (Language.Haskell.TH.Quote.QuasiQuoter
+                   (GHC.Err.undefined
+                      @ (GHC.Base.String
+                         -> Language.Haskell.TH.Syntax.Q Language.Haskell.TH.Syntax.Exp))
+                   (GHC.Err.undefined
+                      @ (GHC.Base.String
+                         -> Language.Haskell.TH.Syntax.Q Language.Haskell.TH.Syntax.Pat))
+                   (GHC.Err.undefined
+                      @ (GHC.Base.String
+                         -> Language.Haskell.TH.Syntax.Q Language.Haskell.TH.Syntax.Type))
+                   Quote.aparse) -}
+5680891ea3b3c3ebf9ae4b9d123206f4
+  agpl_f :: Language.Haskell.TH.Quote.QuasiQuoter
+  {- Strictness: m,
+     Unfolding: (Language.Haskell.TH.Quote.QuasiQuoter
+                   Quote.agpl_f4
+                     `cast`
+                   (<GHC.Base.String>_R
+                    ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                  <Language.Haskell.TH.Syntax.Exp>_N))
+                   Quote.agpl_f3
+                     `cast`
+                   (<GHC.Base.String>_R
+                    ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                  <Language.Haskell.TH.Syntax.Pat>_N))
+                   Quote.agpl_f2
+                     `cast`
+                   (<GHC.Base.String>_R
+                    ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                  <Language.Haskell.TH.Syntax.Type>_N))
+                   Quote.agpl_f1
+                     `cast`
+                   (<GHC.Base.String>_R
+                    ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                  <[Language.Haskell.TH.Syntax.Dec]>_N))) -}
+6900d8d6fe3e1dc9a15f2077de11884d
+  agpl_f1 ::
+    GHC.Base.String
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Unfolding: (Language.Haskell.TH.Quote.quoteFile1
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   Quote.aparse) -}
+9315d9e5953e6f2a9937bcb514a53388
+  agpl_f2 ::
+    GHC.Base.String
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m Language.Haskell.TH.Syntax.Type
+  {- Arity: 2,
+     Unfolding: (Language.Haskell.TH.Quote.quoteFile1
+                   @ Language.Haskell.TH.Syntax.Type
+                   (GHC.Err.undefined
+                      @ (GHC.Base.String
+                         -> Language.Haskell.TH.Syntax.Q
+                              Language.Haskell.TH.Syntax.Type))) -}
+349bce981bd42db68bbe3219b7b23fc7
+  agpl_f3 ::
+    GHC.Base.String
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m Language.Haskell.TH.Syntax.Pat
+  {- Arity: 2,
+     Unfolding: (Language.Haskell.TH.Quote.quoteFile1
+                   @ Language.Haskell.TH.Syntax.Pat
+                   (GHC.Err.undefined
+                      @ (GHC.Base.String
+                         -> Language.Haskell.TH.Syntax.Q
+                              Language.Haskell.TH.Syntax.Pat))) -}
+0e7ac2194af75469f61332e0100a2363
+  agpl_f4 ::
+    GHC.Base.String
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m Language.Haskell.TH.Syntax.Exp
+  {- Arity: 2,
+     Unfolding: (Language.Haskell.TH.Quote.quoteFile1
+                   @ Language.Haskell.TH.Syntax.Exp
+                   (GHC.Err.undefined
+                      @ (GHC.Base.String
+                         -> Language.Haskell.TH.Syntax.Q
+                              Language.Haskell.TH.Syntax.Exp))) -}
+effd569a6bfea3eef1ce807fac156988
+  aparse ::
+    GHC.Base.String
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 1, Strictness: <L,U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ s :: GHC.Base.String ->
+                 CodeGen.makeAGPLDecs (Parser.parseGame s)) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+

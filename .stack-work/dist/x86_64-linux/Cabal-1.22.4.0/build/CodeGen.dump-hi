@@ -1,0 +1,1591 @@
+
+==================== FINAL INTERFACE ====================
+2015-11-16 17:36:38.410741 UTC
+
+interface Agpl_AD5F5QRTR3rBTosVQjF5y6:CodeGen 7102
+  interface hash: a121933faa6d6ace8acfc0b152ea8dea
+  ABI hash: 6cff55d0ce95a6523b3a6088a6ab5e19
+  export-list hash: 1d461b5ade346d3137daaee595189333
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: b66090cf17f4cc751c68c8377d24c28f
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  CodeGen.boardT
+  CodeGen.customDataDec
+  CodeGen.doNothing
+  CodeGen.fromStringDec
+  CodeGen.gamestateDec
+  CodeGen.gsDec
+  CodeGen.handT
+  CodeGen.initStateDec
+  CodeGen.isValidDec
+  CodeGen.makeAGPLDecs
+  CodeGen.moveDec
+  CodeGen.nilD
+  CodeGen.outcomeDec
+  CodeGen.pieceT
+  CodeGen.playerDec
+  CodeGen.possmovesDec
+  CodeGen.testD
+  CodeGen.turnT
+  CodeGen.turnTypeDec
+module dependencies: Agpl_syntax Parser
+package dependencies: array-0.5.1.0@array_E0sTtauuKsGDLZoT7lTbgZ
+                      base-4.8.1.0 binary-0.7.5.0@binar_IvYoLp9H6Xy3zEH13MmZwd
+                      bytestring-0.10.6.0@bytes_6elQVSg5cWdFrvRnfxTUrH
+                      containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN
+                      deepseq-1.4.1.1@deeps_LbCWUlehDDeLxurARKDH5o ghc-prim-0.4.0.0
+                      haskell-src-exts-1.16.0.1@haske_2mzIFu6itP1JzQr9p1IAHT
+                      haskell-src-meta-0.6.0.11@haske_DSABzgEPWpw1dF6z3BP4C8
+                      integer-gmp-1.0.0.0 loop-0.2.0@loop_804hhNK9LSY6FgJQJ2wKvV
+                      matrix-0.3.4.4@matri_AtloKBQ0sJh0fVbfwJdXPl
+                      mtl-2.2.1@mtl_KMpng31YRYc5JfMWFZ3FCU
+                      parsec-3.1.9@parse_8fSmqig53hOL2SEu1k9Tv0
+                      pretty-1.1.2.0@prett_7UQTOB05U7lIYPkFOVraeR
+                      primitive-0.6.1.0@primi_5Jnw7oEuYtM9dmKXelGXVb
+                      template-haskell-2.10.0.0 text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh
+                      transformers-0.4.2.0@trans_3eG64VdP2vzGjP6wJiCp5X
+                      vector-0.10.12.3@vecto_JrQt7SYKOQF2foH4Ugm8MQ
+orphans: base-4.8.1.0:GHC.Base base-4.8.1.0:GHC.Float
+         binary-0.7.5.0@binar_IvYoLp9H6Xy3zEH13MmZwd:Data.Binary.Generic
+         bytestring-0.10.6.0@bytes_6elQVSg5cWdFrvRnfxTUrH:Data.ByteString.Builder
+         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text
+         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text.Lazy
+         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text.Show
+         transformers-0.4.2.0@trans_3eG64VdP2vzGjP6wJiCp5X:Control.Monad.Trans.Error
+         vector-0.10.12.3@vecto_JrQt7SYKOQF2foH4Ugm8MQ:Data.Vector.Fusion.Stream
+family instance modules: base-4.8.1.0:Control.Applicative
+                         base-4.8.1.0:Data.Either base-4.8.1.0:Data.Functor.Identity
+                         base-4.8.1.0:Data.Monoid base-4.8.1.0:Data.Type.Equality
+                         base-4.8.1.0:Data.Void base-4.8.1.0:GHC.Exts
+                         base-4.8.1.0:GHC.Generics
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.IntMap.Base
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.IntSet.Base
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.Map.Base
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.Sequence
+                         containers-0.5.6.2@conta_LKCPrTJwOTOLk4OU37YmeN:Data.Set.Base
+                         haskell-src-exts-1.16.0.1@haske_2mzIFu6itP1JzQr9p1IAHT:Language.Haskell.Exts.Annotated.Syntax
+                         haskell-src-exts-1.16.0.1@haske_2mzIFu6itP1JzQr9p1IAHT:Language.Haskell.Exts.SrcLoc
+                         haskell-src-exts-1.16.0.1@haske_2mzIFu6itP1JzQr9p1IAHT:Language.Haskell.Exts.Syntax
+                         pretty-1.1.2.0@prett_7UQTOB05U7lIYPkFOVraeR:Text.PrettyPrint.HughesPJ
+                         primitive-0.6.1.0@primi_5Jnw7oEuYtM9dmKXelGXVb:Control.Monad.Primitive
+                         template-haskell-2.10.0.0:Language.Haskell.TH.Syntax
+                         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text
+                         text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text.Lazy
+                         vector-0.10.12.3@vecto_JrQt7SYKOQF2foH4Ugm8MQ:Data.Vector
+import  -/  Agpl_syntax d6e12984bfa3d75cef1a4ce27085c3a1
+  exports: 4570ab8b7892687bdf3a2d2b487e6f4e
+  CustomDataType e88dc7ccee00d00df49166e7b3e895a8
+  CustomDataType 988b2f038c1802de86eaba7f67590fd4
+  FromString 1bc03b655af56bb96c0832c10ef877b8
+  FromString c8a7511e52251b65e26f772373179b5c
+  Game 554074c4efb59f070115b91c01733b9f
+  Game de3dd5caea81854764feffdebc53bdd8
+  GameState 1b2c366051b2fa08560609aefe230373
+  InitState e11ff6fcfc65c4585a0b9a65a9c40d94
+  IsValidFun 63559228ad82b23b79915a74d894e815
+  IsValidFun 7a0869e73c8fc2dd23ea15f03a085f11
+  Move 4a5f749ae10f829a170f29cb1b97aa50
+  Move 1e697550a1da15c0bf586972e3338ed7
+  OutcomeFun c25d8f9302c7b7e3fe23ea90a1d140fc
+  OutcomeFun 7609d58afa83d49a69a5d19ef091be09
+  PMNil 6afa5c74119a036106e6ec732642008e
+  Player 2098c7330631d83ce09cc3d840ca8852
+  Player 318e89567daccf1b9d1ad64bc03c049c
+  PossMovesFun 55fdef073fa40a29ffc8fa4000b88eec
+  PossMovesFun d2ed9e1f37923f7085dc353b56f7dfc0
+  board 293c87a642a88ab30489cd1c2c4a543e
+  boardInit a3b81673e880cc8d70656938ab02fd16
+  hand e3579385b06bdf3459a7a2c8c04cca4e
+  piece ff69e8416740c58c81f1d5bffeac5f87
+  turn 197429b02364bd2806e96ec349750317
+  turnInit 1e9639057c98edd3abd8acd13e01da69
+import  -/  Parser 6e38b1be72f6e2a7ea3699071f8afadd
+  exports: 0c9f93026536bc9450c675dec2c30861
+import  -/  base-4.8.1.0:Data.Foldable 2e5acb797cfda6b3b7fabd7052abe290
+import  -/  base-4.8.1.0:Debug.Trace 7cf679861c4b1d69175105437aae1212
+import  -/  base-4.8.1.0:GHC.Base 1db77db5dae73d8c424c85b09fbadb89
+import  -/  base-4.8.1.0:GHC.Show b8c65ca3124f92a166c9f05120382442
+import  -/  base-4.8.1.0:Prelude 518f762991bc287d78f21a73c974da1f
+import  -/  ghc-prim-0.4.0.0:GHC.Classes e1f4ff80f7b5262008a595d29986fb18
+import  -/  template-haskell-2.10.0.0:Language.Haskell.TH cce81ae8a1596a0252bdcb72179c2937
+import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Quote 7a74e3dce88866c160fffb1503661817
+import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Syntax afcf64bad3773d231089a8ce432131ab
+0c4c71837ca6d1f7c9efbdfd0883f558
+  boardT :: Language.Haskell.TH.Syntax.VarStrictType
+  {- Strictness: m,
+     Unfolding: ((CodeGen.boardT4,
+                  Language.Haskell.TH.Syntax.NotStrict,
+                  CodeGen.boardT1)) -}
+7d8e9ffe8a3ff9e4a836278c63ddcc3c
+  boardT1 :: Language.Haskell.TH.Syntax.Type
+  {- Strictness: m5,
+     Unfolding: (Language.Haskell.TH.Syntax.ConT CodeGen.boardT2) -}
+5d2fa93dd2118c1d858f454b7a74e441
+  boardT2 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.boardT3
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+9e565b4bd79b4d75f27a79937eb810c0
+  boardT3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Board"#) -}
+39449adc19bf3795dfa91125ef05e30c
+  boardT4 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.boardT5
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+6fc9af55fcd5ca2b7f4e79b9d37bebef
+  boardT5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "board"#) -}
+cb7a5e2d8616562e5522f923fa40ef3e
+  customDataDec ::
+    Agpl_syntax.CustomDataType
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2, HasNoCafRefs,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.customDataDec1
+                  `cast`
+                (<Agpl_syntax.CustomDataType>_R
+                 ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                               <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+aa2263bdb36c5f3dc5ce58ecd5e71838
+  customDataDec1 ::
+    Agpl_syntax.CustomDataType
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2, HasNoCafRefs,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (2, True, False)
+                (\ ds :: Agpl_syntax.CustomDataType
+                   @ (m :: * -> *)
+                   eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 case ds of wild { Agpl_syntax.CustomDataType d ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   (GHC.Types.:
+                      @ Language.Haskell.TH.Syntax.Dec
+                      d
+                      (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)) }) -}
+68d641cfaf12187f1df9f17c123b5d7a
+  doNothing :: Language.Haskell.TH.Syntax.Q ()
+  {- Arity: 1, HasNoCafRefs,
+     Strictness: <S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.doNothing1
+                  `cast`
+                (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0] <()>_N)) -}
+2091a2cf483ee3fc7e4bb243f53edab8
+  doNothing1 :: Language.Haskell.TH.Syntax.Quasi m => m ()
+  {- Arity: 1, HasNoCafRefs,
+     Strictness: <S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ (m :: * -> *) $dQuasi :: Language.Haskell.TH.Syntax.Quasi m ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m $dQuasi)
+                   @ ()
+                   GHC.Tuple.()) -}
+448ba141a2b397a105e05c667c4eb554
+  fromStringDec ::
+    Agpl_syntax.FromString
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.fromStringDec1
+                  `cast`
+                (<Agpl_syntax.FromString>_R
+                 ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                               <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+413553239fdcd982fd0475576964d7e0
+  fromStringDec1 ::
+    Agpl_syntax.FromString
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (2, True, False)
+                (\ ds :: Agpl_syntax.FromString
+                   @ (m :: * -> *)
+                   eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 case ds of wild { Agpl_syntax.FromString e ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   (GHC.Types.:
+                      @ Language.Haskell.TH.Syntax.Dec
+                      (Language.Haskell.TH.Syntax.ValD
+                         CodeGen.fromStringDec2
+                         (Language.Haskell.TH.Syntax.NormalB e)
+                         (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec))
+                      (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)) }) -}
+5b477841df8a7eb56e900f7125d89d98
+  fromStringDec2 :: Language.Haskell.TH.Syntax.Pat
+  {- Strictness: m2,
+     Unfolding: (Language.Haskell.TH.Syntax.VarP
+                   CodeGen.fromStringDec3) -}
+b6eddd79eeb297c188b62fc1d05056ab
+  fromStringDec3 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.fromStringDec4
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+34b93cb3a0f9dbfd8c7bd016eddf0659
+  fromStringDec4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "fromString"#) -}
+4e6b004f5fd7dc8d35e158ec427668cb
+  gamestateDec ::
+    Agpl_syntax.GameState
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 1, Strictness: <L,U(1*U,1*U,1*U,1*U,A)>,
+     Unfolding: (\ gs :: Agpl_syntax.GameState ->
+                 let {
+                   x :: [Language.Haskell.TH.Syntax.Dec]
+                   = case gs of wild { Agpl_syntax.GameState ds1 ds2 ds3 ds4 ds5 ->
+                     let {
+                       acc :: [Language.Haskell.TH.Syntax.Dec]
+                       = let {
+                           acc1 :: [Language.Haskell.TH.Syntax.Dec]
+                           = case Language.Haskell.TH.Syntax.$fEqDec_$c==
+                                    ds2
+                                    CodeGen.nilD of wild1 {
+                               GHC.Types.False
+                               -> GHC.Types.:
+                                    @ Language.Haskell.TH.Syntax.Dec
+                                    ds2
+                                    (case Language.Haskell.TH.Syntax.$fEqDec_$c==
+                                            ds1
+                                            CodeGen.nilD of wild2 {
+                                       GHC.Types.False
+                                       -> GHC.Types.:
+                                            @ Language.Haskell.TH.Syntax.Dec
+                                            ds1
+                                            (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)
+                                       GHC.Types.True
+                                       -> GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec })
+                               GHC.Types.True
+                               -> case Language.Haskell.TH.Syntax.$fEqDec_$c==
+                                         ds1
+                                         CodeGen.nilD of wild2 {
+                                    GHC.Types.False
+                                    -> GHC.Types.:
+                                         @ Language.Haskell.TH.Syntax.Dec
+                                         ds1
+                                         (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)
+                                    GHC.Types.True
+                                    -> GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec } }
+                         } in
+                         case Language.Haskell.TH.Syntax.$fEqDec_$c==
+                                ds3
+                                CodeGen.nilD of wild1 {
+                           GHC.Types.False
+                           -> GHC.Types.: @ Language.Haskell.TH.Syntax.Dec ds3 acc1
+                           GHC.Types.True -> acc1 }
+                     } in
+                     case Language.Haskell.TH.Syntax.$fEqDec_$c==
+                            ds4
+                            CodeGen.nilD of wild1 {
+                       GHC.Types.False
+                       -> GHC.Types.: @ Language.Haskell.TH.Syntax.Dec ds4 acc
+                       GHC.Types.True -> acc } }
+                 } in
+                 (\ @ (m :: * -> *) $dQuasi :: Language.Haskell.TH.Syntax.Quasi m ->
+                  GHC.Base.return
+                    @ m
+                    (Language.Haskell.TH.Syntax.$p1Quasi @ m $dQuasi)
+                    @ [Language.Haskell.TH.Syntax.Dec]
+                    x)
+                   `cast`
+                 (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                           <[Language.Haskell.TH.Syntax.Dec]>_N))) -}
+7123107b842805dd2496f87e44073e7e
+  gsDec ::
+    [Language.Haskell.TH.Syntax.VarStrictType]
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <L,U><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.gsDec1
+                  `cast`
+                (<[Language.Haskell.TH.Syntax.VarStrictType]>_R
+                 ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                               <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+60e87f290fdd851288fa334b94e1164b
+  gsDec1 ::
+    [Language.Haskell.TH.Syntax.VarStrictType]
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <L,U><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (2, True, False)
+                (\ types :: [Language.Haskell.TH.Syntax.VarStrictType]
+                   @ (m :: * -> *)
+                   eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   (GHC.Types.:
+                      @ Language.Haskell.TH.Syntax.Dec
+                      (Language.Haskell.TH.Syntax.DataD
+                         (GHC.Types.[] @ Language.Haskell.TH.Syntax.Pred)
+                         CodeGen.gsDec21
+                         (GHC.Types.[] @ Language.Haskell.TH.Syntax.TyVarBndr)
+                         (GHC.Types.:
+                            @ Language.Haskell.TH.Syntax.Con
+                            (Language.Haskell.TH.Syntax.RecC CodeGen.gsDec21 types)
+                            CodeGen.gsDec8)
+                         CodeGen.gsDec2)
+                      (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec))) -}
+0557c49bade33dca17a82cada3dbf63d
+  gsDec10 :: Language.Haskell.TH.Syntax.Con
+  {- Strictness: m1,
+     Unfolding: (Language.Haskell.TH.Syntax.NormalC
+                   CodeGen.gsDec11
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.StrictType)) -}
+dbbd0c112773ffbbaccc291693cde6e0
+  gsDec11 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.gsDec12
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+94218dcb9050fb887f17dd01df78b4ad
+  gsDec12 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Tie"#) -}
+cc8b9cf042a1d80f244589750fae34da
+  gsDec13 :: Language.Haskell.TH.Syntax.Con
+  {- Strictness: m1,
+     Unfolding: (Language.Haskell.TH.Syntax.NormalC
+                   CodeGen.gsDec19
+                   CodeGen.gsDec14) -}
+ca211843483e776ecf4f8dee5c194259
+  gsDec14 :: [Language.Haskell.TH.Syntax.StrictType]
+  {- Strictness: m2,
+     Unfolding: (GHC.Types.:
+                   @ Language.Haskell.TH.Syntax.StrictType
+                   CodeGen.gsDec15
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.StrictType)) -}
+afad3d784cb19f20a4159515e95602ac
+  gsDec15 ::
+    (Language.Haskell.TH.Syntax.Strict,
+     Language.Haskell.TH.Syntax.Type)
+  {- Strictness: m,
+     Unfolding: ((Language.Haskell.TH.Syntax.NotStrict,
+                  CodeGen.gsDec16)) -}
+e82d4f6e4cb921a2ec5d33fbf271d0e3
+  gsDec16 :: Language.Haskell.TH.Syntax.Type
+  {- Strictness: m5,
+     Unfolding: (Language.Haskell.TH.Syntax.ConT CodeGen.gsDec17) -}
+8363cc49bec7e9d141ecf3b4e23bf69d
+  gsDec17 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.gsDec18
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+283e7ada6e1088cc291320bbbfefaa12
+  gsDec18 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Player"#) -}
+2c80be10300ef231c8033fba985aef8a
+  gsDec19 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.gsDec20
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+fce6ff2751ab01b2d6a6f5b41dbb6d8b
+  gsDec2 :: [Language.Haskell.TH.Syntax.Name]
+  {- Strictness: m2,
+     Unfolding: (GHC.Types.:
+                   @ Language.Haskell.TH.Syntax.Name
+                   CodeGen.gsDec6
+                   CodeGen.gsDec3) -}
+a7ef8d071f25423c4f002b3e37d94ccc
+  gsDec20 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Win"#) -}
+95ca4f334ab95ff2cbc2a1f77b8c59ed
+  gsDec21 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.gsDec22
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+83300809065347dd54d09d1ff17a5b7d
+  gsDec22 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "GameState"#) -}
+084aef237af33051c6412483dd499b58
+  gsDec3 :: [Language.Haskell.TH.Syntax.Name]
+  {- Strictness: m2,
+     Unfolding: (GHC.Types.:
+                   @ Language.Haskell.TH.Syntax.Name
+                   CodeGen.gsDec4
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.Name)) -}
+190747b81e05d5184600c9365a0cbaee
+  gsDec4 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.gsDec5
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+8083af4b40c000f19200673ec3e340d4
+  gsDec5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Eq"#) -}
+f121b9ed5f0afebe69776359f857357a
+  gsDec6 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.gsDec7
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+9f69f433b184f88fa1c17f908c4130d5
+  gsDec7 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Show"#) -}
+641dce68fb3807ee3180bcf69e19ff31
+  gsDec8 :: [Language.Haskell.TH.Syntax.Con]
+  {- Strictness: m2,
+     Unfolding: (GHC.Types.:
+                   @ Language.Haskell.TH.Syntax.Con
+                   CodeGen.gsDec13
+                   CodeGen.gsDec9) -}
+269f30ebc607f721dfd950f11faf558e
+  gsDec9 :: [Language.Haskell.TH.Syntax.Con]
+  {- Strictness: m2,
+     Unfolding: (GHC.Types.:
+                   @ Language.Haskell.TH.Syntax.Con
+                   CodeGen.gsDec10
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.Con)) -}
+2539c1a5981f58ef3394b382f1f8bccc
+  handT :: Language.Haskell.TH.Syntax.VarStrictType
+  {- Strictness: m,
+     Unfolding: ((CodeGen.handT4,
+                  Language.Haskell.TH.Syntax.NotStrict,
+                  CodeGen.handT1)) -}
+d051d851e6f3086e47abb1ecda6db541
+  handT1 :: Language.Haskell.TH.Syntax.Type
+  {- Strictness: m5,
+     Unfolding: (Language.Haskell.TH.Syntax.ConT CodeGen.handT2) -}
+73e63ababad987c985c06b26e02ea0b4
+  handT2 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.handT3
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+698a3d0abd2714fe4868199f2d1a4875
+  handT3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Hand"#) -}
+9855dd296e5930e9ddceeee147b2d4d1
+  handT4 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.handT5
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+59be90f0eef324ee045a472568ac6cae
+  handT5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "hand"#) -}
+0676f07a5c7f18e4506254ce1f3cce48
+  initStateDec ::
+    Agpl_syntax.InitState
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <L,U(1*U,1*U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.initStateDec1
+                  `cast`
+                (<Agpl_syntax.InitState>_R
+                 ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                               <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+28688036c9af732bd2d7c7ceafe5a3aa
+  initStateDec1 ::
+    Agpl_syntax.InitState
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <L,U(1*U,1*U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: (\ is :: Agpl_syntax.InitState
+                   @ (m :: * -> *)
+                   eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   (GHC.Types.:
+                      @ Language.Haskell.TH.Syntax.Dec
+                      (Language.Haskell.TH.Syntax.ValD
+                         CodeGen.initStateDec5
+                         (Language.Haskell.TH.Syntax.NormalB
+                            (case is of wild { Agpl_syntax.InitState ds1 ds2 -> ds1 }))
+                         (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec))
+                      (GHC.Types.:
+                         @ Language.Haskell.TH.Syntax.Dec
+                         (Language.Haskell.TH.Syntax.ValD
+                            CodeGen.initStateDec2
+                            (Language.Haskell.TH.Syntax.NormalB
+                               (case is of wild { Agpl_syntax.InitState ds1 ds2 -> ds2 }))
+                            (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec))
+                         (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)))) -}
+8f45db99fd82958d3ec24270f999c3b1
+  initStateDec2 :: Language.Haskell.TH.Syntax.Pat
+  {- Strictness: m2,
+     Unfolding: (Language.Haskell.TH.Syntax.VarP
+                   CodeGen.initStateDec3) -}
+52dccfdf383537f19e6addc17fbc3ba8
+  initStateDec3 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.initStateDec4
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+9bdc062234d0ea6ab4d2972181668a27
+  initStateDec4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "turn"#) -}
+4273397c74e3501720fad022fcf8138f
+  initStateDec5 :: Language.Haskell.TH.Syntax.Pat
+  {- Strictness: m2,
+     Unfolding: (Language.Haskell.TH.Syntax.VarP
+                   CodeGen.initStateDec6) -}
+a79719a0bd76959343241d6a9796d05c
+  initStateDec6 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.initStateDec7
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+41b051d4d4fdfa3109026865665cb08e
+  initStateDec7 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "boardInitF"#) -}
+6a61ba38c8bc552b08b9e0948f080b63
+  isValidDec ::
+    Agpl_syntax.IsValidFun
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.isValidDec1
+                  `cast`
+                (<Agpl_syntax.IsValidFun>_R
+                 ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                               <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+0ea3bdc23300eaad47074335033bf4ba
+  isValidDec1 ::
+    Agpl_syntax.IsValidFun
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (2, True, False)
+                (\ ds :: Agpl_syntax.IsValidFun
+                   @ (m :: * -> *)
+                   eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 case ds of wild { Agpl_syntax.IsValidFun e ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   (GHC.Types.:
+                      @ Language.Haskell.TH.Syntax.Dec
+                      (Language.Haskell.TH.Syntax.ValD
+                         CodeGen.isValidDec2
+                         (Language.Haskell.TH.Syntax.NormalB e)
+                         (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec))
+                      (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)) }) -}
+7e215dab6eaf82fa6949b6f2f77fe108
+  isValidDec2 :: Language.Haskell.TH.Syntax.Pat
+  {- Strictness: m2,
+     Unfolding: (Language.Haskell.TH.Syntax.VarP CodeGen.isValidDec3) -}
+abca8ab6601521f7bd7acc4df9c70b92
+  isValidDec3 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.isValidDec4
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+c62f42789b8311054d6433630eeb9e9c
+  isValidDec4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "isValid"#) -}
+1c2b8d0684e91188f71ab61be0e16a71
+  makeAGPLDecs ::
+    Agpl_syntax.Game
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 1, Strictness: <S,1*U> -}
+8a414300461a33fb00be32bdb57cdecd
+  moveDec ::
+    Agpl_syntax.Move
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2, HasNoCafRefs,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.moveDec1
+                  `cast`
+                (<Agpl_syntax.Move>_R
+                 ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                               <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+20e074e4b09ae678aac35f0ea8f9d4ff
+  moveDec1 ::
+    Agpl_syntax.Move
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2, HasNoCafRefs,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (2, True, False)
+                (\ ds :: Agpl_syntax.Move
+                   @ (m :: * -> *)
+                   eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 case ds of wild { Agpl_syntax.Move d ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   (GHC.Types.:
+                      @ Language.Haskell.TH.Syntax.Dec
+                      d
+                      (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)) }) -}
+546f3877cc8b35600fd1fa826aa080d1
+  nilD :: Language.Haskell.TH.Syntax.Dec
+  {- Strictness: m3,
+     Unfolding: (Language.Haskell.TH.Syntax.DataD
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.Pred)
+                   CodeGen.nilD3
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.TyVarBndr)
+                   CodeGen.nilD1
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.Name)) -}
+04af3a1348da2b49f6caf1f300fc966c
+  nilD1 :: [Language.Haskell.TH.Syntax.Con]
+  {- Strictness: m2,
+     Unfolding: (GHC.Types.:
+                   @ Language.Haskell.TH.Syntax.Con
+                   CodeGen.nilD2
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.Con)) -}
+492f5310b62b68ea3c6d93badda56566
+  nilD2 :: Language.Haskell.TH.Syntax.Con
+  {- Strictness: m1,
+     Unfolding: (Language.Haskell.TH.Syntax.NormalC
+                   CodeGen.nilD3
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.StrictType)) -}
+250d5a6db3bfb72328680f51545860dc
+  nilD3 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.nilD4
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+20149123b32c06e2ef8133f02770511b
+  nilD4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "NULL"#) -}
+91a4d2a87791447f8d723ac038689da5
+  outcomeDec ::
+    Agpl_syntax.OutcomeFun
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.outcomeDec1
+                  `cast`
+                (<Agpl_syntax.OutcomeFun>_R
+                 ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                               <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+bb93bfe1dbd8dfdf44b2151105807fb6
+  outcomeDec1 ::
+    Agpl_syntax.OutcomeFun
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (2, True, False)
+                (\ ds :: Agpl_syntax.OutcomeFun
+                   @ (m :: * -> *)
+                   eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 case ds of wild { Agpl_syntax.OutcomeFun e ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   (GHC.Types.:
+                      @ Language.Haskell.TH.Syntax.Dec
+                      (Language.Haskell.TH.Syntax.ValD
+                         CodeGen.outcomeDec2
+                         (Language.Haskell.TH.Syntax.NormalB e)
+                         (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec))
+                      (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)) }) -}
+90d692c6f84b7690dd0f95c7941f1386
+  outcomeDec2 :: Language.Haskell.TH.Syntax.Pat
+  {- Strictness: m2,
+     Unfolding: (Language.Haskell.TH.Syntax.VarP CodeGen.outcomeDec3) -}
+27b458482cad079bc5ab01211fbef94d
+  outcomeDec3 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.outcomeDec4
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+665acf112126aeffa394303c3582742e
+  outcomeDec4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "outcome"#) -}
+66e81505a195117d1c16bcdb359a7e34
+  pieceT :: Language.Haskell.TH.Syntax.VarStrictType
+  {- Strictness: m,
+     Unfolding: ((CodeGen.pieceT4,
+                  Language.Haskell.TH.Syntax.NotStrict,
+                  CodeGen.pieceT1)) -}
+ee64845747a10cdf1d72150e4eae0b30
+  pieceT1 :: Language.Haskell.TH.Syntax.Type
+  {- Strictness: m5,
+     Unfolding: (Language.Haskell.TH.Syntax.ConT CodeGen.pieceT2) -}
+6ee3a4a20916847a94e9a679f1649ae4
+  pieceT2 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.pieceT3
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+38f6613a41f6d6042e2e6f5537db0a0b
+  pieceT3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Piece"#) -}
+9dd5d41d75ef9f5854609cffc7d1faa3
+  pieceT4 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.pieceT5
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+7c128f968dd2b87ddd595b3b942766d1
+  pieceT5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "piece"#) -}
+e9d0be891c34e5d305688ed45099c83d
+  playerDec ::
+    Agpl_syntax.Player
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2, HasNoCafRefs,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.playerDec1
+                  `cast`
+                (<Agpl_syntax.Player>_R
+                 ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                               <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+fcf88f49ecf08f7df764d20ac29952a6
+  playerDec1 ::
+    Agpl_syntax.Player
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2, HasNoCafRefs,
+     Strictness: <S,1*U(U)><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (2, True, False)
+                (\ ds :: Agpl_syntax.Player
+                   @ (m :: * -> *)
+                   eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 case ds of wild { Agpl_syntax.Player d ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   (GHC.Types.:
+                      @ Language.Haskell.TH.Syntax.Dec
+                      d
+                      (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)) }) -}
+c7ed6d3d5b617c9cce15c2dec5915387
+  possmovesDec ::
+    Agpl_syntax.PossMovesFun
+    -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <S,1*U><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.possmovesDec1
+                  `cast`
+                (<Agpl_syntax.PossMovesFun>_R
+                 ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                               <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+c555362166102b87ecc6e01342f8b53e
+  possmovesDec1 ::
+    Agpl_syntax.PossMovesFun
+    -> forall (m :: * -> *).
+       Language.Haskell.TH.Syntax.Quasi m =>
+       m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 2,
+     Strictness: <S,1*U><S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: (\ ds :: Agpl_syntax.PossMovesFun
+                   @ (m :: * -> *)
+                   eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 case ds of wild {
+                   Agpl_syntax.PossMovesFun e
+                   -> GHC.Base.return
+                        @ m
+                        (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                        @ [Language.Haskell.TH.Syntax.Dec]
+                        (GHC.Types.:
+                           @ Language.Haskell.TH.Syntax.Dec
+                           (Language.Haskell.TH.Syntax.ValD
+                              CodeGen.possmovesDec2
+                              (Language.Haskell.TH.Syntax.NormalB e)
+                              (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec))
+                           (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec))
+                   Agpl_syntax.PMNil
+                   -> GHC.Base.return
+                        @ m
+                        (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                        @ [Language.Haskell.TH.Syntax.Dec]
+                        (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec) }) -}
+ed3dc8dd2c374adec8d3c42045a43597
+  possmovesDec2 :: Language.Haskell.TH.Syntax.Pat
+  {- Strictness: m2,
+     Unfolding: (Language.Haskell.TH.Syntax.VarP
+                   CodeGen.possmovesDec3) -}
+82548433a04e9126a59d5b4ef2c622f4
+  possmovesDec3 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.possmovesDec4
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+48f95ae0bc5d87c882162dd4760c38c4
+  possmovesDec4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "possMoves"#) -}
+b6d03372d045902593d3055da80d4df8
+  testD ::
+    Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 1,
+     Strictness: <S(S(LC(C(S))LLL)LLLLLLLLLLLLLLLL),U(U(U(U(U,U),U,U,U,U),U,U,U,U),U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.testD1
+                  `cast`
+                (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                          <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+9754f557ff15744279291cf1e0795e76
+  testD1 ::
+    Language.Haskell.TH.Syntax.Quasi m =>
+    m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 1,
+     Strictness: <S(S(LC(C(S))LLL)LLLLLLLLLLLLLLLL),U(U(U(U(U,U),U,U,U,U),U,U,U,U),U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U)>,
+     Unfolding: (\ @ (m :: * -> *)
+                   $dQuasi :: Language.Haskell.TH.Syntax.Quasi m ->
+                 let {
+                   lvl11 :: GHC.Base.Monad m
+                   = Language.Haskell.TH.Syntax.$p1Quasi @ m $dQuasi
+                 } in
+                 let {
+                   lvl12 :: m Language.Haskell.TH.Syntax.Name
+                   = Language.Haskell.TH.Syntax.qNewName @ m $dQuasi CodeGen.testD16
+                 } in
+                 let {
+                   lvl13 :: m Language.Haskell.TH.Syntax.Name
+                   = Language.Haskell.TH.Syntax.qNewName @ m $dQuasi CodeGen.testD15
+                 } in
+                 let {
+                   lvl14 :: m Language.Haskell.TH.Syntax.Name
+                   = Language.Haskell.TH.Syntax.qNewName @ m $dQuasi CodeGen.testD14
+                 } in
+                 GHC.Base.>>=
+                   @ m
+                   lvl11
+                   @ Language.Haskell.TH.Syntax.Name
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   lvl14
+                   (\ x :: Language.Haskell.TH.Syntax.Name ->
+                    GHC.Base.>>=
+                      @ m
+                      lvl11
+                      @ Language.Haskell.TH.Syntax.Name
+                      @ [Language.Haskell.TH.Syntax.Dec]
+                      lvl14
+                      (\ x1 :: Language.Haskell.TH.Syntax.Name ->
+                       GHC.Base.>>=
+                         @ m
+                         lvl11
+                         @ Language.Haskell.TH.Syntax.Name
+                         @ [Language.Haskell.TH.Syntax.Dec]
+                         lvl13
+                         (\ x2 :: Language.Haskell.TH.Syntax.Name ->
+                          let {
+                            a2 :: forall (m1 :: * -> *).
+                                  Language.Haskell.TH.Syntax.Quasi m1 =>
+                                  m1 Language.Haskell.TH.Syntax.VarStrictType
+                              {- Arity: 1 -}
+                            = Language.Haskell.TH.Lib.varStrictType1
+                                x2
+                                CodeGen.testD10
+                                  `cast`
+                                (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                          <Language.Haskell.TH.Syntax.StrictType>_N))
+                          } in
+                          GHC.Base.>>=
+                            @ m
+                            lvl11
+                            @ Language.Haskell.TH.Syntax.Name
+                            @ [Language.Haskell.TH.Syntax.Dec]
+                            lvl12
+                            (\ x3 :: Language.Haskell.TH.Syntax.Name ->
+                             Language.Haskell.TH.Syntax.sequenceQ2
+                               @ Language.Haskell.TH.Syntax.Dec
+                               (GHC.Types.:
+                                  @ Language.Haskell.TH.Lib.DecQ
+                                  (Language.Haskell.TH.Lib.dataD1
+                                     CodeGen.testD9
+                                       `cast`
+                                     (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                               <[Language.Haskell.TH.Syntax.Pred]>_N))
+                                     x
+                                     (GHC.Types.[] @ Language.Haskell.TH.Syntax.TyVarBndr)
+                                     (GHC.Types.:
+                                        @ Language.Haskell.TH.Lib.ConQ
+                                        (Language.Haskell.TH.Lib.recC1
+                                           x1
+                                           (GHC.Types.:
+                                              @ Language.Haskell.TH.Lib.VarStrictTypeQ
+                                              a2
+                                                `cast`
+                                              (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                                        <Language.Haskell.TH.Syntax.VarStrictType>_N))
+                                              (GHC.Types.:
+                                                 @ Language.Haskell.TH.Lib.VarStrictTypeQ
+                                                 (Language.Haskell.TH.Lib.varStrictType1
+                                                    x3
+                                                    CodeGen.testD2
+                                                      `cast`
+                                                    (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                                              <Language.Haskell.TH.Syntax.StrictType>_N)))
+                                                   `cast`
+                                                 (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                                           <Language.Haskell.TH.Syntax.VarStrictType>_N))
+                                                 (GHC.Types.[]
+                                                    @ Language.Haskell.TH.Lib.VarStrictTypeQ))))
+                                          `cast`
+                                        (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                                  <Language.Haskell.TH.Syntax.Con>_N))
+                                        (GHC.Types.[] @ Language.Haskell.TH.Lib.ConQ))
+                                     (GHC.Types.[] @ Language.Haskell.TH.Syntax.Name))
+                                    `cast`
+                                  (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                                            <Language.Haskell.TH.Syntax.Dec>_N))
+                                  (GHC.Types.[] @ Language.Haskell.TH.Lib.DecQ))
+                               @ m
+                               $dQuasi))))) -}
+a9d1218d4ffbe9c6d89c48c7bfd43f1b
+  testD10 ::
+    Language.Haskell.TH.Syntax.Quasi m =>
+    m Language.Haskell.TH.Syntax.StrictType
+  {- Arity: 1,
+     Unfolding: (Language.Haskell.TH.Lib.strictType1
+                   Language.Haskell.TH.Lib.notStrict1
+                     `cast`
+                   (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                             <Language.Haskell.TH.Syntax.Strict>_N))
+                   CodeGen.testD11
+                     `cast`
+                   (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                             <Language.Haskell.TH.Syntax.Type>_N))) -}
+61a3ee3fb8193ffc2bc2a43aca552362
+  testD11 ::
+    Language.Haskell.TH.Syntax.Quasi m =>
+    m Language.Haskell.TH.Syntax.Type
+  {- Arity: 1,
+     Strictness: <S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ (m :: * -> *) eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ Language.Haskell.TH.Syntax.Type
+                   (Language.Haskell.TH.Syntax.ConT CodeGen.testD12)) -}
+8c3fcaf8a03f2c1bafa08f5377b45dea
+  testD12 :: Language.Haskell.TH.Syntax.Name
+  {- Strictness: m,
+     Unfolding: (Language.Haskell.TH.Syntax.Name
+                   CodeGen.testD13
+                     `cast`
+                   (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                   CodeGen.testD5) -}
+6e028fb4cb44081cc2d5c1182686107e
+  testD13 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Int"#) -}
+c4d66f38ce2001eef25bdf3d230f5a22
+  testD14 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "A"#) -}
+41fec6706243b4a9575571f89f6115fc
+  testD15 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "b"#) -}
+6a3da9e4eef36826e18ac975923f7374
+  testD16 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "c"#) -}
+a49d50317b716ee27da6bf5e718edd24
+  testD2 ::
+    Language.Haskell.TH.Syntax.Quasi m =>
+    m Language.Haskell.TH.Syntax.StrictType
+  {- Arity: 1,
+     Unfolding: (Language.Haskell.TH.Lib.strictType1
+                   Language.Haskell.TH.Lib.notStrict1
+                     `cast`
+                   (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                             <Language.Haskell.TH.Syntax.Strict>_N))
+                   CodeGen.testD3
+                     `cast`
+                   (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                             <Language.Haskell.TH.Syntax.Type>_N))) -}
+290d25bd907f762ddd6ee6ee22a52cc9
+  testD3 ::
+    Language.Haskell.TH.Syntax.Quasi m =>
+    m Language.Haskell.TH.Syntax.Type
+  {- Arity: 1,
+     Strictness: <S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ (m :: * -> *) eta :: Language.Haskell.TH.Syntax.Quasi m ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m eta)
+                   @ Language.Haskell.TH.Syntax.Type
+                   (Language.Haskell.TH.Syntax.ConT CodeGen.testD4)) -}
+3b551a11489b5cd6192d058e4b1d565e
+  testD4 :: Language.Haskell.TH.Syntax.Name
+  {- Strictness: m,
+     Unfolding: (Language.Haskell.TH.Syntax.Name
+                   CodeGen.testD8
+                     `cast`
+                   (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                   CodeGen.testD5) -}
+1c4cd22bf3a24ee96fe8579c0ca10cb5
+  testD5 :: Language.Haskell.TH.Syntax.NameFlavour
+  {- Strictness: m5,
+     Unfolding: (Language.Haskell.TH.Syntax.NameG
+                   Language.Haskell.TH.Syntax.TcClsName
+                   CodeGen.testD7
+                     `cast`
+                   (Sym (Language.Haskell.TH.Syntax.NTCo:PkgName[0]))
+                   CodeGen.testD6
+                     `cast`
+                   (Sym (Language.Haskell.TH.Syntax.NTCo:ModName[0]))) -}
+381a66dbc81953a0a91ebea038d5fd3c
+  testD6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "GHC.Types"#) -}
+6d9765cf6cdda7e9c8f86cd72433be31
+  testD7 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "ghc-prim"#) -}
+1d6716be9631107065d824ccb9d306c6
+  testD8 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Char"#) -}
+be78bba7a6dd07ea3359edc798e35562
+  testD9 ::
+    Language.Haskell.TH.Syntax.Quasi m =>
+    m [Language.Haskell.TH.Syntax.Pred]
+  {- Arity: 1, HasNoCafRefs,
+     Strictness: <S(S(SLLLL)LLLLLLLLLLLLLLLL),U(U(U(U(U,U),U,U,U,U),U,U,U,U),U,U,U,U,U,U,U,U,U,U,U,U,U,U,U,U)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ (m :: * -> *) eta1 :: Language.Haskell.TH.Syntax.Quasi m ->
+                 Language.Haskell.TH.Lib.cxt2
+                   (GHC.Types.[] @ Language.Haskell.TH.Lib.TypeQ)
+                   @ m
+                   eta1) -}
+af0eb1a7f80f018fcdb5a1f1de660ab9
+  turnT :: Language.Haskell.TH.Syntax.VarStrictType
+  {- Strictness: m,
+     Unfolding: ((CodeGen.turnT4,
+                  Language.Haskell.TH.Syntax.NotStrict,
+                  CodeGen.turnT1)) -}
+dc73ef5aa96bfc002fb077a4c236e8a5
+  turnT1 :: Language.Haskell.TH.Syntax.Type
+  {- Strictness: m5,
+     Unfolding: (Language.Haskell.TH.Syntax.ConT CodeGen.turnT2) -}
+3ffa8cacaf8058ec15a5abc60b0c4417
+  turnT2 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.turnT3
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+8200a8cc54987e50778ab9b7e02251f6
+  turnT3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "Turn"#) -}
+848f35dbe90544c37b5c514f9f491303
+  turnT4 :: Language.Haskell.TH.Syntax.Name
+  {- Unfolding: (case GHC.List.reverse1
+                        @ GHC.Types.Char
+                        CodeGen.turnT5
+                        (GHC.Types.[] @ GHC.Types.Char) of wild {
+                   []
+                   -> Language.Haskell.TH.Syntax.Name
+                        (GHC.Types.[] @ GHC.Types.Char)
+                          `cast`
+                        (Sym (Language.Haskell.TH.Syntax.NTCo:OccName[0]))
+                        Language.Haskell.TH.Syntax.NameS
+                   : ds rev
+                   -> case ds of wild1 { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 }
+                        '.'
+                        -> case Language.Haskell.TH.Syntax.mkName_$s$wsplit1
+                                  wild1
+                                  (GHC.Types.[] @ GHC.Types.Char)
+                                  rev of ww { (#,#) ww1 ww2 ->
+                           Language.Haskell.TH.Syntax.Name ww1 ww2 } } } }) -}
+f7222e298618c4319582f7c3a673fba4
+  turnT5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "currentTurn"#) -}
+02b6778077d493c7d001977d6ad0c0c2
+  turnTypeDec ::
+    Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 1,
+     Strictness: <S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (0, True, True)
+                CodeGen.turnTypeDec1
+                  `cast`
+                (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
+                          <[Language.Haskell.TH.Syntax.Dec]>_N)) -}
+f87e0bcb905f811475f75b8083341e10
+  turnTypeDec1 ::
+    Language.Haskell.TH.Syntax.Quasi m =>
+    m [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 1,
+     Strictness: <S(S(LLLC(S)L)LLLLLLLLLLLLLLLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A,A,A,A,A,A,A,A,A,A,A,A,A,A)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ (m :: * -> *) $dQuasi :: Language.Haskell.TH.Syntax.Quasi m ->
+                 GHC.Base.return
+                   @ m
+                   (Language.Haskell.TH.Syntax.$p1Quasi @ m $dQuasi)
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   CodeGen.turnTypeDec2) -}
+da221e784d0c91d42d5255c9a3bf6af7
+  turnTypeDec2 :: [Language.Haskell.TH.Syntax.Dec]
+  {- Strictness: m2,
+     Unfolding: (GHC.Types.:
+                   @ Language.Haskell.TH.Syntax.Dec
+                   CodeGen.turnTypeDec3
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)) -}
+cd0ca910f40b37c9cff39acdab6a5a23
+  turnTypeDec3 :: Language.Haskell.TH.Syntax.Dec
+  {- Strictness: m5,
+     Unfolding: (Language.Haskell.TH.Syntax.TySynD
+                   CodeGen.turnT2
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.TyVarBndr)
+                   CodeGen.gsDec16) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+
