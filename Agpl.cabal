@@ -22,7 +22,7 @@ library
   exposed-modules:     Parser, Agpl_syntax, Quote, CodeGen
   --other-modules:	Agpl_tests      
   -- other-extensions:    
-  build-depends:       base >=4.6, parsec >=3.1, template-haskell >=2.8, haskell-src-meta >=0.6 , transformers >=0.4 , array, matrix, vector
+  build-depends:       base >=4.6, parsec >=3.1, template-haskell >=2.8, haskell-src-meta >=0.6 , transformers >=0.4 , array, matrix, vector, split
   -- hs-source-dirs:      
   default-language:    Haskell2010
 
@@ -31,7 +31,7 @@ executable main
   default-extensions: TemplateHaskell, QuasiQuotes
   main-is:	Main.hs
   build-depends:       base >=4.6, parsec >=3.1, template-haskell >=2.8, haskell-src-meta >=0.6, transformers >=0.4, array, matrix, vector, split
- 
+
   default-language:	Haskell2010
 
 Test-Suite test

@@ -52,6 +52,8 @@ outcome: {\(Move move) ->
 initialState:{Board: {matrix 3 3 (\(i,j) -> Nil)}
               Turn: {PX}}
 
+fromString: {\(s) -> let move = map read (splitOn "," s) in (Move ((head move), (head (tail move))))}
+
 $
 isFull b = mfold (\((i, j), piece, acc) -> if piece == Nil then False else (True && acc)) True b
 ne (x, y) = (x+1,y+1)

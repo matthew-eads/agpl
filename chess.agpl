@@ -2,21 +2,39 @@ Chess : Game
 
   Gamestate: {
                Board: {Matrix}
-               Piece: {Player (ChessPiece)}
+               Piece: {(Player, ChessPiece)}
   }
   
   Player: {White | Black}
-  Move: {(Player, (Int, Int), (Int, Int))}
-  isValid: {\(p, (x1, y1), (x2, y2)) -> if p != Game.Turn then False
-                                        else case Game.Board[x1][y1] of
-                                               (_, Rook) -> (x1 == x2) xor (y1 == y2)
-                                                           } --etc
+  Move: {((Int, Int), (Int, Int))}
 
-  outcome: {undefined}
+  isValid: {\(Move ((x1, y1), (x2, y2))) -> (((x2 <= 8) && (y2 <= 8)) && ((x2 > 0) && (y2 > 0)))
+                                            && 
+                case ((board game) ! (x1, y1)) of
+                  (Piece (_, Rook)) -> (x1 == x2) `xor` (y1 == y2)
+                  (Piece (_, Bishop)) -> (abs (x1 - x2)) == (abs (y1 - y2))
+                  (Piece (_, Queen)) -> ((x1 == x2) `xor` (y1 == y2)) ||
+                                        ((abs (x1 - x2)) == (abs (y1 - y2)))
+                  (Piece (White, Pawn)) -> ((x1 == x2) && ((y1 + 1) == y2))
+                  (Piece (Black, Pawn)) -> ((x1 == x2) && (y1 == (y2 +1)))
+                  (Piece (_, King)) -> ((abs (x1 - x2)) <= 1) && ((abs (y1 - y2)) <= 1)
+                  (Piece (_, Knight)) -> (((abs (x1 - x2)) == 1) && ((abs (y1 - y2)) == 2)) ||
+                                        (((abs (x1 - x2)) == 2) && ((abs (y1 - y2)) == 1))
+--                  (Piece _) -> False
+           } --etc
+
+  outcome: {\(Move (origin, dest)) -> case ((board game) ! origin) of
+                                        _ -> (Tie, 1)}
+
   initialState: {Board: {matrix 8 8 (\(i, j) -> case i of 
-                                                  (2) -> (White Pawn)
-                                                  (7) -> (Black Pawn)
-                                                  (_) -> (Black King))}
+                                                  (2) -> Piece (White, Pawn)
+                                                  (7) -> Piece (Black, Pawn)
+                                                  (_) -> Piece (Black, Queen))}
                  Turn: {White}}
+
+  fromString: {\(s) -> let move = map read (splitOneOf ", " s) in 
+                       (Move (((head move), (head (tail move))), ((head (tail (tail move))), (head (tail (tail (tail move)))))))}
                                      
-  ChessPiece: {Rook|Knight|King|Queen|Bishop|Pawn}
+$
+  data ChessPiece = Rook|Knight|King|Queen|Bishop|Pawn deriving (Show, Eq)
+$

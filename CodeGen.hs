@@ -9,21 +9,28 @@ import Debug.Trace
 nilD = (DataD [] (mkName "NULL") [] [NormalC (mkName "NULL") []] [])
 
 makeAGPLDecs :: Game -> Q [Dec]
-makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, cd)) = 
+makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd)) = 
     do {
+      (trace "\nmaking agpl decs\n" doNothing);
       gsdecs <- gamestateDec gs;
+      (trace ("\ngsDecs:" ++ (show gsdecs)) doNothing);
       ttype <- turnTypeDec;
+      (trace ("\nturntypeDecs:" ++ (show ttype)) doNothing);
       gsdec <- gsDec [boardT,turnT];
+      (trace ("\ngameStateDec:" ++ (show gsdec)) doNothing);
       initStateDecs <- initStateDec is;
+      (trace ("\ninitStateDecs:" ++ (show initStateDecs)) doNothing);
       move <- moveDec m;
       player <- playerDec p;
       isValid <- isValidDec ivf;
       possMoves <- possmovesDec pmf;
       outcome <- outcomeDec ocf;
-      return (gsdecs ++ initStateDecs ++ ttype ++ move ++ player ++ isValid ++ gsdec ++ outcome ++ possMoves ++ cd);
+      fromS <- fromStringDec fs;
+      return (gsdecs ++ initStateDecs ++ ttype ++ move ++ player ++ isValid ++ gsdec ++ outcome ++ possMoves ++ fromS ++ cd);
     }
-
-makeAGPLDecs x = (trace (show x) undefined)
+makeAGPLDecs x = (trace ("Error." ++ (show x)) undefined)
+doNothing :: Q ()
+doNothing = do {return ()}
 
 gsDec :: [VarStrictType] -> Q [Dec]
 gsDec types = do {return [DataD [] (mkName "GameState") [] 
@@ -82,6 +89,13 @@ outcomeDec (OutcomeFun e) =
 possmovesDec :: PossMovesFun -> Q [Dec]
 possmovesDec (PossMovesFun e) =
     let f = ValD (VarP (mkName "possMoves")) (NormalB (e)) []
+    in do {return [f]}
+possmovesDec PMNil = do {return []}
+
+
+fromStringDec :: FromString -> Q [Dec]
+fromStringDec (FromString e) =
+    let f = ValD (VarP (mkName "fromString")) (NormalB (e)) []
     in do {return [f]}
 
 moveDec :: Move -> Q [Dec]
