@@ -5,26 +5,40 @@ Chess : Game
                Piece: {(Player, ChessPiece)}
   }
   
-  Player: {White | Black}
+  Player: {White | Black | Empty}
   Move: {((Int, Int), (Int, Int))}
 
-  isValid: {\(Move ((x1, y1), (x2, y2))) -> (((x2 <= 8) && (y2 <= 8)) && ((x2 > 0) && (y2 > 0)))
-                                            && 
+  isValid: {\(Move ((x1, y1), (x2, y2))) -> 
+                (((x2 <= 8) && (y2 <= 8)) && ((x2 > 0) && (y2 > 0))) && 
+            ((pieceToPlayer ((board game) ! (x1, y1))) /= 
+             (pieceToPlayer ((board game) ! (x2, y2)))) &&
                 case ((board game) ! (x1, y1)) of
                   (Piece (_, Rook)) -> (x1 == x2) `xor` (y1 == y2)
                   (Piece (_, Bishop)) -> (abs (x1 - x2)) == (abs (y1 - y2))
                   (Piece (_, Queen)) -> ((x1 == x2) `xor` (y1 == y2)) ||
                                         ((abs (x1 - x2)) == (abs (y1 - y2)))
-                  (Piece (White, Pawn)) -> ((x1 == x2) && ((y1 + 1) == y2))
-                  (Piece (Black, Pawn)) -> ((x1 == x2) && (y1 == (y2 +1)))
+                  (Piece (White, Pawn)) -> ((isEmpty ((board game) ! (x2, y2))) 
+                                           && ((x1 == x2) && ((y1 + 1) == y2))) 
+                                           || ((not (isEmpty ((board game) ! (x2, y2)))) 
+                                           && ((abs (x1 - x2)) == 1) && (y2 == (y1 + 1)))
+                  (Piece (Black, Pawn)) -> ((isEmpty ((board game) ! (x2, y2))) 
+                                           && ((x1 == x2) && ((y1 - 1) == y2))) 
+                                           || ((not (isEmpty ((board game) ! (x2, y2)))) 
+                                           && ((abs (x1 - x2)) == 1) && (y2 == (y1 - 1)))
                   (Piece (_, King)) -> ((abs (x1 - x2)) <= 1) && ((abs (y1 - y2)) <= 1)
                   (Piece (_, Knight)) -> (((abs (x1 - x2)) == 1) && ((abs (y1 - y2)) == 2)) ||
                                         (((abs (x1 - x2)) == 2) && ((abs (y1 - y2)) == 1))
 --                  (Piece _) -> False
-           } --etc
+           } 
 
-  outcome: {\(Move (origin, dest)) -> case ((board game) ! origin) of
-                                        _ -> (Tie, 1)}
+  outcome: {\(Move (origin, dest)) -> 
+                if isKing ((board game) ! origin) then 
+                    (Win ((currentTurn game), 0)) else
+                case ((board game) ! origin) of
+                  (Piece (p1, Rook)) -> (Tie, 1)
+                  _ -> (Tie, 2)
+
+-- _ -> (Tie, 1)}
 
   initialState: {Board: {matrix 8 8 (\(i, j) -> case i of 
                                                   (2) -> Piece (White, Pawn)
@@ -37,4 +51,9 @@ Chess : Game
                                      
 $
   data ChessPiece = Rook|Knight|King|Queen|Bishop|Pawn deriving (Show, Eq)
+  pieceToPlayer :: Piece -> Player
+  pieceToPlayer (Piece (p, _)) -> p
+  isEmpty :: Piece -> Bool
+  isEmpty (Piece (Empty, _)) -> True
+  isEmpty _ -> False
 $

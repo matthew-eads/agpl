@@ -5,16 +5,19 @@
 \paragraph{}
 \paragraph{AGPL Syntax}
 \begin{grammar}
-<game> ::= `Gamestate:{' <gamestatelist> `}'\\
+<game> ::= `Gamestate:{' [<gamestate>] `}'\\
+           `Player:{' <Dec> `}'\\
            `Move:{' <Dec> `}'\\
            `isVailid:{' <Exp> `}'\\
            `possMoves:{' <Exp> `}'\\
            `outcome:{' <Exp> `}'\\
-           `initialState:{' <Exp> `}'\\
-           `Type:{' <Dec> `}'
+           `initialState:{' <InitState> `}'\\
+           `fromString:{' <Exp> `}'\\
+           `$' [<Dec>] `$'
+           
 
-<gamestatelist> ::= <gamestate> <gamestatelist>
-\alt <empty>
+%% <gamestatelist> ::= <gamestate> <gamestatelist>
+%% \alt <empty>
 
 
 <gamestate> ::= `Board:{' <Dec>
@@ -22,6 +25,9 @@
 \alt `Hand:{' <Dec>
 \alt `Turn:{' <Dec>
 \alt <string>`:{' <Dec>
+
+<InitState> ::= `Board:{' <Exp> `}'\\
+                `Turn:{' <Exp> `}'
 
 <Exp> ::= <Template Haskell Expression>
 
