@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2015-11-16 17:36:47.151651 UTC
+2015-11-18 01:59:17.4314 UTC
 
 interface main@main:Main 7102
-  interface hash: e613d42c89e4712af080e299dabfc6c6
-  ABI hash: 381c0c7846a449c7e1d645f62a9fd308
-  export-list hash: 019e5cc871e74c0bbdb3f2f0cc29ddb6
+  interface hash: 90809b7d8bab35c52f1c74851fdafe26
+  ABI hash: 945d6bc325b9e1a7d2553e088aab54c1
+  export-list hash: 033bddba2b6349b465a989e30170511f
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: b9fdbf528949e233f3a610c29cd057f2
   sig of: Nothing
@@ -16,9 +16,12 @@ exports:
   Main.e
   Main.fromString
   Main.getMove
+  Main.iToC
   Main.isFull
   Main.isValid
+  Main.lfoldi
   Main.main
+  Main.mfold
   Main.n
   Main.ne
   Main.nw
@@ -87,11 +90,13 @@ family instance modules: base-4.8.1.0:Control.Applicative
                          text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text
                          text-1.2.1.3@text_1l1AN4I48k37RaQ6fm6CEh:Data.Text.Lazy
                          vector-0.10.12.3@vecto_JrQt7SYKOQF2foH4Ugm8MQ:Data.Vector
+import  -/  base-4.8.1.0:Data.Foldable 2e5acb797cfda6b3b7fabd7052abe290
 import  -/  base-4.8.1.0:Data.List 2a4f5f92892d432e7113f64cd9dcca53
 import  -/  base-4.8.1.0:Debug.Trace 7cf679861c4b1d69175105437aae1212
 import  -/  base-4.8.1.0:GHC.Base 1db77db5dae73d8c424c85b09fbadb89
 import  -/  base-4.8.1.0:GHC.List f31ed8784b3e05f1397195751f7d74ea
 import  -/  base-4.8.1.0:GHC.Num 9f42750c866f5832ca565146bd660c60
+import  -/  base-4.8.1.0:GHC.Real 4c3b525ecbd4d62bb287aec36d4c2f0d
 import  -/  base-4.8.1.0:GHC.Show b8c65ca3124f92a166c9f05120382442
 import  -/  base-4.8.1.0:Prelude 518f762991bc287d78f21a73c974da1f
 import  -/  base-4.8.1.0:System.Environment 946ddc2d7c48138bb213316abaff2a8d
@@ -99,10 +104,9 @@ import  -/  base-4.8.1.0:System.IO d541b8bdf18c04de3ab7ea0277c4eba3
 import  -/  base-4.8.1.0:Text.Read 30509137a501bd56d136aca29a7a35a6
 import  -/  ghc-prim-0.4.0.0:GHC.Classes e1f4ff80f7b5262008a595d29986fb18
 import  -/  ghc-prim-0.4.0.0:GHC.Types 6b27fb3fdbd0e3f0925a4496c66513bb
-import  -/  Parser f64c1c97d5ba8479c540137e486b34be
-  exports: 33d7dbc22874718da19af563b84c9525
-  mfold 572af231ecadd376b0f99a0d82f0e8d6
-import  -/  Quote 83f6c4435fa50694303ea01392395eb3
+import  -/  Parser b4ef8721765527c0319d753b414a913e
+  exports: c215cb32fb45085606455ee0a0967b11
+import  -/  Quote 2497ee36c20f2956069ca944b3f90afc
   exports: d0ec02e763329704e7da15c6df5027d3
 import  -/  matrix-0.3.4.4@matri_AtloKBQ0sJh0fVbfwJdXPl:Data.Matrix ccc9b2eeba0ed526bed77e0610fa9537
 import  -/  split-0.2.2@split_E4yadeCDng9EtdbI5MZoDg:Data.List.Split 191d865ea862c301707cccb38cecb628
@@ -653,34 +657,38 @@ de40dd42e4b1777a205415e9060e5b7b
                      case move of wild {
                        [] -> case GHC.List.tail1 ret_ty GHC.Types.Int of {}
                        : ds1 xs -> GHC.List.head @ GHC.Types.Int xs }) #)) -}
-b6454698cc84775fb1268720b01d6e4e
-  $wisFull ::
-    GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> Data.Vector.Vector Main.Piece
-    -> GHC.Types.Bool
-  {- Arity: 6, Strictness: <L,U><L,U><L,U><L,U><L,U><L,U(U,A,U)>,
-     Inline: [0],
-     Unfolding: (\ ww :: GHC.Prim.Int#
-                   ww1 :: GHC.Prim.Int#
-                   ww2 :: GHC.Prim.Int#
-                   ww3 :: GHC.Prim.Int#
-                   ww4 :: GHC.Prim.Int#
-                   ww5 :: Data.Vector.Vector Main.Piece ->
-                 Parser.$wmfold
-                   @ Main.Piece
-                   @ GHC.Types.Bool
-                   Main.isFull1
-                   GHC.Types.True
-                   ww
-                   ww1
-                   ww2
-                   ww3
-                   ww4
-                   ww5) -}
+83a1064a4e88f49fe65e89151bacc3e2
+  $wiToC ::
+    GHC.Types.Int
+    -> GHC.Types.Int
+    -> GHC.Types.Int
+    -> (# GHC.Types.Int, GHC.Types.Int #)
+  {- Arity: 3, Strictness: <L,1*U(U)><L,1*U(U)><L,U(U)>, Inline: [0],
+     Unfolding: (\ w1 :: GHC.Types.Int
+                   w2 :: GHC.Types.Int
+                   w3 :: GHC.Types.Int ->
+                 (# case w3 of wild { GHC.Types.I# i ->
+                    case w1 of wild1 { GHC.Types.I# i1 ->
+                    case GHC.Prim./##
+                           (GHC.Prim.int2Double# i)
+                           (GHC.Prim.int2Double# i1) of wild2 { DEFAULT ->
+                    let {
+                      n1 :: GHC.Prim.Int# = GHC.Prim.double2Int# wild2
+                    } in
+                    case GHC.Prim.tagToEnum#
+                           @ GHC.Types.Bool
+                           (GHC.Prim.<## (GHC.Prim.int2Double# n1) wild2) of wild3 {
+                      GHC.Types.False -> GHC.Types.I# n1
+                      GHC.Types.True -> GHC.Types.I# (GHC.Prim.+# n1 1) } } } },
+                    case w2 of ww { GHC.Types.I# ww1 ->
+                    case ww1 of wild {
+                      DEFAULT
+                      -> case w3 of wild1 { GHC.Types.I# x ->
+                         case GHC.Classes.modInt# x wild of ww2 {
+                           DEFAULT -> GHC.Types.I# ww2 0 -> ww } }
+                      (-1) -> ww
+                      0
+                      -> case GHC.Real.divZeroError ret_ty GHC.Types.Int of {} } } #)) -}
 6ff5f1ccd01656802467a838872d1ad0
   $wisValid ::
     Main.GameState -> GHC.Prim.Int# -> GHC.Types.Int -> GHC.Types.Bool
@@ -765,12 +773,70 @@ b6454698cc84775fb1268720b01d6e4e
                                             -> case Main.isValid1 x ww3 ww4 ww
                                                ret_ty GHC.Types.Bool
                                                of {} } } } } } } } }) -}
-7968e3bd693e1ab0de1ff13b5fa06648
+af4d152c243d02a8017ec2e121e2b60b
+  $wmfold ::
+    (((GHC.Types.Int, GHC.Types.Int), a, b) -> b)
+    -> b
+    -> GHC.Prim.Int#
+    -> GHC.Prim.Int#
+    -> GHC.Prim.Int#
+    -> GHC.Prim.Int#
+    -> GHC.Prim.Int#
+    -> Data.Vector.Vector a
+    -> b
+  {- Arity: 8,
+     Strictness: <L,C(U)><L,1*U><L,U><L,U><L,U><L,U><L,U><L,U(U,A,U)>,
+     Inline: [0],
+     Unfolding: (\ @ a
+                   @ b
+                   w1 :: ((GHC.Types.Int, GHC.Types.Int), a, b) -> b
+                   w2 :: b
+                   ww :: GHC.Prim.Int#
+                   ww1 :: GHC.Prim.Int#
+                   ww2 :: GHC.Prim.Int#
+                   ww3 :: GHC.Prim.Int#
+                   ww4 :: GHC.Prim.Int#
+                   ww5 :: Data.Vector.Vector a ->
+                 let {
+                   l :: [a] = Data.Matrix.$wtoList @ a ww ww1 ww2 ww3 ww4 ww5
+                 } in
+                 Main.lfoldi
+                   @ a
+                   @ b
+                   (let {
+                      w3 :: GHC.Types.Int = GHC.Types.I# ww1
+                    } in
+                    \ w4 :: GHC.Types.Int ->
+                    (case w4 of wild { GHC.Types.I# i ->
+                     case GHC.Prim./##
+                            (GHC.Prim.int2Double# i)
+                            (GHC.Prim.int2Double# ww) of wild2 { DEFAULT ->
+                     let {
+                       n1 :: GHC.Prim.Int# = GHC.Prim.double2Int# wild2
+                     } in
+                     case GHC.Prim.tagToEnum#
+                            @ GHC.Types.Bool
+                            (GHC.Prim.<## (GHC.Prim.int2Double# n1) wild2) of wild1 {
+                       GHC.Types.False -> GHC.Types.I# n1
+                       GHC.Types.True -> GHC.Types.I# (GHC.Prim.+# n1 1) } } },
+                     case ww1 of wild {
+                       DEFAULT
+                       -> case w4 of wild1 { GHC.Types.I# x ->
+                          case GHC.Classes.modInt# x wild of ww6 {
+                            DEFAULT -> GHC.Types.I# ww6 0 -> w3 } }
+                       (-1) -> w3
+                       0 -> case GHC.Real.divZeroError ret_ty GHC.Types.Int of {} }))
+                   (case GHC.List.$wlenAcc @ a l 0 of ww6 { DEFAULT ->
+                    GHC.Types.I# ww6 })
+                   w1
+                   w2
+                   l) -}
+13a5d4f98305fca6f80d4f974c2a1867
   $woutcome ::
     Main.GameState
     -> (GHC.Types.Int, GHC.Types.Int)
     -> (# Main.GameState, GHC.Types.Int #)
-  {- Arity: 2, Strictness: <S,1*U><L,1*U(1*U(U),1*U(U))>,
+  {- Arity: 2, Strictness: <S,U><L,1*U(1*U(U),1*U(U))>,
      Inline: [0] -}
 ce7c3823a57e3665c0a17db8a1500187
   type Board = Data.Matrix.Matrix Main.Piece
@@ -1079,14 +1145,26 @@ eb01401792f331164eeec8a42cebf1ea
                    @ GHC.Types.Char
                    Main.$fShowGameState7
                    Main.getMove3) -}
-7761ebedd77c7c37ed951fb11dde1f39
-  isFull :: Data.Matrix.Matrix Main.Piece -> GHC.Types.Bool
-  {- Arity: 1, Strictness: <S,1*U(U,U,U,U,U,U(U,A,U))>,
+26f1737e66c3c13e56e78d7d534cc7a2
+  iToC ::
+    GHC.Types.Int
+    -> GHC.Types.Int -> GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int)
+  {- Arity: 3, Strictness: <L,1*U(U)><L,1*U(U)><L,U(U)>m,
      Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ w1 :: GHC.Types.Int w2 :: GHC.Types.Int w3 :: GHC.Types.Int ->
+                 case Main.$wiToC w1 w2 w3 of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+becfc7b1b0ccdf893c533e96af85920a
+  isFull :: Data.Matrix.Matrix Main.Piece -> GHC.Types.Bool
+  {- Arity: 1, Strictness: <S,U(U,U,U,U,U,U(U,A,U))>,
      Unfolding: InlineRule (1, True, False)
-                (\ w1 :: Data.Matrix.Matrix Main.Piece ->
-                 case w1 of ww { Data.Matrix.M ww1 ww2 ww3 ww4 ww5 ww6 ->
-                 Main.$wisFull ww1 ww2 ww3 ww4 ww5 ww6 }) -}
+                (\ b :: Data.Matrix.Matrix Main.Piece ->
+                 Main.mfold
+                   @ Main.Piece
+                   @ GHC.Types.Bool
+                   Main.isFull1
+                   GHC.Types.True
+                   b) -}
 27199e1a32266b3e3ea0b77e989051ec
   isFull1 ::
     ((GHC.Types.Int, GHC.Types.Int), Main.Piece, GHC.Types.Bool)
@@ -1115,6 +1193,16 @@ eb01401792f331164eeec8a42cebf1ea
     GHC.Prim.Int#
     -> GHC.Prim.Int# -> GHC.Prim.Int# -> GHC.Prim.Int# -> Main.Piece
   {- Arity: 4, Strictness: <L,U><L,U><L,U><L,U>b -}
+0b01ab912a9150549937adbdd209f272
+  lfoldi ::
+    (GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+    -> GHC.Types.Int
+    -> (((GHC.Types.Int, GHC.Types.Int), a, b) -> b)
+    -> b
+    -> [a]
+    -> b
+  {- Arity: 5, HasNoCafRefs,
+     Strictness: <L,C(U)><L,U(U)><L,C(U)><L,1*U><S,1*U> -}
 cfc2b4bfb15c8fd121c2c058a1a85abd
   main :: GHC.Types.IO ()
   {- Arity: 1, Strictness: <L,U>,
@@ -1145,6 +1233,20 @@ a900321e9c2a5b0fa374426be661f3c5
      Unfolding: (GHC.TopHandler.runMainIO1
                    @ ()
                    Main.main1 `cast` (Sym (GHC.Types.NTCo:IO[0] <()>_R))) -}
+be009e1a928b6e3085c0218bd1675c90
+  mfold ::
+    (((GHC.Types.Int, GHC.Types.Int), a, b) -> b)
+    -> b -> Data.Matrix.Matrix a -> b
+  {- Arity: 3, Strictness: <L,C(U)><L,1*U><S,U(U,U,U,U,U,U(U,A,U))>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ @ a
+                   @ b
+                   w1 :: ((GHC.Types.Int, GHC.Types.Int), a, b) -> b
+                   w2 :: b
+                   w3 :: Data.Matrix.Matrix a ->
+                 case w3 of ww { Data.Matrix.M ww1 ww2 ww3 ww4 ww5 ww6 ->
+                 Main.$wmfold @ a @ b w1 w2 ww1 ww2 ww3 ww4 ww5 ww6 }) -}
 24bd0c61c60343fcef11e05e5993ff8b
   n :: GHC.Num.Num t1 => (t, t1) -> (t, t1)
   {- Arity: 2, HasNoCafRefs,
@@ -1192,10 +1294,10 @@ b7d986fe127fe014ba6bd2377a3ffae5
      Unfolding: InlineRule (1, True, False)
                 (\ ds :: Main.Player ->
                  case ds of wild { Main.PX -> Main.PO Main.PO -> Main.PX }) -}
-e389f6a59f1a2df7cdefbfd27657f768
+4b59d6564e264bb2c912740777f55ee8
   outcome ::
     Main.GameState -> Main.Move -> (Main.GameState, GHC.Types.Int)
-  {- Arity: 2, Strictness: <S,1*U><S,1*U(1*U(1*U(U),1*U(U)))>m,
+  {- Arity: 2, Strictness: <S,U><S,1*U(1*U(1*U(U),1*U(U)))>m,
      Inline: INLINE[0],
      Unfolding: InlineRule (2, True, False)
                 (\ w1 :: Main.GameState w2 :: Main.Move ->
@@ -1227,25 +1329,20 @@ f2eb96289d445fa99c5d7e73f9c33d25
      Unfolding: InlineRule (1, True, False)
                 (\ ds :: Main.Player ->
                  case ds of wild { Main.PX -> Main.X Main.PO -> Main.O }) -}
-c508a0a7909981cee1764b5905ccf861
+63f3ffeea55ba064e09d5b8ab65ce101
   possMoves :: Main.GameState -> [Main.Move]
   {- Arity: 1, Strictness: <S,1*U>,
-     Unfolding: (\ game :: Main.GameState ->
+     Unfolding: InlineRule (1, True, False)
+                (\ game :: Main.GameState ->
                  case game of wild {
                    DEFAULT -> case Main.board1 ret_ty [Main.Move] of {}
                    Main.GameState ds ds1
-                   -> case ds of ww { Data.Matrix.M ww1 ww2 ww3 ww4 ww5 ww6 ->
-                      Parser.$wmfold
+                   -> Main.mfold
                         @ Main.Piece
                         @ [Main.Move]
                         Main.possMoves1
                         (GHC.Types.[] @ Main.Move)
-                        ww1
-                        ww2
-                        ww3
-                        ww4
-                        ww5
-                        ww6 } }) -}
+                        ds }) -}
 caa7e6b1e764b660945b06c8e5028617
   possMoves1 ::
     ((GHC.Types.Int, GHC.Types.Int), Main.Piece, [Main.Move])

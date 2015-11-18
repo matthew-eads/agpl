@@ -1,7 +1,32 @@
 Main.hs:1:1: Splicing declarations
     "ttt.agpl"
   ======>
-    [data Piece
+    [xor :: Bool -> Bool -> Bool,
+     xor True True = False
+     xor False False = False
+     xor _ _ = True,
+     iToC :: Int -> Int -> Int -> (Int, Int),
+     iToC rows cols i
+       = let
+           c = if (i `mod` cols) == 0 then cols else (i `mod` cols)
+           r = ceiling ((realToFrac i) / (realToFrac rows))
+         in (r, c),
+     lfoldi ::
+       forall a b.
+       (Int -> (Int, Int))
+       -> Int -> (((Int, Int), a, b) -> b) -> b -> [a] -> b,
+     lfoldi toC i f b [] = b
+     lfoldi toC i f b (x ghc-prim-0.4.0.0:GHC.Types.: xs)
+       = f ((toC i), x, (lfoldi toC (i - 1) f b xs)),
+     mfold ::
+       forall a b. (((Int, Int), a, b) -> b) -> b -> Matrix a -> b,
+     mfold f b m
+       = let
+           nr = (nrows m)
+           nc = (ncols m)
+           l = (toList m)
+         in lfoldi (iToC nr nc) (length l) f b l,
+     data Piece
        = X | O | Nil
        deriving (Eq, Show),
      type Board = Matrix Piece,

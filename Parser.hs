@@ -12,21 +12,21 @@ import Language.Haskell.Meta.Syntax.Translate
 import Data.Functor.Identity
 import Data.Matrix (Matrix, nrows, ncols, toList)
 import Debug.Trace
+import System.IO.Unsafe
+-- iToC :: Int -> Int -> Int-> (Int, Int)
+-- iToC rows cols i = let c = if (i `mod` cols) == 0 then cols else (i `mod` cols) 
+--                        r = ceiling ((realToFrac i) / (realToFrac rows))
+--                    in (r, c)
 
-iToC :: Int -> Int -> Int-> (Int, Int)
-iToC rows cols i = let c = if (i `mod` cols) == 0 then cols else (i `mod` cols) 
-                       r = ceiling ((realToFrac i) / (realToFrac rows))
-                   in (r, c)
+-- lfoldi :: (Int -> (Int, Int)) -> Int -> (((Int, Int), a, b) -> b) -> b -> [a] -> b
+-- lfoldi toC i f b [] = b
+-- lfoldi toC i f b (x:xs) = f ((toC i), x, (lfoldi toC (i-1) f b xs)) 
 
-lfoldi :: (Int -> (Int, Int)) -> Int -> (((Int, Int), a, b) -> b) -> b -> [a] -> b
-lfoldi toC i f b [] = b
-lfoldi toC i f b (x:xs) = f ((toC i), x, (lfoldi toC (i-1) f b xs)) 
-
-mfold :: (((Int, Int), a, b) -> b) -> b -> Matrix a -> b
-mfold f b m = let nr = (nrows m)
-                  nc = (ncols m)
-                  l  = (toList m)
-              in lfoldi (iToC nr nc) (length l) f b l
+-- mfold :: (((Int, Int), a, b) -> b) -> b -> Matrix a -> b
+-- mfold f b m = let nr = (nrows m)
+--                   nc = (ncols m)
+--                   l  = (toList m)
+--               in lfoldi (iToC nr nc) (length l) f b l
 
 m_reservedNames = ["Gamestate", "Board", "Piece", "Turn", "Move",
                    "isValid", "possMoves", "Hand", "outcome",
@@ -57,9 +57,15 @@ TokenParser{ parens = m_parens,
 reservedParser = foldl (\acc -> \s -> m_reserved s <|> acc)
                        (m_reserved "Game") m_reservedNames
 
+emptyDecL :: Parser [Dec]
+emptyDecL = do {return []} 
+
 gameParser :: Parser Game
 gameParser = do {
                ws;
+               importsL <- many parseImports; -- <|> emptyDecL; ws;
+               let imports = foldl (++) [] importsL in do {
+               (trace ("parsed imports: " ++ (show imports)) ws);
                id <- gameIDParser; ws; 
                (trace ("id is: " ++ id) ws);
                
@@ -87,8 +93,8 @@ gameParser = do {
                customData <- parseCustomData;
                (trace ("custData" ++ (show customData)) ws);
                return (Game (id, gamestate, move, isValid, possMoves, outcome, 
-                            initState, player, fromString, customData));
-             }
+                            initState, player, fromString, customData, imports));
+             }}
 
 parseCustomData :: Parser [Dec]
 parseCustomData = do {
@@ -99,11 +105,32 @@ parseCustomData = do {
                     decs <- many (noneOf "$");
                     -- dataDec <- decParser name;
                     case parseDecs decs of
-                      (Left err) -> do {return (trace "failed" undefined)}
+                      (Left err) -> do {return (trace ("failed:\n" ++ err) undefined)}
                       (Right d) -> do {return d}
                     -- return (CustomDataType dataDec);
                   }
-                    
+
+parseImports :: Parser [Dec]
+parseImports = do {
+                 ws; 
+                 m_reserved "import"; (trace "read import" ws);
+                 file <- many (noneOf " \n\r\t"); 
+                 (trace ("filename: " ++ file) ws);
+                 decs <- (parseDecsFromFile (file ++ ".hs"));
+                 (trace ("importDecs: " ++ (show decs)) ws);
+                 -- moredecs <- try parseImports;
+                 -- (trace "moreDecs..." ws);
+                 -- return (decs ++ moredecs);
+                 return decs;
+               }
+
+parseDecsFromFile :: String -> Parser [Dec]
+parseDecsFromFile filename = 
+      let contents = unsafePerformIO (readFile filename) in
+      case parseDecs contents of
+        (Left err) -> do {return (trace err undefined)}
+        (Right decs) -> do {return decs}
+    
 
 parsePlayer :: Parser Player
 parsePlayer = do {

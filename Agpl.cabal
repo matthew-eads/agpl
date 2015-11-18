@@ -20,9 +20,9 @@ library
   GHC-Options: -ddump-splices
   default-extensions: TemplateHaskell, QuasiQuotes
   exposed-modules:     Parser, Agpl_syntax, Quote, CodeGen
-  --other-modules:	Agpl_tests      
+  -- other-modules:	Agpl_tests      
   -- other-extensions:    
-  build-depends:       base >=4.6, parsec >=3.1, template-haskell >=2.8, haskell-src-meta >=0.6 , transformers >=0.4 , array, matrix, vector, split
+  build-depends:       base >=4.6, parsec >=3.1, template-haskell >=2.8, haskell-src-meta >=0.6 , transformers >=0.4 , array, matrix, vector, split, haskell-src-exts, haskell-src
   -- hs-source-dirs:      
   default-language:    Haskell2010
 

@@ -9,7 +9,7 @@ import Debug.Trace
 nilD = (DataD [] (mkName "NULL") [] [NormalC (mkName "NULL") []] [])
 
 makeAGPLDecs :: Game -> Q [Dec]
-makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd)) = 
+makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd, imports)) = 
     do {
       (trace "\nmaking agpl decs\n" doNothing);
       gsdecs <- gamestateDec gs;
@@ -26,7 +26,7 @@ makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd)) =
       possMoves <- possmovesDec pmf;
       outcome <- outcomeDec ocf;
       fromS <- fromStringDec fs;
-      return (gsdecs ++ initStateDecs ++ ttype ++ move ++ player ++ isValid ++ gsdec ++ outcome ++ possMoves ++ fromS ++ cd);
+      return (imports ++ gsdecs ++ initStateDecs ++ ttype ++ move ++ player ++ isValid ++ gsdec ++ outcome ++ possMoves ++ fromS ++ cd);
     }
 makeAGPLDecs x = (trace ("Error." ++ (show x)) undefined)
 doNothing :: Q ()

@@ -17,7 +17,7 @@ version = Version [0,1,0,0] []
 bindir, libdir, datadir, libexecdir, sysconfdir :: FilePath
 
 bindir     = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/bin"
-libdir     = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/Agpl-0.1.0.0-AD5F5QRTR3rBTosVQjF5y6"
+libdir     = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/Agpl-0.1.0.0-ARbgTy7wgrRJtlloTDRArE"
 datadir    = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/share/x86_64-linux-ghc-7.10.2/Agpl-0.1.0.0"
 libexecdir = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/libexec"
 sysconfdir = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/etc"

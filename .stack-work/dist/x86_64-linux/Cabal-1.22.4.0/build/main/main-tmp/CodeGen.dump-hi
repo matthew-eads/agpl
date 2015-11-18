@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2015-11-16 17:36:45.25056 UTC
+2015-11-17 20:06:02.863217 UTC
 
 interface main@main:CodeGen 7102
-  interface hash: cf4554fbf4fe6521ad953bcd3f1326da
-  ABI hash: 696bac01b02802a29d9c7da65c163f64
+  interface hash: c9df1738a6d89920b1dd799792deb03f
+  ABI hash: 2daab7d52aa7feab57df89fc0b396ce0
   export-list hash: d610f34a3750dc83fca41edff6e34f45
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 1e433d0ebc6754f04665631962e57d78
@@ -81,14 +81,14 @@ import  -/  base-4.8.1.0:GHC.Base 1db77db5dae73d8c424c85b09fbadb89
 import  -/  base-4.8.1.0:GHC.Show b8c65ca3124f92a166c9f05120382442
 import  -/  base-4.8.1.0:Prelude 518f762991bc287d78f21a73c974da1f
 import  -/  ghc-prim-0.4.0.0:GHC.Classes e1f4ff80f7b5262008a595d29986fb18
-import  -/  Agpl_syntax 42f44a9b7c06e56d8735a0773af521f2
+import  -/  Agpl_syntax 0d03665e22b77225049046f30f356eb6
   exports: 7fcbc9434e651b8819f98adc2072f221
   CustomDataType 8ace7205c1809c3e1a1719112620abbc
   CustomDataType d3b6a4545c5e0b7a95d5e37943647fa1
   FromString fc3e7db34f22a6a183f0c6b521a8704b
   FromString fa116921aba72ce2ad28ea1ae766def1
-  Game 6c66ba4cd5a76066895df0062ff3afc5
-  Game 94d5299277b36be96b68211f0a36372a
+  Game 15b43d0ebb823b409e11207fe33aca0b
+  Game 488ce63c75a6e9bef5316a6172b53ed0
   GameState 63bee39a6fccef6e2f5f8d4bd1bf55a5
   InitState 1b55e285126b83a72cf61a2d578f9b8d
   IsValidFun 2c52aceb2e3f10c236b661b98e76cec6
@@ -108,8 +108,8 @@ import  -/  Agpl_syntax 42f44a9b7c06e56d8735a0773af521f2
   piece 9a6dc21b8ac759403ceae7f72b25b368
   turn b1d12908789ddd80490b963de4b39dd3
   turnInit a1f7b223289610490f93d70cb0b22869
-import  -/  Parser f64c1c97d5ba8479c540137e486b34be
-  exports: 33d7dbc22874718da19af563b84c9525
+import  -/  Parser e8f92bac97a29d18654cf687efb5bace
+  exports: c215cb32fb45085606455ee0a0967b11
 import  -/  template-haskell-2.10.0.0:Language.Haskell.TH cce81ae8a1596a0252bdcb72179c2937
 import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Quote 7a74e3dce88866c160fffb1503661817
 import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Syntax afcf64bad3773d231089a8ce432131ab
@@ -901,7 +901,7 @@ be624757a480fc0c5ca7590d57cb9b61
 a7220a2b78cb414d67e68c0b80a21cd0
   isValidDec4 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "isValid"#) -}
-d5552d1f4444c17d10edd6df0eb962a1
+7cc9cce75a8abf2c53aac7f7e162f7a0
   makeAGPLDecs ::
     Agpl_syntax.Game
     -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]

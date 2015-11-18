@@ -6,14 +6,11 @@ import Quote
 import Data.Matrix hiding (trace)
 import Data.List
 import Data.List.Split
+--import Agpl_lib
 
-xor :: Bool -> Bool -> Bool
-xor True True = False
-xor False False = False
-xor _ _ = True
 
 [agpl_f|ttt.agpl|]
--- [agpl_f|chess.agpl|]
+--[agpl_f|chess.agpl|]
 
 getMove :: GameState -> IO Move
 getMove gs = do {

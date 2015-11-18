@@ -1,3 +1,5 @@
+import Agpl_lib
+
 TicTacToe: Game
 
 Gamestate: {
@@ -6,9 +8,6 @@ Gamestate: {
 }
 
 Player: {PX | PO}
-
---Type Coord: {Coord (Int, Int)}
---Move: {Move (Coord)}
 
 Move: {(Int, Int)}
 isValid: { (\(Move (i, j)) -> ((i <= 3) && (j <= 3) &&
@@ -46,7 +45,14 @@ outcome: {\(Move move) ->
     else if isFull b then (Tie, 1)
     else (g, 1)
 }
+{-
+outcome: {
+         winCondition: { (inRow 3 (currentTurn game)) || (inCol 3 (currentTurn game)) ||
+                         (inDiag 3 (currentTurn game))}
+         tieCondition: {isFull (board game)}
+         else: {place (playerToPiece (currentTurn game)) move}}
 
+-}
 
 
 initialState:{Board: {matrix 3 3 (\(i,j) -> Nil)}

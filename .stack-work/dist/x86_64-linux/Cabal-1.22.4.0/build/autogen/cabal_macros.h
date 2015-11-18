@@ -14,6 +14,20 @@
   (major1) == 4 && (major2) <  8 || \
   (major1) == 4 && (major2) == 8 && (minor) <= 1)
 
+/* package haskell-src-1.0.2.0 */
+#define VERSION_haskell_src "1.0.2.0"
+#define MIN_VERSION_haskell_src(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  0 || \
+  (major1) == 1 && (major2) == 0 && (minor) <= 2)
+
+/* package haskell-src-exts-1.16.0.1 */
+#define VERSION_haskell_src_exts "1.16.0.1"
+#define MIN_VERSION_haskell_src_exts(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  16 || \
+  (major1) == 1 && (major2) == 16 && (minor) <= 0)
+
 /* package haskell-src-meta-0.6.0.11 */
 #define VERSION_haskell_src_meta "0.6.0.11"
 #define MIN_VERSION_haskell_src_meta(major1,major2,minor) (\
@@ -62,6 +76,13 @@
   (major1) <  0 || \
   (major1) == 0 && (major2) <  10 || \
   (major1) == 0 && (major2) == 10 && (minor) <= 12)
+
+/* package HUnit-1.2.5.2 */
+#define VERSION_HUnit "1.2.5.2"
+#define MIN_VERSION_HUnit(major1,major2,minor) (\
+  (major1) <  1 || \
+  (major1) == 1 && (major2) <  2 || \
+  (major1) == 1 && (major2) == 2 && (minor) <= 5)
 
 /* tool cpphs-1.19.3 */
 #define TOOL_VERSION_cpphs "1.19.3"
@@ -133,5 +154,5 @@
   (major1) == 2 && (major2) <  24 || \
   (major1) == 2 && (major2) == 24 && (minor) <= 0)
 
-#define CURRENT_PACKAGE_KEY "Agpl_AD5F5QRTR3rBTosVQjF5y6"
+#define CURRENT_PACKAGE_KEY "Agpl_ARbgTy7wgrRJtlloTDRArE"
 

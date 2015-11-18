@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2015-11-16 17:36:42.719195 UTC
+2015-11-18 01:56:45.966647 UTC
 
 interface main@main:Parser 7102
-  interface hash: fdbf725d59de90f98bdd61c09b4dc4ff
-  ABI hash: f64c1c97d5ba8479c540137e486b34be
-  export-list hash: 33d7dbc22874718da19af563b84c9525
+  interface hash: c781e2b7c5b28a90e0ddee3de20fc6f2
+  ABI hash: b4ef8721765527c0319d753b414a913e
+  export-list hash: c215cb32fb45085606455ee0a0967b11
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 1e433d0ebc6754f04665631962e57d78
   sig of: Nothing
@@ -16,12 +16,11 @@ exports:
   Parser.customDParser
   Parser.decParser
   Parser.def
+  Parser.emptyDecL
   Parser.expParser
   Parser.gameIDParser
   Parser.gameParser
   Parser.handParser
-  Parser.iToC
-  Parser.lfoldi
   Parser.m_braces
   Parser.m_identifier
   Parser.m_parens
@@ -32,13 +31,14 @@ exports:
   Parser.m_stringLiteral
   Parser.m_whiteSpace
   Parser.matrixParser
-  Parser.mfold
   Parser.nilPM
   Parser.nilParser
   Parser.parseCustomData
+  Parser.parseDecsFromFile
   Parser.parseFromString
   Parser.parseGame
   Parser.parseGameState
+  Parser.parseImports
   Parser.parseInitState
   Parser.parseIsValid
   Parser.parseMove
@@ -104,22 +104,21 @@ import  -/  base-4.8.1.0:Data.Foldable 2e5acb797cfda6b3b7fabd7052abe290
 import  -/  base-4.8.1.0:Data.Functor.Identity a1d62025f76004ef8a0b496b15c00348
 import  -/  base-4.8.1.0:Debug.Trace 7cf679861c4b1d69175105437aae1212
 import  -/  base-4.8.1.0:GHC.Base 1db77db5dae73d8c424c85b09fbadb89
+import  -/  base-4.8.1.0:GHC.IO c40fa9051eafbe02c69624c2ae0f498f
 import  -/  base-4.8.1.0:GHC.List f31ed8784b3e05f1397195751f7d74ea
-import  -/  base-4.8.1.0:GHC.Num 9f42750c866f5832ca565146bd660c60
-import  -/  base-4.8.1.0:GHC.Real 4c3b525ecbd4d62bb287aec36d4c2f0d
 import  -/  base-4.8.1.0:GHC.Show b8c65ca3124f92a166c9f05120382442
 import  -/  base-4.8.1.0:Prelude 518f762991bc287d78f21a73c974da1f
 import  -/  base-4.8.1.0:System.IO d541b8bdf18c04de3ab7ea0277c4eba3
-import  -/  ghc-prim-0.4.0.0:GHC.Classes e1f4ff80f7b5262008a595d29986fb18
+import  -/  base-4.8.1.0:System.IO.Unsafe ef92cd1677ac901cad4b8432c8a18791
 import  -/  ghc-prim-0.4.0.0:GHC.Types 6b27fb3fdbd0e3f0925a4496c66513bb
 import  -/  haskell-src-meta-0.6.0.11@haske_DSABzgEPWpw1dF6z3BP4C8:Language.Haskell.Meta.Parse c926810653cf52d957a896d138bd5ba0
 import  -/  haskell-src-meta-0.6.0.11@haske_DSABzgEPWpw1dF6z3BP4C8:Language.Haskell.Meta.Syntax.Translate b50bbba01272650e630505d524fe2191
-import  -/  Agpl_syntax 42f44a9b7c06e56d8735a0773af521f2
+import  -/  Agpl_syntax 0d03665e22b77225049046f30f356eb6
   exports: 7fcbc9434e651b8819f98adc2072f221
   FromString fc3e7db34f22a6a183f0c6b521a8704b
   FromString fa116921aba72ce2ad28ea1ae766def1
-  Game 6c66ba4cd5a76066895df0062ff3afc5
-  Game 94d5299277b36be96b68211f0a36372a
+  Game 15b43d0ebb823b409e11207fe33aca0b
+  Game 488ce63c75a6e9bef5316a6172b53ed0
   GameID 00bf6901622b39d3e3fee26bf1d4a165
   GameState dbc27295cd3cb575e9835bf7032bcbf3
   GameState 63bee39a6fccef6e2f5f8d4bd1bf55a5
@@ -129,7 +128,7 @@ import  -/  Agpl_syntax 42f44a9b7c06e56d8735a0773af521f2
   IsValidFun 031a07d37b99494a219f43a36d824680
   Move 6e99273b590ada1ce52947bf16ce97f7
   Move 6dd9273724fe6375d7f78327d31d1299
-  NIL 7846bd1906514c8dda29ff8633586247
+  NIL a1b4daf3565cdc77732410ec90c42fc7
   OutcomeFun 7f7ea21ff4df2c525f3ff4633ddb467a
   OutcomeFun 6174187bcf5e8fe30057c0b9024291c5
   PMNil e8092ba103316e8754f683b43e462d2a
@@ -155,7 +154,7 @@ import  -/  parsec-3.1.9@parse_8fSmqig53hOL2SEu1k9Tv0:Text.ParserCombinators.Par
 import  -/  parsec-3.1.9@parse_8fSmqig53hOL2SEu1k9Tv0:Text.ParserCombinators.Parsec.Language a97b805eb594ac5775036ef8828f3c11
 import  -/  template-haskell-2.10.0.0:Language.Haskell.TH cce81ae8a1596a0252bdcb72179c2937
 import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Syntax afcf64bad3773d231089a8ce432131ab
-83b0dff9e752b02f25f68348b6c82a4a
+d78aa8c2072f1022bc98def5c22a5231
   $wa ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ([Language.Haskell.TH.Syntax.Dec]
@@ -171,9 +170,107 @@ import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Syntax afcf64bad3773d2
     -> Data.Functor.Identity.Identity b1
   {- Arity: 4,
      Strictness: <L,U(U,U(U,U,U),U)><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))>,
-     Inline: [0] -}
-ebb4701bb7ad862e1fc8da23a186337c
+     Inline: [0],
+     Unfolding: (\ @ b1
+                   w :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   w1 :: [Language.Haskell.TH.Syntax.Dec]
+                         -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                         -> Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b1
+                   w2 :: Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b1
+                   w3 :: [Language.Haskell.TH.Syntax.Dec]
+                         -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                         -> Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b1 ->
+                 Text.Parsec.Prim.$wa9
+                   @ GHC.Base.String
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ GHC.Types.Char
+                   Parser.parseCustomData4
+                     `cast`
+                   (Sym (Text.Parsec.Prim.NTCo:ParsecT[0]
+                             <GHC.Base.String>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <GHC.Types.Char>_R))
+                   @ b1
+                   w
+                   (\ x :: [GHC.Types.Char]
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                      err :: Text.Parsec.Error.ParseError[OneShot] ->
+                    Parser.$wa1
+                      x
+                      @ b1
+                      s2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec][OneShot]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       w1 x1 s3 (Text.Parsec.Error.mergeError err err')))
+                   w2
+                   (\ x :: [GHC.Types.Char]
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                      err :: Text.Parsec.Error.ParseError[OneShot] ->
+                    Parser.$wa1
+                      x
+                      @ b1
+                      s2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec][OneShot]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       w3 x1 s3 (Text.Parsec.Error.mergeError err err')))) -}
+b22bdc7610cd8de8ba1fb72b55f303df
   $wa1 ::
+    [GHC.Types.Char]
+    -> forall b.
+       Text.Parsec.Prim.State GHC.Base.String ()
+       -> ([Language.Haskell.TH.Syntax.Dec]
+           -> Text.Parsec.Prim.State GHC.Base.String ()
+           -> Text.Parsec.Error.ParseError
+           -> Data.Functor.Identity.Identity b)
+       -> Data.Functor.Identity.Identity b
+  {- Arity: 3,
+     Strictness: <L,U><L,U(U,U,U)><C(C(C(S))),1*C1(C1(C1(U)))>,
+     Inline: [0],
+     Unfolding: (\ w :: [GHC.Types.Char]
+                   @ b
+                   w1 :: Text.Parsec.Prim.State GHC.Base.String ()
+                   w2 :: [Language.Haskell.TH.Syntax.Dec]
+                         -> Text.Parsec.Prim.State GHC.Base.String ()
+                         -> Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b ->
+                 case Language.Haskell.Meta.Parse.parseResultToEither
+                        @ Language.Haskell.Exts.Syntax.Module
+                        (Language.Haskell.Meta.Parse.parseDecs1 w) of wild {
+                   Data.Either.Left x1
+                   -> w2
+                        (Debug.Trace.trace
+                           @ [Language.Haskell.TH.Syntax.Dec]
+                           (GHC.CString.unpackAppendCString# "failed:\n"# x1)
+                           (GHC.Err.undefined @ [Language.Haskell.TH.Syntax.Dec]))
+                        w1
+                        (case w1 of wild1 { Text.Parsec.Prim.State ds3 ds4 ds5 ->
+                         Text.Parsec.Error.ParseError
+                           ds4
+                           (GHC.Types.[] @ Text.Parsec.Error.Message) })
+                   Data.Either.Right y
+                   -> w2
+                        (case y of wild1 { Language.Haskell.Exts.Syntax.Module ds ds1 ds2 ds3 ds4 ds5 x1 ->
+                         Language.Haskell.Meta.Syntax.Translate.$fToDecs[]_$ctoDecs
+                           @ Language.Haskell.Exts.Syntax.Decl
+                           Language.Haskell.Meta.Syntax.Translate.$ctoDecs
+                             `cast`
+                           (Sym (Language.Haskell.Meta.Syntax.Translate.NTCo:ToDecs[0]
+                                     <Language.Haskell.Exts.Syntax.Decl>_N))
+                           x1 })
+                        w1
+                        (case w1 of wild1 { Text.Parsec.Prim.State ds3 ds4 ds5 ->
+                         Text.Parsec.Error.ParseError
+                           ds4
+                           (GHC.Types.[] @ Text.Parsec.Error.Message) }) }) -}
+256881e2ecb00e3e507a86817d2b90e8
+  $wa2 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (GHC.Base.String
         -> Text.Parsec.Prim.State [GHC.Types.Char] ()
@@ -218,7 +315,7 @@ ebb4701bb7ad862e1fc8da23a186337c
                    (\ x :: [GHC.Types.Char]
                       s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
                       err :: Text.Parsec.Error.ParseError[OneShot] ->
-                    Parser.$wa2
+                    Parser.$wa3
                       x
                       @ b1
                       s2
@@ -231,7 +328,7 @@ ebb4701bb7ad862e1fc8da23a186337c
                    (\ x :: [GHC.Types.Char]
                       s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
                       err :: Text.Parsec.Error.ParseError[OneShot] ->
-                    Parser.$wa2
+                    Parser.$wa3
                       x
                       @ b1
                       s2
@@ -240,8 +337,8 @@ ebb4701bb7ad862e1fc8da23a186337c
                          s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
                          err' :: Text.Parsec.Error.ParseError[OneShot] ->
                        w3 x1 s3 (Text.Parsec.Error.mergeError err err')))) -}
-e78ba190cfe07d04edf1069a72c005e1
-  $wa2 ::
+ccce52fa23978d372babb186dcccc5a4
+  $wa3 ::
     [GHC.Types.Char]
     -> forall b.
        Text.Parsec.Prim.State GHC.Base.String ()
@@ -257,8 +354,8 @@ e78ba190cfe07d04edf1069a72c005e1
   {- Arity: 4,
      Strictness: <L,U><L,U(U,U(U,U,U),U)><L,C(C1(C1(U)))><L,C(C1(C1(U)))>,
      Inline: [0] -}
-d93e4c077f2f648dfc85397d5a20d04c
-  $wa3 ::
+f9eb77f77c302fc57c376618972c3d66
+  $wa4 ::
     Text.Parsec.Prim.State [GHC.Types.Char] t
     -> ([GHC.Base.String]
         -> Text.Parsec.Prim.State [GHC.Types.Char] t
@@ -344,96 +441,6 @@ d93e4c077f2f648dfc85397d5a20d04c
                               (GHC.Types.[]
                                  @ Text.Parsec.Error.Message) of ww14 { (#,#) ww15 ww16 ->
                        Text.Parsec.Error.ParseError ww15 ww16 } } } } }))) -}
-cf3e6b63e448700a45932ced87af4608
-  $wiToC ::
-    GHC.Types.Int
-    -> GHC.Types.Int
-    -> GHC.Types.Int
-    -> (# GHC.Types.Int, GHC.Types.Int #)
-  {- Arity: 3, Strictness: <L,1*U(U)><L,1*U(U)><L,U(U)>, Inline: [0],
-     Unfolding: (\ w :: GHC.Types.Int
-                   w1 :: GHC.Types.Int
-                   w2 :: GHC.Types.Int ->
-                 (# case w2 of wild { GHC.Types.I# i ->
-                    case w of wild1 { GHC.Types.I# i1 ->
-                    case GHC.Prim./##
-                           (GHC.Prim.int2Double# i)
-                           (GHC.Prim.int2Double# i1) of wild2 { DEFAULT ->
-                    let {
-                      n :: GHC.Prim.Int# = GHC.Prim.double2Int# wild2
-                    } in
-                    case GHC.Prim.tagToEnum#
-                           @ GHC.Types.Bool
-                           (GHC.Prim.<## (GHC.Prim.int2Double# n) wild2) of wild3 {
-                      GHC.Types.False -> GHC.Types.I# n
-                      GHC.Types.True -> GHC.Types.I# (GHC.Prim.+# n 1) } } } },
-                    case w1 of ww { GHC.Types.I# ww1 ->
-                    case ww1 of wild {
-                      DEFAULT
-                      -> case w2 of wild1 { GHC.Types.I# x ->
-                         case GHC.Classes.modInt# x wild of ww2 {
-                           DEFAULT -> GHC.Types.I# ww2 0 -> ww } }
-                      (-1) -> ww
-                      0
-                      -> case GHC.Real.divZeroError ret_ty GHC.Types.Int of {} } } #)) -}
-c9f819929cf5bd91608f30c17f761113
-  $wmfold ::
-    (((GHC.Types.Int, GHC.Types.Int), a, b) -> b)
-    -> b
-    -> GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> Data.Vector.Vector a
-    -> b
-  {- Arity: 8,
-     Strictness: <L,C(U)><L,1*U><L,U><L,U><L,U><L,U><L,U><L,U(U,A,U)>,
-     Inline: [0],
-     Unfolding: (\ @ a9
-                   @ b
-                   w :: ((GHC.Types.Int, GHC.Types.Int), a9, b) -> b
-                   w1 :: b
-                   ww :: GHC.Prim.Int#
-                   ww1 :: GHC.Prim.Int#
-                   ww2 :: GHC.Prim.Int#
-                   ww3 :: GHC.Prim.Int#
-                   ww4 :: GHC.Prim.Int#
-                   ww5 :: Data.Vector.Vector a9 ->
-                 let {
-                   l :: [a9] = Data.Matrix.$wtoList @ a9 ww ww1 ww2 ww3 ww4 ww5
-                 } in
-                 Parser.lfoldi
-                   @ a9
-                   @ b
-                   (let {
-                      w2 :: GHC.Types.Int = GHC.Types.I# ww1
-                    } in
-                    \ w3 :: GHC.Types.Int ->
-                    (case w3 of wild { GHC.Types.I# i ->
-                     case GHC.Prim./##
-                            (GHC.Prim.int2Double# i)
-                            (GHC.Prim.int2Double# ww) of wild2 { DEFAULT ->
-                     let {
-                       n :: GHC.Prim.Int# = GHC.Prim.double2Int# wild2
-                     } in
-                     case GHC.Prim.tagToEnum#
-                            @ GHC.Types.Bool
-                            (GHC.Prim.<## (GHC.Prim.int2Double# n) wild2) of wild1 {
-                       GHC.Types.False -> GHC.Types.I# n
-                       GHC.Types.True -> GHC.Types.I# (GHC.Prim.+# n 1) } } },
-                     case ww1 of wild {
-                       DEFAULT
-                       -> case w3 of wild1 { GHC.Types.I# x ->
-                          case GHC.Classes.modInt# x wild of ww6 {
-                            DEFAULT -> GHC.Types.I# ww6 0 -> w2 } }
-                       (-1) -> w2
-                       0 -> case GHC.Real.divZeroError ret_ty GHC.Types.Int of {} }))
-                   (case GHC.List.$wlenAcc @ a9 l 0 of ww6 { DEFAULT ->
-                    GHC.Types.I# ww6 })
-                   w
-                   w1
-                   l) -}
 c4af98df2114d148e575ad11aed22a7d
   boardParser ::
     Text.Parsec.String.Parser Language.Haskell.TH.Syntax.Dec
@@ -1732,6 +1739,59 @@ efbc5aa932928696556dfd900402ed9a
 71cb9265439d16c3f727c4e15a9befa4
   def9 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "{"#) -}
+8a963ae39764cabcf4c5161a1a16aaa3
+  emptyDecL ::
+    Text.Parsec.String.Parser [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 5, HasNoCafRefs,
+     Strictness: <L,U(U,U,U)><L,A><L,A><C(C(C(S))),1*C1(C1(C1(U)))><L,A>,
+     Unfolding: InlineRule (0, True, True)
+                Parser.emptyDecL1
+                  `cast`
+                (Sym (Text.Parsec.Prim.NTCo:ParsecT[0]
+                          <[GHC.Types.Char]>_R
+                          <()>_R
+                          <Data.Functor.Identity.Identity>_R
+                          <[Language.Haskell.TH.Syntax.Dec]>_R)) -}
+55a157195735d26839138ff517f56669
+  emptyDecL1 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> Data.Functor.Identity.Identity b
+  {- Arity: 5, HasNoCafRefs,
+     Strictness: <L,U(U,U,U)><L,A><L,A><C(C(C(S))),1*C1(C1(C1(U)))><L,A>,
+     Unfolding: InlineRule (5, True, False)
+                (\ @ b
+                   s1 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   ds :: [Language.Haskell.TH.Syntax.Dec]
+                         -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                         -> Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b
+                   ds1 :: Text.Parsec.Error.ParseError
+                          -> Data.Functor.Identity.Identity b
+                   eok :: [Language.Haskell.TH.Syntax.Dec]
+                          -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                          -> Text.Parsec.Error.ParseError
+                          -> Data.Functor.Identity.Identity b
+                   ds2 :: Text.Parsec.Error.ParseError
+                          -> Data.Functor.Identity.Identity b ->
+                 eok
+                   (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)
+                   s1
+                   (case s1 of wild { Text.Parsec.Prim.State ds3 ds4 ds5 ->
+                    Text.Parsec.Error.ParseError
+                      ds4
+                      (GHC.Types.[] @ Text.Parsec.Error.Message) })) -}
 a3fbf3c3db13be549b22c5401e5999fe
   expParser ::
     GHC.Base.String
@@ -1971,7 +2031,7 @@ c4c809efcac30bf325ee224506b63187
 5a8ec5e239fe073dbcf23fd1e5b14420
   gameIDParser5 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# " :"#) -}
-4b4ec3950d3ae98f66b593900eea5a47
+3dfbccf8256d4619a5b96a168b5dbb46
   gameParser :: Text.Parsec.String.Parser Agpl_syntax.Game
   {- Arity: 5,
      Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
@@ -1983,7 +2043,7 @@ c4c809efcac30bf325ee224506b63187
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <Agpl_syntax.Game>_R)) -}
-e8b4b819f4f9d9d6194a8d0f76995020
+88b72e3fa8699c33c0dccd47d6def371
   gameParser1 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (Agpl_syntax.Game
@@ -2056,7 +2116,18 @@ e8b4b819f4f9d9d6194a8d0f76995020
                       (\ err' :: Text.Parsec.Error.ParseError ->
                        eta4 (Text.Parsec.Error.mergeError err err')))
                    eta4 }) -}
-496067f8d2a2d4170e44dcca590f63a3
+f54573980dd33cac32d349a8d85a7dac
+  gameParser10 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   " \n\
+                   \\r\t"#) -}
+7bbcfddc511ec411ccdec9e90f873728
+  gameParser11 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "read import"#) -}
+c8f69f40bf8c9b29d674aebb9ab07eae
+  gameParser12 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "import"#) -}
+18727962f49a863f9d34256d50629ef6
   gameParser2 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (Agpl_syntax.Game
@@ -2073,7 +2144,7 @@ e8b4b819f4f9d9d6194a8d0f76995020
         -> Data.Functor.Identity.Identity b1)
     -> Data.Functor.Identity.Identity b1
   {- Arity: 5,
-     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
+     Strictness: <L,U(U,U(U,U,U),U)><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,C(U)>,
      Unfolding: (\ @ b1
                    eta :: Text.Parsec.Prim.State [GHC.Types.Char] ()
                    eta1 :: Agpl_syntax.Game
@@ -2088,10 +2159,21 @@ e8b4b819f4f9d9d6194a8d0f76995020
                            -> Data.Functor.Identity.Identity b1
                    eta4 :: Text.Parsec.Error.ParseError
                            -> Data.Functor.Identity.Identity b1 ->
-                 Parser.gameIDParser1
+                 Text.Parsec.Prim.$wa9
+                   @ GHC.Base.String
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ [Language.Haskell.TH.Syntax.Dec]
+                   Parser.gameParser4
+                     `cast`
+                   (Sym (Text.Parsec.Prim.NTCo:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <[Language.Haskell.TH.Syntax.Dec]>_R))
                    @ b1
                    eta
-                   (\ x :: Agpl_syntax.GameID
+                   (\ x :: [[Language.Haskell.TH.Syntax.Dec]]
                       s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
                       err :: Text.Parsec.Error.ParseError[OneShot] ->
                     Parser.gameParser3
@@ -2107,7 +2189,7 @@ e8b4b819f4f9d9d6194a8d0f76995020
                       (\ err' :: Text.Parsec.Error.ParseError ->
                        eta2 (Text.Parsec.Error.mergeError err err')))
                    eta2
-                   (\ x :: Agpl_syntax.GameID
+                   (\ x :: [[Language.Haskell.TH.Syntax.Dec]]
                       s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
                       err :: Text.Parsec.Error.ParseError[OneShot] ->
                     Parser.gameParser3
@@ -2121,11 +2203,10 @@ e8b4b819f4f9d9d6194a8d0f76995020
                          err' :: Text.Parsec.Error.ParseError[OneShot] ->
                        eta3 x1 s3 (Text.Parsec.Error.mergeError err err'))
                       (\ err' :: Text.Parsec.Error.ParseError ->
-                       eta4 (Text.Parsec.Error.mergeError err err')))
-                   eta4) -}
-625c426fec7089aa6abe1754af4b1d57
+                       eta4 (Text.Parsec.Error.mergeError err err')))) -}
+8e554c313a4321fef6f8c883ea35b4bd
   gameParser3 ::
-    Agpl_syntax.GameID
+    [[Language.Haskell.TH.Syntax.Dec]]
     -> forall b.
        Text.Parsec.Prim.State [GHC.Types.Char] ()
        -> (Agpl_syntax.Game
@@ -2142,7 +2223,384 @@ e8b4b819f4f9d9d6194a8d0f76995020
            -> Data.Functor.Identity.Identity b)
        -> Data.Functor.Identity.Identity b
   {- Arity: 6,
+     Strictness: <L,1*U><L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U> -}
+33ffdd8c467f9aeec4db962c94bac1a7
+  gameParser4 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
+     Unfolding: (\ @ b1
+                   eta :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   eta1 :: [Language.Haskell.TH.Syntax.Dec]
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta2 :: Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta3 :: [Language.Haskell.TH.Syntax.Dec]
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta4 :: Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1 ->
+                 case Parser.boardParser7
+                        @ () of wild { Text.Parsec.Token.TokenParser ds ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ->
+                 ds15
+                   `cast`
+                 (Text.Parsec.Prim.NTCo:ParsecT[0]
+                      <[GHC.Types.Char]>_R
+                      <()>_R
+                      <Data.Functor.Identity.Identity>_R
+                      <()>_R)
+                   @ b1
+                   eta
+                   (\ x :: ()
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                      err :: Text.Parsec.Error.ParseError ->
+                    Parser.gameParser5
+                      @ b1
+                      s2
+                      eta1
+                      eta2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       eta1 x1 s3 (Text.Parsec.Error.mergeError err err'))
+                      (\ err' :: Text.Parsec.Error.ParseError ->
+                       eta2 (Text.Parsec.Error.mergeError err err')))
+                   eta2
+                   (\ x :: ()
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                      err :: Text.Parsec.Error.ParseError ->
+                    Parser.gameParser5
+                      @ b1
+                      s2
+                      eta1
+                      eta2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       eta3 x1 s3 (Text.Parsec.Error.mergeError err err'))
+                      (\ err' :: Text.Parsec.Error.ParseError ->
+                       eta4 (Text.Parsec.Error.mergeError err err')))
+                   eta4 }) -}
+74a226bd48e37ac957a90c3f331ae1ae
+  gameParser5 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
+     Unfolding: (\ @ b1
+                   eta :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   eta1 :: [Language.Haskell.TH.Syntax.Dec]
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta2 :: Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta3 :: [Language.Haskell.TH.Syntax.Dec]
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta4 :: Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1 ->
+                 Parser.gameParser_m2
+                   `cast`
+                 (Text.Parsec.Prim.NTCo:ParsecT[0]
+                      <[GHC.Types.Char]>_R
+                      <()>_R
+                      <Data.Functor.Identity.Identity>_R
+                      <()>_R)
+                   @ b1
+                   eta
+                   (\ x :: ()
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                      err :: Text.Parsec.Error.ParseError ->
+                    Parser.gameParser6
+                      @ b1
+                      s2
+                      eta1
+                      eta2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       eta1 x1 s3 (Text.Parsec.Error.mergeError err err'))
+                      (\ err' :: Text.Parsec.Error.ParseError ->
+                       eta2 (Text.Parsec.Error.mergeError err err')))
+                   eta2
+                   (\ x :: ()
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                      err :: Text.Parsec.Error.ParseError ->
+                    Parser.gameParser6
+                      @ b1
+                      s2
+                      eta1
+                      eta2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       eta3 x1 s3 (Text.Parsec.Error.mergeError err err'))
+                      (\ err' :: Text.Parsec.Error.ParseError ->
+                       eta4 (Text.Parsec.Error.mergeError err err')))
+                   eta4) -}
+eb448c8b39d31b50e1ee76b3e50916a1
+  gameParser6 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
+     Unfolding: (\ @ b1
+                   eta :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   eta1 :: [Language.Haskell.TH.Syntax.Dec]
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta2 :: Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta3 :: [Language.Haskell.TH.Syntax.Dec]
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta4 :: Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1 ->
+                 Parser.gameParser_m1
+                   `cast`
+                 (Text.Parsec.Prim.NTCo:ParsecT[0]
+                      <[GHC.Types.Char]>_R
+                      <()>_R
+                      <Data.Functor.Identity.Identity>_R
+                      <()>_R)
+                   @ b1
+                   eta
+                   (\ x :: ()
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                      err :: Text.Parsec.Error.ParseError ->
+                    Parser.gameParser7
+                      @ b1
+                      s2
+                      eta1
+                      eta2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       eta1 x1 s3 (Text.Parsec.Error.mergeError err err'))
+                      (\ err' :: Text.Parsec.Error.ParseError ->
+                       eta2 (Text.Parsec.Error.mergeError err err')))
+                   eta2
+                   (\ x :: ()
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                      err :: Text.Parsec.Error.ParseError ->
+                    Parser.gameParser7
+                      @ b1
+                      s2
+                      eta1
+                      eta2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       eta3 x1 s3 (Text.Parsec.Error.mergeError err err'))
+                      (\ err' :: Text.Parsec.Error.ParseError ->
+                       eta4 (Text.Parsec.Error.mergeError err err')))
+                   eta4) -}
+eff604167d3754500f863780a128a37c
+  gameParser7 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> ([Language.Haskell.TH.Syntax.Dec]
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Strictness: <L,U(U,U(U,U,U),U)><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,C(U)>,
+     Unfolding: (\ @ b1
+                   eta :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   eta1 :: [Language.Haskell.TH.Syntax.Dec]
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta2 :: Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta3 :: [Language.Haskell.TH.Syntax.Dec]
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1
+                   eta4 :: Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1 ->
+                 Text.Parsec.Prim.$wa9
+                   @ GHC.Base.String
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ GHC.Types.Char
+                   Parser.gameParser9
+                     `cast`
+                   (Sym (Text.Parsec.Prim.NTCo:ParsecT[0]
+                             <GHC.Base.String>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <GHC.Types.Char>_R))
+                   @ b1
+                   eta
+                   (\ x :: [GHC.Types.Char]
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                      err :: Text.Parsec.Error.ParseError[OneShot] ->
+                    Parser.gameParser8
+                      x
+                      @ b1
+                      s2
+                      eta1
+                      eta2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       eta1 x1 s3 (Text.Parsec.Error.mergeError err err'))
+                      (\ err' :: Text.Parsec.Error.ParseError ->
+                       eta2 (Text.Parsec.Error.mergeError err err')))
+                   eta2
+                   (\ x :: [GHC.Types.Char]
+                      s2 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                      err :: Text.Parsec.Error.ParseError[OneShot] ->
+                    Parser.gameParser8
+                      x
+                      @ b1
+                      s2
+                      eta1
+                      eta2
+                      (\ x1 :: [Language.Haskell.TH.Syntax.Dec]
+                         s3 :: Text.Parsec.Prim.State [GHC.Types.Char] ()[OneShot]
+                         err' :: Text.Parsec.Error.ParseError[OneShot] ->
+                       eta3 x1 s3 (Text.Parsec.Error.mergeError err err'))
+                      (\ err' :: Text.Parsec.Error.ParseError ->
+                       eta4 (Text.Parsec.Error.mergeError err err')))) -}
+72295b95e672c00b8223c3cf308a4a8f
+  gameParser8 ::
+    [GHC.Types.Char]
+    -> forall b.
+       Text.Parsec.Prim.State [GHC.Types.Char] ()
+       -> ([Language.Haskell.TH.Syntax.Dec]
+           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+           -> Text.Parsec.Error.ParseError
+           -> Data.Functor.Identity.Identity b)
+       -> (Text.Parsec.Error.ParseError
+           -> Data.Functor.Identity.Identity b)
+       -> ([Language.Haskell.TH.Syntax.Dec]
+           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+           -> Text.Parsec.Error.ParseError
+           -> Data.Functor.Identity.Identity b)
+       -> (Text.Parsec.Error.ParseError
+           -> Data.Functor.Identity.Identity b)
+       -> Data.Functor.Identity.Identity b
+  {- Arity: 6,
      Strictness: <L,U><L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U> -}
+c46893792ea527f2a1ee9f2cc3279e8d
+  gameParser9 ::
+    Text.Parsec.Prim.State GHC.Base.String ()
+    -> (GHC.Types.Char
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (GHC.Types.Char
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> Data.Functor.Identity.Identity b
+  {- Arity: 5,
+     Strictness: <S(LSS),1*U(U,U(U,U,U),U)><L,C(C1(C1(U)))><L,A><L,A><L,C(U)>,
+     Unfolding: InlineRule (5, True, False)
+                (\ @ b
+                   w2 :: Text.Parsec.Prim.State GHC.Base.String ()
+                   w3 :: GHC.Types.Char
+                         -> Text.Parsec.Prim.State GHC.Base.String ()
+                         -> Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b
+                   w4 :: Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b
+                   w5 :: GHC.Types.Char
+                         -> Text.Parsec.Prim.State GHC.Base.String ()
+                         -> Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b
+                   w6 :: Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b ->
+                 case w2 of ww { Text.Parsec.Prim.State ww1 ww2 ww3 ->
+                 case ww2 of ww4 { Text.Parsec.Pos.SourcePos ww5 ww6 ww7 ->
+                 Text.Parsec.Char.$wa1
+                   @ GHC.Base.String
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   (Text.Parsec.String.$s$fStream[]mtok @ GHC.Types.Char)
+                   Parser.gameParser10
+                   @ b
+                   ww1
+                   ww5
+                   ww6
+                   ww7
+                   ww3
+                   w3
+                   w6 } }) -}
+be26e825000a85c1f5ce451325fdb3b9
+  gameParser_m1 ::
+    Text.Parsec.Prim.ParsecT
+      [GHC.Types.Char] () Data.Functor.Identity.Identity ()
+  {- Unfolding: (Debug.Trace.trace
+                   @ (Text.Parsec.Prim.ParsecT
+                        GHC.Base.String () Data.Functor.Identity.Identity ())
+                   Parser.gameParser11
+                   (Parser.m_whiteSpace @ ())) -}
+2c9399a39ae51af84018fe626689e745
+  gameParser_m2 ::
+    Text.Parsec.Prim.ParsecT
+      [GHC.Types.Char] () Data.Functor.Identity.Identity ()
+  {- Unfolding: (case Parser.boardParser7
+                        @ () of wild { Text.Parsec.Token.TokenParser ds ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ->
+                 ds1 Parser.gameParser12 }) -}
 57923796113f01f82a144bb58e242e75
   handParser ::
     Text.Parsec.String.Parser Language.Haskell.TH.Syntax.Dec
@@ -2604,26 +3062,6 @@ f707bfe4656972c9bd49f2c8222a4e4d
   {- Unfolding: (case Parser.boardParser7
                         @ () of wild { Text.Parsec.Token.TokenParser ds ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ->
                  ds1 Parser.m_reservedNames16 }) -}
-ae7f6ed628a85a02e65d98a32abd9749
-  iToC ::
-    GHC.Types.Int
-    -> GHC.Types.Int -> GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int)
-  {- Arity: 3, Strictness: <L,1*U(U)><L,1*U(U)><L,U(U)>m,
-     Inline: INLINE[0],
-     Unfolding: InlineRule (3, True, False)
-                (\ w :: GHC.Types.Int w1 :: GHC.Types.Int w2 :: GHC.Types.Int ->
-                 case Parser.$wiToC w w1 w2 of ww { (#,#) ww1 ww2 ->
-                 (ww1, ww2) }) -}
-9b793da0a764a43fa1b70eadcc29d808
-  lfoldi ::
-    (GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
-    -> GHC.Types.Int
-    -> (((GHC.Types.Int, GHC.Types.Int), a, b) -> b)
-    -> b
-    -> [a]
-    -> b
-  {- Arity: 5, HasNoCafRefs,
-     Strictness: <L,C(U)><L,U(U)><L,C(U)><L,1*U><S,1*U> -}
 0abf58393168621816fbb713c365a8f0
   m_braces ::
     Text.Parsec.Prim.ParsecT
@@ -3260,20 +3698,6 @@ f609d8e33528b4b1d6d41366f305af4a
   {- Unfolding: (case Parser.boardParser7
                         @ () of wild { Text.Parsec.Token.TokenParser ds ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ->
                  ds1 Parser.m_reservedNames12 }) -}
-572af231ecadd376b0f99a0d82f0e8d6
-  mfold ::
-    (((GHC.Types.Int, GHC.Types.Int), a, b) -> b)
-    -> b -> Data.Matrix.Matrix a -> b
-  {- Arity: 3, Strictness: <L,C(U)><L,1*U><S,U(U,U,U,U,U,U(U,A,U))>,
-     Inline: INLINE[0],
-     Unfolding: InlineRule (3, True, False)
-                (\ @ a9
-                   @ b
-                   w :: ((GHC.Types.Int, GHC.Types.Int), a9, b) -> b
-                   w1 :: b
-                   w2 :: Data.Matrix.Matrix a9 ->
-                 case w2 of ww { Data.Matrix.M ww1 ww2 ww3 ww4 ww5 ww6 ->
-                 Parser.$wmfold @ a9 @ b w w1 ww1 ww2 ww3 ww4 ww5 ww6 }) -}
 4589a2d878988672e2225239bd892afd
   nilPM :: Text.Parsec.String.Parser Agpl_syntax.PossMovesFun
   {- Arity: 5, HasNoCafRefs,
@@ -3396,7 +3820,7 @@ f609d8e33528b4b1d6d41366f305af4a
 1592030632ef4a1d58a0db3c22c79b32
   nilParser3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "data NULL = NULL"#) -}
-0c43ec915ab6fb3164e4a9d223d1c045
+aa4bff5807c58ae3c2a36808bd25d744
   parseCustomData ::
     Text.Parsec.String.Parser [Language.Haskell.TH.Syntax.Dec]
   {- Arity: 5,
@@ -3409,7 +3833,7 @@ f609d8e33528b4b1d6d41366f305af4a
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <[Language.Haskell.TH.Syntax.Dec]>_R)) -}
-ada4f58f1c37591231ecf2af77017886
+2b057a4684c5f1fb35e7c9373e96e1df
   parseCustomData1 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ([Language.Haskell.TH.Syntax.Dec]
@@ -3482,7 +3906,7 @@ ada4f58f1c37591231ecf2af77017886
                       (\ err' :: Text.Parsec.Error.ParseError ->
                        eta4 (Text.Parsec.Error.mergeError err err')))
                    eta4 }) -}
-d06d5c515f0316f9333884bda46c9685
+f59c810ee6c9be867f26dbbdf3dd25cc
   parseCustomData2 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ([Language.Haskell.TH.Syntax.Dec]
@@ -3553,7 +3977,7 @@ d06d5c515f0316f9333884bda46c9685
                       (\ err' :: Text.Parsec.Error.ParseError ->
                        eta4 (Text.Parsec.Error.mergeError err err')))
                    eta4) -}
-4ebf87aa61d900a501d957780adc6764
+d36b75965c05c8e4ffe742719420ad34
   parseCustomData3 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ([Language.Haskell.TH.Syntax.Dec]
@@ -3622,16 +4046,159 @@ d06d5c515f0316f9333884bda46c9685
                          err' :: Text.Parsec.Error.ParseError[OneShot] ->
                        eta3 x1 s3 (Text.Parsec.Error.mergeError err err')))
                    eta4 }) -}
-f8657f818ac834b199e5336a57d00d9e
-  parseCustomData4 :: [GHC.Types.Char]
+13e76f4db240eb802a3576dbf96a19e8
+  parseCustomData4 ::
+    Text.Parsec.Prim.State GHC.Base.String ()
+    -> (GHC.Types.Char
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (GHC.Types.Char
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> Data.Functor.Identity.Identity b
+  {- Arity: 5,
+     Strictness: <S(LSS),1*U(U,U(U,U,U),U)><L,C(C1(C1(U)))><L,A><L,A><L,C(U)>,
+     Unfolding: InlineRule (5, True, False)
+                (\ @ b
+                   w2 :: Text.Parsec.Prim.State GHC.Base.String ()
+                   w3 :: GHC.Types.Char
+                         -> Text.Parsec.Prim.State GHC.Base.String ()
+                         -> Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b
+                   w4 :: Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b
+                   w5 :: GHC.Types.Char
+                         -> Text.Parsec.Prim.State GHC.Base.String ()
+                         -> Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b
+                   w6 :: Text.Parsec.Error.ParseError
+                         -> Data.Functor.Identity.Identity b ->
+                 case w2 of ww { Text.Parsec.Prim.State ww1 ww2 ww3 ->
+                 case ww2 of ww4 { Text.Parsec.Pos.SourcePos ww5 ww6 ww7 ->
+                 Text.Parsec.Char.$wa1
+                   @ GHC.Base.String
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   (Text.Parsec.String.$s$fStream[]mtok @ GHC.Types.Char)
+                   Parser.parseCustomData5
+                   @ b
+                   ww1
+                   ww5
+                   ww6
+                   ww7
+                   ww3
+                   w3
+                   w6 } }) -}
+d7e7fdb36100aedc7eec83e25ca3e0b7
+  parseCustomData5 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "$"#) -}
-d555a08c9bacf474f224af07dabcce75
+5679c9eb460b6983b890663a0b780f13
   parseCustomData_m1 ::
     Text.Parsec.Prim.ParsecT
       [GHC.Types.Char] () Data.Functor.Identity.Identity ()
   {- Unfolding: (case Parser.boardParser7
                         @ () of wild { Text.Parsec.Token.TokenParser ds ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ->
-                 ds3 Parser.parseCustomData4 }) -}
+                 ds3 Parser.parseCustomData5 }) -}
+31a12b35d4ce662e9760849d88eb3f06
+  parseDecsFromFile ::
+    GHC.Base.String
+    -> Text.Parsec.String.Parser [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 1, Strictness: <L,U>,
+     Unfolding: (\ filename :: GHC.Base.String ->
+                 case Language.Haskell.Meta.Parse.parseResultToEither
+                        @ Language.Haskell.Exts.Syntax.Module
+                        (Language.Haskell.Meta.Parse.parseDecs1
+                           (GHC.IO.unsafeDupablePerformIO
+                              @ GHC.Base.String
+                              (\ s :: GHC.Prim.State# GHC.Prim.RealWorld[OneShot] ->
+                               case GHC.Prim.noDuplicate# s of s' { DEFAULT ->
+                               case GHC.IO.Handle.FD.openFile1
+                                      filename
+                                      GHC.IO.IOMode.ReadMode
+                                      s' of ds1 { (#,#) ipv ipv1 ->
+                               GHC.IO.Handle.Text.hGetContents1 ipv1 ipv } })
+                                `cast`
+                              (Sym (GHC.Types.NTCo:IO[0] <GHC.Base.String>_R)))) of wild {
+                   Data.Either.Left x1
+                   -> let {
+                        x :: [Language.Haskell.TH.Syntax.Dec]
+                        = Debug.Trace.trace
+                            @ [Language.Haskell.TH.Syntax.Dec]
+                            x1
+                            (GHC.Err.undefined @ [Language.Haskell.TH.Syntax.Dec])
+                      } in
+                      (\ @ b
+                         s1 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                         ds :: [Language.Haskell.TH.Syntax.Dec]
+                               -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                               -> Text.Parsec.Error.ParseError
+                               -> Data.Functor.Identity.Identity b
+                         ds1 :: Text.Parsec.Error.ParseError
+                                -> Data.Functor.Identity.Identity b
+                         eok :: [Language.Haskell.TH.Syntax.Dec]
+                                -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                                -> Text.Parsec.Error.ParseError
+                                -> Data.Functor.Identity.Identity b
+                         ds2 :: Text.Parsec.Error.ParseError
+                                -> Data.Functor.Identity.Identity b ->
+                       eok
+                         x
+                         s1
+                         (case s1 of wild1 { Text.Parsec.Prim.State ds3 ds4 ds5 ->
+                          Text.Parsec.Error.ParseError
+                            ds4
+                            (GHC.Types.[] @ Text.Parsec.Error.Message) }))
+                        `cast`
+                      (Sym (Text.Parsec.Prim.NTCo:ParsecT[0]
+                                <[GHC.Types.Char]>_R
+                                <()>_R
+                                <Data.Functor.Identity.Identity>_R
+                                <[Language.Haskell.TH.Syntax.Dec]>_R))
+                   Data.Either.Right y
+                   -> let {
+                        decs :: [Language.Haskell.TH.Syntax.Dec]
+                        = case y of wild1 { Language.Haskell.Exts.Syntax.Module ds ds1 ds2 ds3 ds4 ds5 x1 ->
+                          Language.Haskell.Meta.Syntax.Translate.$fToDecs[]_$ctoDecs
+                            @ Language.Haskell.Exts.Syntax.Decl
+                            Language.Haskell.Meta.Syntax.Translate.$ctoDecs
+                              `cast`
+                            (Sym (Language.Haskell.Meta.Syntax.Translate.NTCo:ToDecs[0]
+                                      <Language.Haskell.Exts.Syntax.Decl>_N))
+                            x1 }
+                      } in
+                      (\ @ b
+                         s1 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                         ds :: [Language.Haskell.TH.Syntax.Dec]
+                               -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                               -> Text.Parsec.Error.ParseError
+                               -> Data.Functor.Identity.Identity b
+                         ds1 :: Text.Parsec.Error.ParseError
+                                -> Data.Functor.Identity.Identity b
+                         eok :: [Language.Haskell.TH.Syntax.Dec]
+                                -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                                -> Text.Parsec.Error.ParseError
+                                -> Data.Functor.Identity.Identity b
+                         ds2 :: Text.Parsec.Error.ParseError
+                                -> Data.Functor.Identity.Identity b ->
+                       eok
+                         decs
+                         s1
+                         (case s1 of wild1 { Text.Parsec.Prim.State ds3 ds4 ds5 ->
+                          Text.Parsec.Error.ParseError
+                            ds4
+                            (GHC.Types.[] @ Text.Parsec.Error.Message) }))
+                        `cast`
+                      (Sym (Text.Parsec.Prim.NTCo:ParsecT[0]
+                                <[GHC.Types.Char]>_R
+                                <()>_R
+                                <Data.Functor.Identity.Identity>_R
+                                <[Language.Haskell.TH.Syntax.Dec]>_R)) }) -}
 eaacfecc342429ef5fcddd29ab872c79
   parseFromString :: Text.Parsec.String.Parser Agpl_syntax.FromString
   {- Arity: 5,
@@ -4542,7 +5109,7 @@ b86250e3044859b6ec4e8cd874e7e055
   {- Unfolding: (case Parser.boardParser7
                         @ () of wild { Text.Parsec.Token.TokenParser ds ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ->
                  ds1 Parser.parseFromString13 }) -}
-a4804fa113c39566d16e1bc9903a73e5
+e599397d5878401e304b85bfd7d44342
   parseGame :: GHC.Base.String -> Agpl_syntax.Game
   {- Arity: 1, Strictness: <L,U>,
      Unfolding: InlineRule (1, True, False)
@@ -4570,7 +5137,7 @@ a4804fa113c39566d16e1bc9903a73e5
                               Text.Parsec.Error.ParseError Agpl_syntax.Game>_R) of wild {
                    Data.Either.Left err -> Parser.parseGame1
                    Data.Either.Right ans -> ans }) -}
-209a76310445414aaeb43a4737c3ba3f
+6c39df8a7375763952254b87892b959d
   parseGame1 :: Agpl_syntax.Game
   {- Unfolding: (Debug.Trace.trace
                    @ Agpl_syntax.Game
@@ -4609,6 +5176,19 @@ a75588ce51f4c33367581b6bb07d917a
     -> Data.Functor.Identity.Identity b1
   {- Arity: 5,
      Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,C(U)> -}
+ba2e8574400fe5e2377733661103355f
+  parseImports ::
+    Text.Parsec.String.Parser [Language.Haskell.TH.Syntax.Dec]
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
+     Unfolding: InlineRule (0, True, True)
+                Parser.gameParser4
+                  `cast`
+                (Sym (Text.Parsec.Prim.NTCo:ParsecT[0]
+                          <[GHC.Types.Char]>_R
+                          <()>_R
+                          <Data.Functor.Identity.Identity>_R
+                          <[Language.Haskell.TH.Syntax.Dec]>_R)) -}
 6ee4f3a9ca230114f5f412bf1da38d00
   parseInitState ::
     Agpl_syntax.GameState
@@ -7899,7 +8479,7 @@ fdc3484039219857c21459d0b2cd75c6
       Data.Functor.Identity.Identity
       Language.Haskell.TH.Syntax.Exp
   {- Unfolding: (Parser.expParser Parser.parsePossMoves7) -}
-72ea6f79256ce731d1f326884421523c
+d1d24a087f9572d22e98e043d854e397
   parseToS :: GHC.Base.String -> GHC.Base.String
   {- Arity: 1, Strictness: <L,U>,
      Unfolding: (\ input :: GHC.Base.String ->
@@ -7926,7 +8506,7 @@ fdc3484039219857c21459d0b2cd75c6
                               Text.Parsec.Error.ParseError Agpl_syntax.Game>_R) of wild {
                    Data.Either.Left err -> Parser.parseToS1
                    Data.Either.Right ans -> Agpl_syntax.$fShowGame_$cshow ans }) -}
-dc942561e99154a0a7edcad6690f2245
+15f8e31086641818dc354570eb0f51d0
   parseToS1 :: GHC.Base.String
   {- Unfolding: (Agpl_syntax.$fShowGame_$cshowsPrec
                    GHC.Show.shows18
@@ -8418,7 +8998,7 @@ e9b388cb056bd80255f65d3d2c3bbce2
     -> Text.Parsec.Prim.ParsecT
          GHC.Base.String u Data.Functor.Identity.Identity ()
   {- Arity: 2, Strictness: <S,1*U><L,U> -}
-217672dd9c7d5eae199a6ab2fe3be9dd
+42e4c60d60e6a3c905a4c426f152a678
   sParser :: Text.Parsec.String.Parser GHC.Base.String
   {- Arity: 5,
      Strictness: <L,U(U,U(U,U,U),U)><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,A>,
@@ -8430,7 +9010,7 @@ e9b388cb056bd80255f65d3d2c3bbce2
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <GHC.Base.String>_R)) -}
-2c1e491087ad172e1ab1137d9089d83c
+da2de88d7c9eb1249a8b45972a002a37
   sParser1 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (GHC.Base.String
@@ -8464,7 +9044,7 @@ e9b388cb056bd80255f65d3d2c3bbce2
                          -> Data.Functor.Identity.Identity b1
                    w4 :: Text.Parsec.Error.ParseError
                          -> Data.Functor.Identity.Identity b1 ->
-                 Parser.$wa1 @ b1 w w1 w2 w3) -}
+                 Parser.$wa2 @ b1 w w1 w2 w3) -}
 aae46a9649d8f5a3a7ed4520e58c539a
   sParser2 ::
     Text.Parsec.Prim.State GHC.Base.String ()
@@ -8567,14 +9147,14 @@ a7df79f118add7be6c7c42998855ae03
                    eta4 :: Text.Parsec.Error.ParseError
                            -> Data.Functor.Identity.Identity b1 ->
                  Parser.parseFromString7 @ b1 eta eta1 eta2 eta3 eta4) -}
-8f064b845a4560809704214b361e62a9
+133d72c5d7fa6387cc136e861ec40b6a
   test :: GHC.Base.String -> GHC.Types.IO ()
   {- Arity: 2, Strictness: <L,U><L,U>,
      Unfolding: InlineRule (0, True, True)
                 Parser.test1
                   `cast`
                 (<GHC.Base.String>_R ->_R Sym (GHC.Types.NTCo:IO[0] <()>_R)) -}
-f474351ecc223490ddc3423e8fb1c6b1
+03a7466ce37e6e053f50456f975733ef
   test1 ::
     GHC.Base.String
     -> GHC.Prim.State# GHC.Prim.RealWorld
@@ -8615,7 +9195,7 @@ f474351ecc223490ddc3423e8fb1c6b1
                         (GHC.Show.$fShow[]_$s$cshow2 ans)
                         GHC.Types.True
                         eta }) -}
-70a238e9d335083364f0d134fcc4b187
+a302ace12df0def0509c50000d7988e1
   test2 ::
     Text.Parsec.Prim.State [GHC.Types.Char] t
     -> ([GHC.Base.String]
@@ -8662,7 +9242,7 @@ f474351ecc223490ddc3423e8fb1c6b1
                    (\ x :: ()
                       s2 :: Text.Parsec.Prim.State [GHC.Types.Char] t
                       err :: Text.Parsec.Error.ParseError ->
-                    Parser.$wa3
+                    Parser.$wa4
                       @ t
                       @ b1
                       s2
@@ -8676,7 +9256,7 @@ f474351ecc223490ddc3423e8fb1c6b1
                    (\ x :: ()
                       s2 :: Text.Parsec.Prim.State [GHC.Types.Char] t
                       err :: Text.Parsec.Error.ParseError ->
-                    Parser.$wa3
+                    Parser.$wa4
                       @ t
                       @ b1
                       s2
@@ -8736,7 +9316,7 @@ e099f5f984fb69f021c11242b8c94f97
 2d87121eb1de54c5fc205e28d2298a5a
   test4 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "dog"#) -}
-5c15c7cfed7c9b6fa33eb0c32820dd3e
+1a7e5e765aee0893233b798e055d239f
   testparser ::
     Text.Parsec.Prim.ParsecT
       GHC.Base.String t Data.Functor.Identity.Identity [GHC.Base.String]
