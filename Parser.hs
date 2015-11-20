@@ -30,7 +30,7 @@ import System.IO.Unsafe
 
 m_reservedNames = ["Gamestate", "Board", "Piece", "Turn", "Move",
                    "isValid", "possMoves", "Hand", "outcome",
-                   "initialState", "Game", "Matrix"]
+                   "initialState", "Game", "Matrix", "all"]
 
 def :: LanguageDef st
 def = emptyDef{ commentStart = "{-",
@@ -42,11 +42,13 @@ def = emptyDef{ commentStart = "{-",
                 opStart = oneOf "$=:|",
                 opLetter = oneOf "$=:|",
                 reservedNames = m_reservedNames,
-                reservedOpNames = ["(", ")", ":", ",", ".", "{", "}"],
+                reservedOpNames = ["(", ")", ":", ",", ".", "{", "}", ">>", "<<"],
                 caseSensitive = True}
 
 TokenParser{ parens = m_parens,
              braces = m_braces,
+             brackets = m_brackets,
+             natural = m_natural,
              identifier = m_identifier,
              reservedOp = m_reservedOp,
              reserved = m_reserved,
@@ -189,7 +191,7 @@ parseInitState gs = do {
                    m_reservedOp "{"; ws;
                    m_reserved "Board"; ws;
                    m_reservedOp ":"; ws;
-                   boardDec <- simpleExpParser ""; ws;
+                   boardDec <- parseInitBoard (board gs); (trace "parsed boarddec" ws);
                    m_reserved "Turn"; ws;
                    m_reservedOp ":"; ws;
                    turnDec <- simpleExpParser "Player"; ws;
@@ -200,6 +202,59 @@ parseInitState gs = do {
                  }
 
 
+parseInitBoard :: Board -> Parser Exp
+parseInitBoard board = (trace "trying all" (try (parseBoardAll board))) <|> 
+                       (trace "trying lit" (try (parseBoardLit board))) <|> 
+                       (trace "trying custom" parseCustomBoard)
+
+parseCustomBoard :: Parser Exp 
+parseCustomBoard = do {
+                          ws; m_reservedOp "<<";
+                          e <- (manyTill anyChar (try (string ">>")));
+                          -- m_reservedOp ">>";
+                          case parseExp e {-++ " :: " ++ typeS-} of
+                            (Left err) -> do {trace ("fack " ++ e ++ "\nerror: " ++ err) (return undefined)}
+                            (Right exp) -> do {return exp}
+                        }               
+
+parseBoardAll :: Board -> Parser Exp
+parseBoardAll (Matrix (d, (i, j))) = let s = "matrix " ++ (show i) ++ " " ++ 
+                                             (show j) ++ " (\\(i,j) -> "
+                                     in do {
+                                          ws; m_reservedOp "{"; ws;
+                                          m_reserved "all"; (trace "here" ws);
+                                          piece <- (many (noneOf "}"));
+                                          m_reservedOp "}";
+                                          case parseExp (s ++ piece ++ ")") of
+                                            (Right e) -> do {(trace ("returning: " ++ (show e)) (return e))}
+                                            (Left err) -> do {(trace ("fuck: " ++ err)(return undefined))}}
+parseBoardAll (Array (d, i)) = let s = "generate " ++ (show i) ++ " (\\i -> "
+                               in do {
+                                    ws; m_reservedOp "{"; ws;
+                                    m_reserved "all"; ws;
+                                    piece <- (many (noneOf "}"));
+                                    m_reservedOp "}";
+                                    case parseExp (s ++ piece ++ ")") of
+                                      (Right e) -> do {return e}
+                                      (Left err) -> do {return undefined}}
+parseBoardAll _ = do {m_reserved "ERROR"; return (VarE (mkName "nil"));}
+
+parseBoardLit :: Board -> Parser Exp
+parseBoardLit (Matrix _) = do {
+                              ws; m_reservedOp "{"; ws;
+                              lists <- (many (noneOf "}"));
+                              m_reservedOp "}";
+                              case parseExp ("M.fromLists " ++ lists) of
+                                (Right e) -> do {return e}
+                                (Left err) -> do {return undefined}}
+parseBoardLit (Array _) = do {
+                              ws; m_reservedOp "{"; ws;
+                              list <- (many (noneOf "}"));
+                              m_reservedOp "}";
+                              case parseExp ("V.fromList " ++ list) of
+                                (Right e) -> do {return e}
+                                (Left err) -> do {return undefined}}
+parseBoardLit _ = do {m_reserved "ERROR"; return (VarE (mkName "nil"))}
 
 parseMove :: Parser Move
 parseMove = do {
@@ -223,15 +278,15 @@ gameIDParser = do {
                  return id;
                }
 
-typeParser :: String -> Parser Dec
-typeParser name = do {
+boardTypeParser :: String -> Parser Board
+boardTypeParser name = do {
               ws;
-              m_reservedOp "{";
-              ty <- (many (noneOf "}"));
-              m_reservedOp "}";
+              m_reservedOp "<<";
+              ty <- (manyTill anyChar (try (string ">>")));
+              -- m_reservedOp ">";
               case parseDecs ("type " ++ name ++ " = " ++ ty) of
                 (Left err) -> do {trace "typeParser" (return undefined)}
-                (Right typ) -> do {return (head typ)}
+                (Right typ) -> do {return (Board (head typ))}
             } 
 
 simpleExpParser :: String -> Parser Exp
@@ -243,7 +298,6 @@ simpleExpParser typeS = do {
                             (Left err) -> do {trace ("expParser: " ++ err) (return undefined)}
                             (Right exp) -> do {return exp}
                         }               
-
 
 sParser :: Parser String
 sParser = do {
@@ -284,8 +338,7 @@ expParser typeS = do {
                 (Left err) -> do {trace ("expParser: " ++ err) (return undefined)}
                 (Right exp) -> do {return exp}
             }
-
-         
+    
 decParser :: String -> Parser Dec
 decParser str = do {
               ws;
@@ -298,26 +351,76 @@ decParser str = do {
                                 (Right d) -> do {return (head d)}
                                 (Left err) -> do {trace "decParser" (return undefined)}
                 }
+     
+simpleDecParser :: String -> Parser Dec
+simpleDecParser str = do {
+              ws;
+              m_reservedOp "<<";
+              dec <- (manyTill anyChar (try (string ">>")));
+              -- m_reservedOp "<";
+              case parseDecs ("data " ++ str ++ " = " ++ dec ++ " deriving (Eq, Show)") of
+                (Right d) -> do {return (head d)}
+                (Left err) -> case parseDecs ("data " ++ str ++ " = " ++ str ++ "(" ++ dec ++ ")" ++ " deriving (Eq, Show)") of
+                                (Right d) -> do {return (head d)}
+                                (Left err) -> do {trace "simpledecParser" (return undefined)}
+                }
+
+pieceDecParser :: Parser Dec
+pieceDecParser = do {
+              ws;
+              m_reservedOp "{";
+              dec <- (many (noneOf "}"));
+              m_reservedOp "}";
+              case parseDecs ("data Piece = " ++ dec ++ "| Nil deriving (Eq, Show)") of
+                (Right d) -> do {return (head d)}
+                (Left err) -> case parseDecs ("data Piece = Piece(" ++ dec ++ ")" ++ "| Nil deriving (Eq, Show)") of
+                                (Right d) -> do {return (head d)}
+                                (Left err) -> do {trace "decParser" (return undefined)}
+                }
 
 
-matrixParser :: Parser Dec 
+parseSize :: Parser (Integer, Integer)
+parseSize = do {
+              n <- m_brackets m_natural; ws;
+              m <- m_brackets m_natural; ws;
+              return (n,m);
+            }
+
+matrixParser :: Parser Board 
 matrixParser = do {
                 ws;
-                m_reservedOp "{";
-                m_reserved "Matrix";
-                m_reservedOp "}";
+                m_reservedOp "{";ws;
+                m_reserved "Matrix";ws;
+                size <- parseSize;ws;
+                m_reservedOp "}";ws;
                 
                 case  parseDecs ("type Board = Matrix Piece") of
-                  (Right d) -> do {return (head d)}
+                  (Right d) -> do {return (Matrix ((head d), size))}
                   (Left err) -> do {trace "matrixParser" (return undefined)} 
                }
 
-boardParser :: Parser Dec
+arrayParser :: Parser Board 
+arrayParser = do {
+                ws;
+                m_reservedOp "{";ws;
+                m_reserved "Array";ws;
+                size <- m_brackets m_natural;ws;
+                m_reservedOp "}";ws;
+                
+                case  parseDecs ("type Board = [Piece]") of
+                  (Right d) -> do {return (Array ((head d), size))}
+                  (Left err) -> do {trace "matrixParser" (return undefined)} 
+               }
+
+
+boardParser :: Parser Board
 boardParser = do {
                 ws;
                 m_reserved "Board"; ws;
                 m_reservedOp ":"; ws;
-                t <- (try matrixParser <|> typeParser "Board");
+                t <- (try matrixParser <|> 
+                      try arrayParser <|> 
+                          boardTypeParser "Board");
                 return t;
 }
 
@@ -326,7 +429,7 @@ pieceParser = do {
                 ws;
                 m_reserved "Piece"; ws;
                 m_reservedOp ":"; ws;
-                t <- decParser "Piece";
+                t <- pieceDecParser;
                 return t;
 }
 
@@ -349,14 +452,14 @@ turnParser = do {
                 return t;
 }
 
-customDParser :: Parser Dec
-customDParser = do {
-                ws;
-                m_reserved "NOTSUPPORTED"; ws;
-                m_reservedOp ":"; ws;
-                t <- (try matrixParser <|> decParser "Board");
-                return t;
-}
+-- customDParser :: Parser Dec
+-- customDParser = do {
+--                 ws;
+--                 m_reserved "NOTSUPPORTED"; ws;
+--                 m_reservedOp ":"; ws;
+--                 t <- (try matrixParser <|> decParser "Board");
+--                 return t;
+-- }
 
 nilParser :: Parser Dec
 nilParser = case parseDecs "data NULL = NULL" of
@@ -370,16 +473,15 @@ nilPM = do {return PMNil} -- case parseExp "nil" of
 
 parseGameState :: Parser GameState 
 parseGameState = do {
-                   btypedec <- boardParser <|> nilParser;
+                   btypedec <- boardParser;-- <|> nilParser;
                    nilT <- nilParser;
                    ptypedec <- pieceParser <|> nilParser;
                    htypedec <- handParser <|> nilParser;
                    ttypedec <- turnParser <|> nilParser;
-                   ctypedec <- customDParser <|> nilParser;
+                   -- ctypedec <- customDParser <|> nilParser;
                    return GameState 
                            {board=btypedec, piece=ptypedec,
-                            hand=htypedec, turn=ttypedec, 
-                            customData=ctypedec};}
+                            hand=htypedec, turn=ttypedec};}
                  
 testparser = do {
                ws;

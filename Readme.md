@@ -1,4 +1,4 @@
-AGPL (A Game Programming Language)
+#AGPL (A Game Programming Language)
 
 AGPL is a simple domain specific language embedded in Haskell, originally
 designed for a language design course at Tufts University.
@@ -14,24 +14,26 @@ This project uses Stack, for instructions on installing Stack, please visit
 https://github.com/commercialhaskell/stack#how-to-install 
 
 To build using stack, run:
+```
 stack setup
 stack build
-
+```
 To run the generated game, run the generated main file:
-./.stack-work/dist/x86_64-linux/Cabal-1.22.4.0/build/main/main
+`./.stack-work/dist/x86_64-linux/Cabal-1.22.4.0/build/main/main`
 
 If you want to try chess, modify Main.hs so that the quasiquoted line 
-[agpl_f|ttt.agpl|] is changed to [agpl_f|chess.agpl|]
+`[agpl_f|ttt.agpl|]` is changed to `[agpl_f|chess.agpl|]`
 
 You can create your own games and load them from a file like above,
-or alternately quasiquote them directly using [agpl|<agpl decs>|]
+or alternately quasiquote them directly using `[agpl|<agpl decs>|]`
 
 ----------------------------
-Releases:
-1.0: Fully working tic-tac-toe implementation.
-	Chess implementation partially functional, more work needed
-	to fully work, but language framework is sufficient.
-	More work should be done on improving ability to concisely
-	express games. AI not yet implemented. Card games not yet implemented.
+###Releases:
+
+1.0. Fully working tic-tac-toe implementation.
+	 Chess implementation partially functional, more work needed
+	 to fully work, but language framework is sufficient.
+	 More work should be done on improving ability to concisely
+	 express games. AI not yet implemented. Card games not yet implemented.
 
 

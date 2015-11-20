@@ -24,14 +24,79 @@ Main.hs:1:1: Splicing declarations
        = let
            nr = (nrows m)
            nc = (ncols m)
-           l = (toList m)
-         in lfoldi (iToC nr nc) (length l) f b l,
+           l = (M.toList m)
+         in lfoldi (iToC nr nc) (L.length l) f b l,
+     inRow :: Int -> Player -> Board -> Bool,
+     inRow n player board
+       = let
+           piece = playerToPiece player :: Piece
+           rows = toLists board :: [[Piece]]
+           frow
+             = (\ c -> (\ x -> if x == piece then (c + 1) else 0)) ::
+                 Int -> Piece -> Int
+           frows
+             = (\ acc -> (\ row -> (foldl frow 0 row) >= n || acc)) ::
+                 Bool -> [Piece] -> Bool
+         in foldl frows False rows,
+     inCol :: Int -> Player -> Board -> Bool,
+     inCol n player board
+       = let
+           piece = playerToPiece player :: Piece
+           cols = toLists (M.transpose board) :: [[Piece]]
+           fcol
+             = (\ c -> (\ x -> if x == piece then (c + 1) else 0)) ::
+                 Int -> Piece -> Int
+           fcols
+             = (\ acc -> (\ col -> (foldl fcol 0 col) >= n || acc)) ::
+                 Bool -> [Piece] -> Bool
+         in foldl fcols False cols,
+     getDiags :: forall t. Matrix t -> [[t]],
+     getDiags m
+       = let
+           k = (ncols m) + (nrows m)
+           midi = (2 * k) - (ncols m) - 2
+           diags = generate (2 * (k - 1)) (\ _ -> empty)
+         in
+           V.toList
+             (V.map
+                V.toList
+                (mfold
+                   (\ ((i, j), elem, diagv)
+                      -> let
+                           subv = snoc (diagv V.! (i + j - 2)) elem
+                           subv2 = snoc (diagv V.! (i - j + midi)) elem
+                         in diagv // [((i + j - 2), subv), ((i - j + midi), subv2)])
+                   diags
+                   m)),
+     inDiag :: Int -> Player -> Board -> Bool,
+     inDiag n player board
+       = let
+           piece = playerToPiece player :: Piece
+           diags = getDiags board :: [[Piece]]
+           fdiag
+             = (\ c -> (\ x -> if x == piece then (c + 1) else 0)) ::
+                 Int -> Piece -> Int
+           fdiags
+             = (\ acc -> (\ diag -> (foldl fdiag 0 diag) >= n || acc)) ::
+                 Bool -> [Piece] -> Bool
+         in foldl fdiags False diags,
+     isFull b
+       = mfold
+           (\ ((i, j), piece, acc)
+              -> if piece == Nil then False else (True && acc))
+           True
+           b,
+     ne (x, y) = (x + 1, y + 1), e (x, y) = (x + 1, y),
+     se (x, y) = (x + 1, y - 1), s (x, y) = (x, y - 1),
+     sw (x, y) = (x - 1, y - 1), w (x, y) = (x - 1, y),
+     nw (x, y) = (x - 1, y + 1), n (x, y) = (x, y + 1),
      data Piece
        = X | O | Nil
        deriving (Eq, Show),
-     type Board = Matrix Piece,
-     boardInitF = matrix 3 3 (\ (i, j) -> Nil), turn = PX,
-     type Turn = Player,
+     size = (3, 3), type Board = Matrix Piece,
+     boardInitF
+       = M.fromLists [[Nil, Nil, Nil], [Nil, Nil, Nil], [Nil, Nil, Nil]],
+     turn = PX, type Turn = Player,
      data Move
        = Move (Int, Int)
        deriving (Eq, Show),
@@ -41,9 +106,7 @@ Main.hs:1:1: Splicing declarations
      isValid
        = (\ game
             -> (\ (Move (i, j))
-                  -> ((i <= 3) && (j <= 3) && (i > 0) && (j > 0)
-                      && ((board game) ! (i, j))
-                      == Nil))) ::
+                  -> ((inBounds (i, j)) && (isEmpty (i, j) game)))) ::
            GameState -> Move -> Bool,
      data GameState
        = GameState {board :: Board, currentTurn :: Turn} |
@@ -61,43 +124,11 @@ Main.hs:1:1: Splicing declarations
                               setElem (playerToPiece (currentTurn game)) move (board game)
                       g = (GameState {board = b, currentTurn = t})
                     in
-                      if ((b ! (1, 1)) == (b ! (1, 2)) && ((b ! (1, 2)) == (b ! (1, 3)))
-                          && ((b ! (1, 1)) /= Nil)) then
-                          (Win (pieceToPlayer (b ! (1, 1))), 1)
+                      if (inRow 3 (currentTurn game) b) || (inCol 3 (currentTurn game) b)
+                         || (inDiag 3 (currentTurn game) b) then
+                          (Win (currentTurn game), 1)
                       else
-                          if ((b ! (2, 1)) == (b ! (2, 2)) && ((b ! (2, 2)) == (b ! (2, 3)))
-                              && ((b ! (2, 1)) /= Nil)) then
-                              (Win (pieceToPlayer (b ! (2, 1))), 1)
-                          else
-                              if ((b ! (3, 1)) == (b ! (3, 2)) && ((b ! (3, 2)) == (b ! (3, 3)))
-                                  && ((b ! (3, 1)) /= Nil)) then
-                                  (Win (pieceToPlayer (b ! (3, 1))), 1)
-                              else
-                                  if ((b ! (1, 1)) == (b ! (2, 1)) && ((b ! (2, 1)) == (b ! (3, 1)))
-                                      && ((b ! (1, 1)) /= Nil)) then
-                                      (Win (pieceToPlayer (b ! (1, 1))), 1)
-                                  else
-                                      if ((b ! (1, 2)) == (b ! (2, 2))
-                                          && ((b ! (2, 2)) == (b ! (3, 2)))
-                                          && ((b ! (1, 2)) /= Nil)) then
-                                          (Win (pieceToPlayer (b ! (1, 1))), 1)
-                                      else
-                                          if ((b ! (1, 3)) == (b ! (2, 3))
-                                              && ((b ! (2, 3)) == (b ! (3, 3)))
-                                              && ((b ! (1, 3)) /= Nil)) then
-                                              (Win (pieceToPlayer (b ! (1, 1))), 1)
-                                          else
-                                              if ((b ! (1, 1)) == (b ! (2, 2))
-                                                  && ((b ! (2, 2)) == (b ! (3, 3)))
-                                                  && ((b ! (1, 1)) /= Nil)) then
-                                                  (Win (pieceToPlayer (b ! (1, 1))), 1)
-                                              else
-                                                  if ((b ! (1, 3)) == (b ! (2, 2))
-                                                      && ((b ! (2, 2)) == (b ! (3, 1)))
-                                                      && ((b ! (1, 3)) /= Nil)) then
-                                                      (Win (pieceToPlayer (b ! (1, 1))), 1)
-                                                  else
-                                                      if isFull b then (Tie, 1) else (g, 1)) ::
+                          if isFull b then (Tie, 1) else (g, 1)) ::
            GameState -> Move -> (GameState, Int),
      possMoves
        = (\ game
@@ -112,18 +143,8 @@ Main.hs:1:1: Splicing declarations
            GameState -> [Move],
      fromString
        = \ (s)
-           -> let move = map read (splitOn "," s)
-              in (Move ((head move), (head (tail move)))),
-     isFull b
-       = mfold
-           (\ ((i, j), piece, acc)
-              -> if piece == Nil then False else (True && acc))
-           True
-           b,
-     ne (x, y) = (x + 1, y + 1), e (x, y) = (x + 1, y),
-     se (x, y) = (x + 1, y - 1), s (x, y) = (x, y - 1),
-     sw (x, y) = (x - 1, y - 1), w (x, y) = (x - 1, y),
-     nw (x, y) = (x - 1, y + 1), n (x, y) = (x, y + 1),
+           -> let move = L.map read (splitOn "," s)
+              in (Move ((L.head move), (L.head (L.tail move)))),
      pieceToPlayer :: Piece -> Player,
      pieceToPlayer X = PX
      pieceToPlayer O = PO,
@@ -132,4 +153,8 @@ Main.hs:1:1: Splicing declarations
      playerToPiece PO = O,
      otherPlayer :: Player -> Player,
      otherPlayer PX = PO
-     otherPlayer PO = PX]
+     otherPlayer PO = PX,
+     inBounds_aRQk (x1_aRQl, y1_aRQm)
+       = ((x1_aRQl <= 3)
+          && ((x1_aRQl > 0) && ((y1_aRQm <= 3) && (y1_aRQm > 0)))),
+     isEmpty (i, j) game = (((board game) M.! (i, j)) == Nil)]

@@ -5,3 +5,6 @@
 #	${CC} ${FLAGS} -o parser Main.hs Parser.hs Agpl_syntax.hs
 all: Parser.hs Agpl_syntax.hs Quote.hs
 	stack build
+clean: 
+	rm -f *~; rm -f *.hi; rm -f *.o;
+ 

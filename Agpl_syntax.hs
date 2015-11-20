@@ -6,8 +6,11 @@ data Game = Game (GameID, GameState, Move, IsValidFun, PossMovesFun,
           | NIL deriving Show
 
 
-data GameState = GameState {board :: Dec, piece :: Dec, hand :: Dec, turn :: Dec, customData :: Dec}
+data GameState = GameState {board :: Board, piece :: Dec, hand :: Dec, turn :: Dec}
                  deriving Show
+data Board = Matrix (Dec, (Integer, Integer))
+           | Array (Dec, Integer)
+           | Board (Dec) deriving Show
 
 type GameID = String
 data Move = Move (Dec) deriving Show

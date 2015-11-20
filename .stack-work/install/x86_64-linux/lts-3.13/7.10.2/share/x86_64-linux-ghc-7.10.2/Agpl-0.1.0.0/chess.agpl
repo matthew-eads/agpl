@@ -1,3 +1,4 @@
+import Agpl_lib
 Chess : Game
 
   Gamestate: {

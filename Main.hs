@@ -3,27 +3,25 @@ import Debug.Trace (trace)
 import System.Environment
 import Parser
 import Quote
-import Data.Matrix hiding (trace)
-import Data.List
+import Data.Matrix as M hiding (trace)
+import Data.List as L
 import Data.List.Split
---import Agpl_lib
-
-
+import Data.Vector as V hiding (foldl)
 [agpl_f|ttt.agpl|]
 --[agpl_f|chess.agpl|]
 
+
 getMove :: GameState -> IO Move
 getMove gs = do {
-               putStrLn ("Player " ++ (show (currentTurn gs)) ++ "'s turn." ++
+               putStrLn ("Player " L.++ (show (currentTurn gs)) L.++ "'s turn." L.++
                          "Please enter a move:");
                m <- getLine;
-               putStrLn ("Parsing: " ++ m);
                return (fromString m);
              }
 
 won :: Player -> IO ()
 won p = do {
-          putStrLn ("Player " ++ (show p) ++ " has won!");
+          putStrLn ("Player " L.++ (show p) L.++ " has won!");
           return ();
 }
 
@@ -32,6 +30,7 @@ tie = do {
         putStrLn "The game has ended in a tie.";
         return ();
 }
+
 
 playGame :: GameState -> IO ()
 playGame gs = do {

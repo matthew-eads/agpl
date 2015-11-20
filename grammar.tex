@@ -13,21 +13,29 @@
            `outcome:{' <Exp> `}'\\
            `initialState:{' <InitState> `}'\\
            `fromString:{' <Exp> `}'\\
-           `$' [<Dec>] `$'
+           `$' [<Dec>] `$' (Custom declarations)
            
 
 %% <gamestatelist> ::= <gamestate> <gamestatelist>
 %% \alt <empty>
 
 
-<gamestate> ::= `Board:{' <Dec>
+<gamestate> ::= `Board:{' <BoardDec>
 \alt `Piece:{' <Dec>
 \alt `Hand:{' <Dec>
 \alt `Turn:{' <Dec>
 \alt <string>`:{' <Dec>
 
-<InitState> ::= `Board:{' <Exp> `}'\\
+<BoardDec> ::= `{Matrix['<int>`]['<int>`]}'
+\alt `{Array['<int>`]'
+\alt `<<' <Dec> `>>' (Custom Type)
+
+<InitState> ::= `Board:' <BoardInitDec>\\
                 `Turn:{' <Exp> `}'
+
+<BoardInitDec> ::= `{ all' <Exp> `}' (Initialize board to piece)
+\alt `{' <Exp> `}' (Initialize board to List literal)
+\alt `<<' <Exp> `>>' (Custom initialization func.)
 
 <Exp> ::= <Template Haskell Expression>
 
