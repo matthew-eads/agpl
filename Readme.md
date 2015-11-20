@@ -30,10 +30,14 @@ or alternately quasiquote them directly using `[agpl|<agpl decs>|]`
 ----------------------------
 ###Releases:
 
-1.0. Fully working tic-tac-toe implementation.
+1.1:	Added library support and basic standard library (Agpl_lib.hs)
+	Added simpler syntax for common board types (Matrix and Array, Graph
+	support to be added in later releases), allowing shorter code, as well
+	as generation of helper functions such as `inBounds`.
+
+1.0:     Fully working tic-tac-toe implementation.
 	 Chess implementation partially functional, more work needed
 	 to fully work, but language framework is sufficient.
 	 More work should be done on improving ability to concisely
 	 express games. AI not yet implemented. Card games not yet implemented.
-
 
