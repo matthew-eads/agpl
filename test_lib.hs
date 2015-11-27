@@ -1,4 +1,4 @@
-isFull b = mfold (\((i, j), piece, acc) -> if piece == Nil then False else (True && acc)) True b
+
 ne (x, y) = (x+1,y+1)
 e  (x, y) = (x+1, y)
 se (x, y) = (x+1, y-1)

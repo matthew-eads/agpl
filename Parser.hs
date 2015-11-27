@@ -13,24 +13,10 @@ import Data.Functor.Identity
 import Data.Matrix (Matrix, nrows, ncols, toList)
 import Debug.Trace
 import System.IO.Unsafe
--- iToC :: Int -> Int -> Int-> (Int, Int)
--- iToC rows cols i = let c = if (i `mod` cols) == 0 then cols else (i `mod` cols) 
---                        r = ceiling ((realToFrac i) / (realToFrac rows))
---                    in (r, c)
-
--- lfoldi :: (Int -> (Int, Int)) -> Int -> (((Int, Int), a, b) -> b) -> b -> [a] -> b
--- lfoldi toC i f b [] = b
--- lfoldi toC i f b (x:xs) = f ((toC i), x, (lfoldi toC (i-1) f b xs)) 
-
--- mfold :: (((Int, Int), a, b) -> b) -> b -> Matrix a -> b
--- mfold f b m = let nr = (nrows m)
---                   nc = (ncols m)
---                   l  = (toList m)
---               in lfoldi (iToC nr nc) (length l) f b l
 
 m_reservedNames = ["Gamestate", "Board", "Piece", "Turn", "Move",
                    "isValid", "possMoves", "Hand", "outcome",
-                   "initialState", "Game", "Matrix", "all"]
+                   "initialState", "Game", "Matrix", "all", "winCondition"]
 
 def :: LanguageDef st
 def = emptyDef{ commentStart = "{-",
@@ -66,6 +52,7 @@ gameParser :: Parser Game
 gameParser = do {
                ws;
                importsL <- many parseImports; -- <|> emptyDecL; ws;
+               (trace "got imports" ws);
                let imports = foldl (++) [] importsL in do {
                (trace ("parsed imports: " ++ (show imports)) ws);
                id <- gameIDParser; ws; 
@@ -141,9 +128,23 @@ parsePlayer = do {
                 ws;
                 m_reservedOp ":";
                 ws;
-                playerDec <- decParser "Player";
+                playerDec <- playerDecParser "Player";
                 return (Player playerDec);
               }
+playerDecParser :: String -> Parser (Dec, Int)
+playerDecParser str = do {
+              ws;
+              m_reservedOp "{";
+              dec <- (many (noneOf "}"));
+              let nplayers = (length (filter ((==) '|') dec)) + 1 in do {
+              m_reservedOp "}";
+              case parseDecs ("data " ++ str ++ " = " ++ dec ++ " deriving (Eq, Show)") of
+                (Right d) -> do {return ((head d), nplayers)}
+                (Left err) -> case parseDecs ("data " ++ str ++ " = " ++ str ++ "(" ++ dec ++ ")" ++ " deriving (Eq, Show)") of
+                                (Right d) -> do {return ((head d), nplayers)}
+                                (Left err) -> do {trace "decParser" (return undefined)}
+                }}
+
 
 parseFromString :: Parser FromString
 parseFromString = do {
@@ -166,13 +167,59 @@ parsePossMoves = do {
                  }
                    
 parseOutcome :: Parser OutcomeFun
-parseOutcome = do {
-                   ws;
-                   m_reserved "outcome"; ws;
-                   m_reservedOp ":"; ws;
-                   outcomeFun <- expParser "Move -> (GameState, Int)";
-                   return (OutcomeFun outcomeFun);
-                 }
+parseOutcome =  do {
+                  ws;
+                  m_reserved "outcome"; ws;
+                  m_reservedOp ":"; ws;
+                  (try parseCustomOutcome) <|> parseOutcome';
+                }
+
+parseCustomOutcome :: Parser OutcomeFun
+parseCustomOutcome = do {
+                       (trace "outcomming" ws); m_reservedOp "<<"; (trace "parsing outcome" ws);
+                       e <- (manyTill anyChar (try (string ">>")));
+                          -- m_reservedOp ">>";
+                       case parseExp ("(\\game -> " ++ e ++ ")") of
+                         (Left err) -> do {trace ("fack " ++ e ++ "\nerror: " ++ err) (return undefined)}
+                         (Right exp) -> do {(trace "success" (return (CustOutcomeFun exp)))}}
+
+parseOutcome' :: Parser OutcomeFun
+parseOutcome' = do {
+                  (trace "parsing better outcome" ws);
+                  m_reservedOp "{";
+                  winc <- winConditionParser;
+                  tiec <- (trace ("parsed win: " ++ (show winc)) tieConditionParser);
+                  elsec <- (trace ("parsed tie: " ++ (show tiec)) elseConditionParser);
+                  m_reservedOp "}";
+                  return (OutcomeFun {wincon=winc, tiecon=tiec, elsecon=elsec})}
+
+winConditionParser :: Parser Exp
+winConditionParser = do {
+                       ws;
+                       m_reserved "winCondition"; ws;
+                       m_reservedOp ":"; (trace "winnin" ws);
+                       e <- simpleExpParser "";
+                       return e;
+                     }
+
+tieConditionParser :: Parser Exp
+tieConditionParser = do {
+                       ws;
+                       m_reserved "tieCondition"; ws;
+                       m_reservedOp ":"; ws;
+                       e <- simpleExpParser "";
+                       return e;
+                     }
+
+elseConditionParser :: Parser Exp
+elseConditionParser = do {
+                        ws;
+                        m_reserved "else"; ws;
+                        m_reservedOp ":"; ws;
+                        e <- simpleExpParser "";
+                        return e;
+                      }
+
 
 parseIsValid :: Parser IsValidFun
 parseIsValid = do {

@@ -1,0 +1,37 @@
+import Agpl_lib
+
+ConnectFour : Game
+
+Gamestate: {
+             Board: {Matrix[7][6]}
+             Piece: {X | O}
+}
+
+Player: {PX | PO}
+
+Move :{(Int)}
+isValid: {\(Move i) -> slot (board game) i /= (-1, -1)}
+
+possMoves: {undefined}
+
+outcome:{
+         winCondition: { (inRowColOrDiag 4 PX (board game) || inRowColOrDiag 4 PO (board game))}
+         tieCondition: {(isFull (board game))}
+         else: {(trace "placing" (place game (playerToPiece (currentTurn game)) (slot (board game) (mtoc move))))}}
+
+initialState:{Board: {all Nil}
+              Turn:{PX}}
+fromString: {\(s) -> Move (read s)}
+
+$
+slot ::Board -> Int -> (Int, Int)
+slot b i = let c = getRow i b 
+           in case V.elemIndex Nil c of
+                (Just j) -> (trace ("setting at index: " L.++ (show (i, j+1))) (i, j+1))
+                (Nothing) -> (trace "fack" (-1, -1)) 
+mtoc :: Move -> Int
+mtoc (Move c) = c
+playerToPiece :: Player -> Piece
+playerToPiece PX = X
+playerToPiece PO = O
+$

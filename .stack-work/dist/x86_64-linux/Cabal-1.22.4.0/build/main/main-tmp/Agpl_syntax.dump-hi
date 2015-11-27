@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2015-11-19 01:48:13.440056 UTC
+2015-11-27 19:33:38.517991 UTC
 
 interface main@main:Agpl_syntax 7102
-  interface hash: fb82caa1bb84ca4e3c0f0c8090c4261c
-  ABI hash: 530416e562a45301176b3789d180fa9e
-  export-list hash: f7de5df4ff3847065957407f09eefadf
+  interface hash: 602e474630d9a831ccdae16bc31867f3
+  ABI hash: d05bf7e6fa7fbb68e60c1d4d9bf005ed
+  export-list hash: 4205051c493e95e2869d33ce21432354
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 1e433d0ebc6754f04665631962e57d78
   sig of: Nothing
@@ -21,7 +21,7 @@ exports:
   Agpl_syntax.InitState{Agpl_syntax.InitState Agpl_syntax.boardInit Agpl_syntax.turnInit}
   Agpl_syntax.IsValidFun{Agpl_syntax.IsValidFun}
   Agpl_syntax.Move{Agpl_syntax.Move}
-  Agpl_syntax.OutcomeFun{Agpl_syntax.OutcomeFun}
+  Agpl_syntax.OutcomeFun{Agpl_syntax.CustOutcomeFun Agpl_syntax.OutcomeFun Agpl_syntax.elsecon Agpl_syntax.tiecon Agpl_syntax.wincon}
   Agpl_syntax.Player{Agpl_syntax.Player}
   Agpl_syntax.PossMovesFun{Agpl_syntax.PMNil Agpl_syntax.PossMovesFun}
 module dependencies:
@@ -271,7 +271,7 @@ f5db2f4c6cd9ea4d98a0ed4c1ec47d08
                  case w of ww { GHC.Types.I# ww1 ->
                  case w1 of ww2 { Agpl_syntax.FromString ww3 ->
                  Agpl_syntax.$w$cshowsPrec2 ww1 ww3 } }) -}
-964dc5e66f90c4b8daeaf55ed46c51ee
+82923e9d91bd4448ce090c8aed9c5a6a
   $fShowGame :: GHC.Show.Show Agpl_syntax.Game
   DFunId[0]
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -280,7 +280,7 @@ f5db2f4c6cd9ea4d98a0ed4c1ec47d08
                   Agpl_syntax.$fShowGame_$cshowsPrec
                   Agpl_syntax.$fShowGame_$cshow
                   Agpl_syntax.$fShowGame_$cshowList -}
-964dc5e66f90c4b8daeaf55ed46c51ee
+82923e9d91bd4448ce090c8aed9c5a6a
   $fShowGame1 :: Agpl_syntax.Game -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (Agpl_syntax.$fShowGame_$cshowsPrec
@@ -350,7 +350,7 @@ bfb2742ef0614dcb577cfb432309e45a
                  case w of ww { GHC.Types.I# ww1 ->
                  case w1 of ww2 { Agpl_syntax.GameState ww3 ww4 ww5 ww6 ->
                  Agpl_syntax.$w$cshowsPrec3 ww1 ww3 ww4 ww5 ww6 } }) -}
-964dc5e66f90c4b8daeaf55ed46c51ee
+82923e9d91bd4448ce090c8aed9c5a6a
   $fShowGame_$cshow :: Agpl_syntax.Game -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
@@ -359,13 +359,13 @@ bfb2742ef0614dcb577cfb432309e45a
                    GHC.Show.shows18
                    x
                    (GHC.Types.[] @ GHC.Types.Char)) -}
-964dc5e66f90c4b8daeaf55ed46c51ee
+82923e9d91bd4448ce090c8aed9c5a6a
   $fShowGame_$cshowList :: [Agpl_syntax.Game] -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (GHC.Show.showList__
                    @ Agpl_syntax.Game
                    Agpl_syntax.$fShowGame1) -}
-964dc5e66f90c4b8daeaf55ed46c51ee
+82923e9d91bd4448ce090c8aed9c5a6a
   $fShowGame_$cshowsPrec ::
     GHC.Types.Int -> Agpl_syntax.Game -> GHC.Show.ShowS
   {- Arity: 3, Strictness: <L,1*U(U)><S,1*U><L,U> -}
@@ -520,7 +520,7 @@ c29b0716c33c850af930b3ea523928fa
                  case w of ww { GHC.Types.I# ww1 ->
                  case w1 of ww2 { Agpl_syntax.Move ww3 ->
                  Agpl_syntax.$w$cshowsPrec6 ww1 ww3 } }) -}
-b72e2669b5cd9e2861e8c87fb0fa3d1c
+70f074be50c0a288868c104210a20e93
   $fShowOutcomeFun :: GHC.Show.Show Agpl_syntax.OutcomeFun
   DFunId[0]
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -529,52 +529,52 @@ b72e2669b5cd9e2861e8c87fb0fa3d1c
                   Agpl_syntax.$fShowOutcomeFun_$cshowsPrec
                   Agpl_syntax.$fShowOutcomeFun_$cshow
                   Agpl_syntax.$fShowOutcomeFun_$cshowList -}
-b72e2669b5cd9e2861e8c87fb0fa3d1c
+70f074be50c0a288868c104210a20e93
   $fShowOutcomeFun1 :: Agpl_syntax.OutcomeFun -> GHC.Show.ShowS
   {- Arity: 1,
      Unfolding: (\ w :: Agpl_syntax.OutcomeFun ->
-                 case w of ww { Agpl_syntax.OutcomeFun ww1 ->
-                 Agpl_syntax.$w$cshowsPrec7 0 ww1 }) -}
-5e3175956aa572a665abfece3dbf72f5
+                 Agpl_syntax.$w$cshowsPrec7 0 w) -}
+4dcc3af5c2a26b8697982a0c09759576
   $fShowOutcomeFun2 :: [GHC.Types.Char]
-  {- Unfolding: (GHC.CString.unpackCString# "OutcomeFun "#) -}
-b72e2669b5cd9e2861e8c87fb0fa3d1c
+  {- Unfolding: (GHC.CString.unpackCString# "elsecon = "#) -}
+e198c6869009b08cb81c1b03447e8ded
+  $fShowOutcomeFun3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "tiecon = "#) -}
+2ed5a2f66e79187d1dfc2980ec8a0984
+  $fShowOutcomeFun4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "wincon = "#) -}
+90913c29c60fd370bfc84ffca7210ab0
+  $fShowOutcomeFun5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "OutcomeFun {"#) -}
+f987b76ad84478c7f90625b013513223
+  $fShowOutcomeFun6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "CustOutcomeFun "#) -}
+70f074be50c0a288868c104210a20e93
   $fShowOutcomeFun_$cshow ::
     Agpl_syntax.OutcomeFun -> GHC.Base.String
-  {- Arity: 1, Strictness: <S,1*U(1*U)>,
+  {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
                 (\ x :: Agpl_syntax.OutcomeFun ->
-                 case x of wild { Agpl_syntax.OutcomeFun b1 ->
-                 GHC.Base.augment
-                   @ GHC.Types.Char
-                   (\ @ b c :: GHC.Types.Char -> b -> b[OneShot] n :: b[OneShot] ->
-                    GHC.Base.foldr
-                      @ GHC.Types.Char
-                      @ b
-                      c
-                      n
-                      Agpl_syntax.$fShowOutcomeFun2)
-                   (Language.Haskell.TH.Syntax.$w$cshowsPrec5
-                      11
-                      b1
-                      (GHC.Types.[] @ GHC.Types.Char)) }) -}
-b72e2669b5cd9e2861e8c87fb0fa3d1c
+                 Agpl_syntax.$fShowOutcomeFun_$cshowsPrec
+                   GHC.Show.shows18
+                   x
+                   (GHC.Types.[] @ GHC.Types.Char)) -}
+70f074be50c0a288868c104210a20e93
   $fShowOutcomeFun_$cshowList ::
     [Agpl_syntax.OutcomeFun] -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (GHC.Show.showList__
                    @ Agpl_syntax.OutcomeFun
                    Agpl_syntax.$fShowOutcomeFun1) -}
-b72e2669b5cd9e2861e8c87fb0fa3d1c
+70f074be50c0a288868c104210a20e93
   $fShowOutcomeFun_$cshowsPrec ::
     GHC.Types.Int -> Agpl_syntax.OutcomeFun -> GHC.Show.ShowS
-  {- Arity: 2, Strictness: <S,1*U(U)><S,1*U(1*U)>, Inline: INLINE[0],
+  {- Arity: 2, Strictness: <S,1*U(U)><S,1*U>, Inline: INLINE[0],
      Unfolding: InlineRule (2, True, False)
                 (\ w :: GHC.Types.Int w1 :: Agpl_syntax.OutcomeFun ->
                  case w of ww { GHC.Types.I# ww1 ->
-                 case w1 of ww2 { Agpl_syntax.OutcomeFun ww3 ->
-                 Agpl_syntax.$w$cshowsPrec7 ww1 ww3 } }) -}
-938a387b6123ae606231aa9293af71c2
+                 Agpl_syntax.$w$cshowsPrec7 ww1 w1 }) -}
+85c3d8138db63776e4a143f6c7901685
   $fShowPlayer :: GHC.Show.Show Agpl_syntax.Player
   DFunId[0]
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -583,44 +583,42 @@ b72e2669b5cd9e2861e8c87fb0fa3d1c
                   Agpl_syntax.$fShowPlayer_$cshowsPrec
                   Agpl_syntax.$fShowPlayer_$cshow
                   Agpl_syntax.$fShowPlayer_$cshowList -}
-938a387b6123ae606231aa9293af71c2
+85c3d8138db63776e4a143f6c7901685
   $fShowPlayer1 :: Agpl_syntax.Player -> GHC.Show.ShowS
-  {- Arity: 1,
-     Unfolding: (\ w :: Agpl_syntax.Player ->
+  {- Arity: 2,
+     Unfolding: (\ w :: Agpl_syntax.Player w1 :: GHC.Base.String ->
                  case w of ww { Agpl_syntax.Player ww1 ->
-                 Agpl_syntax.$w$cshowsPrec8 0 ww1 }) -}
+                 Agpl_syntax.$w$cshowsPrec8 0 ww1 w1 }) -}
 8ec9a5164b41e9ce140af67f54b4c6d0
   $fShowPlayer2 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "Player "#) -}
-938a387b6123ae606231aa9293af71c2
+85c3d8138db63776e4a143f6c7901685
   $fShowPlayer_$cshow :: Agpl_syntax.Player -> GHC.Base.String
-  {- Arity: 1, Strictness: <S,1*U(1*U)>,
+  {- Arity: 1, Strictness: <S,1*U(1*U(1*U,U(U)))>,
      Unfolding: InlineRule (1, True, False)
                 (\ x :: Agpl_syntax.Player ->
-                 case x of wild { Agpl_syntax.Player b1 ->
-                 GHC.Base.augment
-                   @ GHC.Types.Char
-                   (\ @ b c :: GHC.Types.Char -> b -> b[OneShot] n :: b[OneShot] ->
-                    GHC.Base.foldr @ GHC.Types.Char @ b c n Agpl_syntax.$fShowPlayer2)
-                   (Language.Haskell.TH.Syntax.$w$cshowsPrec8
-                      11
-                      b1
-                      (GHC.Types.[] @ GHC.Types.Char)) }) -}
-938a387b6123ae606231aa9293af71c2
+                 Agpl_syntax.$fShowPlayer_$cshowsPrec
+                   GHC.Show.shows18
+                   x
+                   (GHC.Types.[] @ GHC.Types.Char)) -}
+85c3d8138db63776e4a143f6c7901685
   $fShowPlayer_$cshowList :: [Agpl_syntax.Player] -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (GHC.Show.showList__
                    @ Agpl_syntax.Player
                    Agpl_syntax.$fShowPlayer1) -}
-938a387b6123ae606231aa9293af71c2
+85c3d8138db63776e4a143f6c7901685
   $fShowPlayer_$cshowsPrec ::
     GHC.Types.Int -> Agpl_syntax.Player -> GHC.Show.ShowS
-  {- Arity: 2, Strictness: <S,1*U(U)><S,1*U(1*U)>, Inline: INLINE[0],
-     Unfolding: InlineRule (2, True, False)
-                (\ w :: GHC.Types.Int w1 :: Agpl_syntax.Player ->
+  {- Arity: 3, Strictness: <S,1*U(U)><S,1*U(1*U(1*U,U(U)))><L,U>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ w :: GHC.Types.Int
+                   w1 :: Agpl_syntax.Player
+                   w2 :: GHC.Base.String ->
                  case w of ww { GHC.Types.I# ww1 ->
                  case w1 of ww2 { Agpl_syntax.Player ww3 ->
-                 Agpl_syntax.$w$cshowsPrec8 ww1 ww3 } }) -}
+                 Agpl_syntax.$w$cshowsPrec8 ww1 ww3 w2 } }) -}
 50c820c9396d9c7dfcd245c39b536489
   $fShowPossMovesFun :: GHC.Show.Show Agpl_syntax.PossMovesFun
   DFunId[0]
@@ -1049,56 +1047,128 @@ caa5fcf77f4b000a994361d8dfa76da4
                            @ GHC.Types.Char
                            Agpl_syntax.$fShowMove2
                            (g (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 x))) }) -}
-90cff78cee43cdea47e752267c7b0765
+70f074be50c0a288868c104210a20e93
   $w$cshowsPrec7 ::
-    GHC.Prim.Int# -> Language.Haskell.TH.Syntax.Exp -> GHC.Show.ShowS
-  {- Arity: 2, Strictness: <L,U><L,1*U>, Inline: [0],
-     Unfolding: (\ ww :: GHC.Prim.Int#
-                   ww1 :: Language.Haskell.TH.Syntax.Exp ->
-                 let {
-                   g :: GHC.Base.String -> GHC.Base.String
-                   = Language.Haskell.TH.Syntax.$w$cshowsPrec5 11 ww1
-                 } in
-                 case GHC.Prim.tagToEnum#
-                        @ GHC.Types.Bool
-                        (GHC.Prim.>=# ww 11) of wild {
-                   GHC.Types.False
-                   -> \ x :: GHC.Base.String ->
-                      GHC.Base.++ @ GHC.Types.Char Agpl_syntax.$fShowOutcomeFun2 (g x)
-                   GHC.Types.True
-                   -> \ x :: GHC.Base.String ->
-                      GHC.Types.:
-                        @ GHC.Types.Char
-                        GHC.Show.shows9
-                        (GHC.Base.++
-                           @ GHC.Types.Char
-                           Agpl_syntax.$fShowOutcomeFun2
-                           (g (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 x))) }) -}
-3b7f15b2175d8ba2c502524b852afc10
+    GHC.Prim.Int# -> Agpl_syntax.OutcomeFun -> GHC.Show.ShowS
+  {- Arity: 2, Strictness: <L,U><S,1*U>, Inline: [0],
+     Unfolding: (\ ww :: GHC.Prim.Int# w :: Agpl_syntax.OutcomeFun ->
+                 case w of wild {
+                   Agpl_syntax.CustOutcomeFun b1
+                   -> let {
+                        g :: GHC.Base.String -> GHC.Base.String
+                        = Language.Haskell.TH.Syntax.$w$cshowsPrec5 11 b1
+                      } in
+                      case GHC.Prim.tagToEnum#
+                             @ GHC.Types.Bool
+                             (GHC.Prim.>=# ww 11) of wild1 {
+                        GHC.Types.False
+                        -> \ x :: GHC.Base.String ->
+                           GHC.Base.++ @ GHC.Types.Char Agpl_syntax.$fShowOutcomeFun6 (g x)
+                        GHC.Types.True
+                        -> \ x :: GHC.Base.String ->
+                           GHC.Types.:
+                             @ GHC.Types.Char
+                             GHC.Show.shows9
+                             (GHC.Base.++
+                                @ GHC.Types.Char
+                                Agpl_syntax.$fShowOutcomeFun6
+                                (g (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 x))) }
+                   Agpl_syntax.OutcomeFun b1 b2 b3
+                   -> let {
+                        f :: GHC.Base.String -> GHC.Base.String
+                        = Language.Haskell.TH.Syntax.$w$cshowsPrec5 0 b1
+                      } in
+                      let {
+                        f1 :: GHC.Base.String -> GHC.Base.String
+                        = Language.Haskell.TH.Syntax.$w$cshowsPrec5 0 b2
+                      } in
+                      let {
+                        f2 :: GHC.Base.String -> GHC.Base.String
+                        = Language.Haskell.TH.Syntax.$w$cshowsPrec5 0 b3
+                      } in
+                      let {
+                        p :: GHC.Show.ShowS {- Arity: 1, Strictness: <L,1*U> -}
+                        = \ x :: GHC.Base.String ->
+                          GHC.Base.++
+                            @ GHC.Types.Char
+                            Agpl_syntax.$fShowOutcomeFun5
+                            (GHC.Base.++
+                               @ GHC.Types.Char
+                               Agpl_syntax.$fShowOutcomeFun4
+                               (f (GHC.Base.++
+                                     @ GHC.Types.Char
+                                     Agpl_syntax.$fShowGameState6
+                                     (GHC.Base.++
+                                        @ GHC.Types.Char
+                                        Agpl_syntax.$fShowOutcomeFun3
+                                        (f1
+                                           (GHC.Base.++
+                                              @ GHC.Types.Char
+                                              Agpl_syntax.$fShowGameState6
+                                              (GHC.Base.++
+                                                 @ GHC.Types.Char
+                                                 Agpl_syntax.$fShowOutcomeFun2
+                                                 (f2
+                                                    (GHC.Base.++
+                                                       @ GHC.Types.Char
+                                                       Agpl_syntax.$fShowGameState2
+                                                       x)))))))))
+                      } in
+                      case GHC.Prim.tagToEnum#
+                             @ GHC.Types.Bool
+                             (GHC.Prim.>=# ww 11) of wild1 {
+                        GHC.Types.False -> p
+                        GHC.Types.True
+                        -> \ x :: GHC.Base.String ->
+                           GHC.Types.:
+                             @ GHC.Types.Char
+                             GHC.Show.shows9
+                             (p (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 x)) } }) -}
+c39cf2cfe024884684f19afc23734514
   $w$cshowsPrec8 ::
-    GHC.Prim.Int# -> Language.Haskell.TH.Syntax.Dec -> GHC.Show.ShowS
-  {- Arity: 2, Strictness: <L,U><L,1*U>, Inline: [0],
+    GHC.Prim.Int#
+    -> (Language.Haskell.TH.Syntax.Dec, GHC.Types.Int)
+    -> GHC.Base.String
+    -> GHC.Base.String
+  {- Arity: 3, Strictness: <L,U><L,1*U(1*U,U(U))><L,U>, Inline: [0],
      Unfolding: (\ ww :: GHC.Prim.Int#
-                   ww1 :: Language.Haskell.TH.Syntax.Dec ->
+                   ww1 :: (Language.Haskell.TH.Syntax.Dec, GHC.Types.Int)
+                   w :: GHC.Base.String ->
                  let {
-                   g :: GHC.Base.String -> GHC.Base.String
-                   = Language.Haskell.TH.Syntax.$w$cshowsPrec8 11 ww1
+                   p :: GHC.Show.ShowS {- Arity: 1, Strictness: <L,U> -}
+                   = \ x :: GHC.Base.String[OneShot] ->
+                     GHC.Base.++
+                       @ GHC.Types.Char
+                       Agpl_syntax.$fShowPlayer2
+                       (case ww1 of ww2 { (,) ww3 ww4 ->
+                        GHC.Types.:
+                          @ GHC.Types.Char
+                          GHC.Show.shows9
+                          (Language.Haskell.TH.Syntax.$w$cshowsPrec8
+                             0
+                             ww3
+                             (GHC.Types.:
+                                @ GHC.Types.Char
+                                GHC.Show.showList__1
+                                (GHC.List.foldr1_$sfoldr1
+                                   @ (GHC.Base.String -> GHC.Base.String)
+                                   GHC.Show.$fShow(,)1
+                                   (\ w2 :: GHC.Base.String ->
+                                    case ww4 of ww5 { GHC.Types.I# ww6 ->
+                                    case GHC.Show.$wshowSignedInt 0 ww6 w2 of ww7 { (#,#) ww8 ww9 ->
+                                    GHC.Types.: @ GHC.Types.Char ww8 ww9 } })
+                                   (GHC.Types.[] @ GHC.Show.ShowS)
+                                   (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 x)))) })
                  } in
                  case GHC.Prim.tagToEnum#
                         @ GHC.Types.Bool
                         (GHC.Prim.>=# ww 11) of wild {
-                   GHC.Types.False
-                   -> \ x :: GHC.Base.String ->
-                      GHC.Base.++ @ GHC.Types.Char Agpl_syntax.$fShowPlayer2 (g x)
+                   GHC.Types.False -> p w
                    GHC.Types.True
-                   -> \ x :: GHC.Base.String ->
-                      GHC.Types.:
+                   -> GHC.Types.:
                         @ GHC.Types.Char
                         GHC.Show.shows9
-                        (GHC.Base.++
-                           @ GHC.Types.Char
-                           Agpl_syntax.$fShowPlayer2
-                           (g (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 x))) }) -}
+                        (p (GHC.Types.: @ GHC.Types.Char GHC.Show.shows8 w)) }) -}
 5a6575be8b22b0b0f59e88b700df439d
   data Board
     = Matrix (Language.Haskell.TH.Syntax.Dec,
@@ -1109,7 +1179,7 @@ caa5fcf77f4b000a994361d8dfa76da4
   data CustomDataType = CustomDataType Language.Haskell.TH.Syntax.Dec
 46199bec460db4ebc556e57dcb2854df
   data FromString = FromString Language.Haskell.TH.Syntax.Exp
-964dc5e66f90c4b8daeaf55ed46c51ee
+82923e9d91bd4448ce090c8aed9c5a6a
   data Game
     = Game (Agpl_syntax.GameID,
             Agpl_syntax.GameState,
@@ -1139,10 +1209,15 @@ cabb4e294e2b8e5dc26f9253eb649cb2
   data IsValidFun = IsValidFun Language.Haskell.TH.Syntax.Exp
 8b522c55ef1479ecee50454e18a45c6c
   data Move = Move Language.Haskell.TH.Syntax.Dec
-b72e2669b5cd9e2861e8c87fb0fa3d1c
-  data OutcomeFun = OutcomeFun Language.Haskell.TH.Syntax.Exp
-938a387b6123ae606231aa9293af71c2
-  data Player = Player Language.Haskell.TH.Syntax.Dec
+70f074be50c0a288868c104210a20e93
+  data OutcomeFun
+    = CustOutcomeFun Language.Haskell.TH.Syntax.Exp
+    | OutcomeFun {wincon :: Language.Haskell.TH.Syntax.Exp,
+                  tiecon :: Language.Haskell.TH.Syntax.Exp,
+                  elsecon :: Language.Haskell.TH.Syntax.Exp}
+85c3d8138db63776e4a143f6c7901685
+  data Player
+    = Player (Language.Haskell.TH.Syntax.Dec, GHC.Types.Int)
 50c820c9396d9c7dfcd245c39b536489
   data PossMovesFun
     = PossMovesFun Language.Haskell.TH.Syntax.Exp | PMNil
@@ -1162,6 +1237,18 @@ d73f6bbedaa8a4f24243b4d11e763ff7
      Unfolding: InlineRule (1, True, False)
                 (\ ds :: Agpl_syntax.InitState ->
                  case ds of wild { Agpl_syntax.InitState ds1 ds2 -> ds1 }) -}
+e454c2e082ee75eece9bdc6d683beb9e
+  elsecon :: Agpl_syntax.OutcomeFun -> Language.Haskell.TH.Syntax.Exp
+  RecSel Agpl_syntax.OutcomeFun
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ ds :: Agpl_syntax.OutcomeFun ->
+                 case ds of wild {
+                   Agpl_syntax.CustOutcomeFun ipv -> Agpl_syntax.elsecon1
+                   Agpl_syntax.OutcomeFun ds1 ds2 ds3 -> ds3 }) -}
+b3715190c73636217a6925ba029d894a
+  elsecon1 :: Language.Haskell.TH.Syntax.Exp
+  {- Strictness: b -}
 eb19f0d1e86bff8e6fbbae71be517fdc
   hand :: Agpl_syntax.GameState -> Language.Haskell.TH.Syntax.Dec
   RecSel Agpl_syntax.GameState
@@ -1178,6 +1265,18 @@ f13a62b0bc85e116f4659bdc83150bab
                 (\ ds :: Agpl_syntax.GameState ->
                  case ds of wild { Agpl_syntax.GameState ds1 ds2 ds3 ds4 ->
                  ds2 }) -}
+22591ef32f27ed01423a77d9450c45a8
+  tiecon :: Agpl_syntax.OutcomeFun -> Language.Haskell.TH.Syntax.Exp
+  RecSel Agpl_syntax.OutcomeFun
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ ds :: Agpl_syntax.OutcomeFun ->
+                 case ds of wild {
+                   Agpl_syntax.CustOutcomeFun ipv -> Agpl_syntax.tiecon1
+                   Agpl_syntax.OutcomeFun ds1 ds2 ds3 -> ds2 }) -}
+d41ba30dc1f2bf16c016afa226df644b
+  tiecon1 :: Language.Haskell.TH.Syntax.Exp
+  {- Strictness: b -}
 44783e2441694d687ced07df48f6d04d
   turn :: Agpl_syntax.GameState -> Language.Haskell.TH.Syntax.Dec
   RecSel Agpl_syntax.GameState
@@ -1193,6 +1292,18 @@ f13a62b0bc85e116f4659bdc83150bab
      Unfolding: InlineRule (1, True, False)
                 (\ ds :: Agpl_syntax.InitState ->
                  case ds of wild { Agpl_syntax.InitState ds1 ds2 -> ds2 }) -}
+b09fb148b335c3f24831da78114d198e
+  wincon :: Agpl_syntax.OutcomeFun -> Language.Haskell.TH.Syntax.Exp
+  RecSel Agpl_syntax.OutcomeFun
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ ds :: Agpl_syntax.OutcomeFun ->
+                 case ds of wild {
+                   Agpl_syntax.CustOutcomeFun ipv -> Agpl_syntax.wincon1
+                   Agpl_syntax.OutcomeFun ds1 ds2 ds3 -> ds1 }) -}
+63556977e6fb143f6235458876d90979
+  wincon1 :: Language.Haskell.TH.Syntax.Exp
+  {- Strictness: b -}
 instance GHC.Show.Show [Agpl_syntax.Board]
   = Agpl_syntax.$fShowBoard
 instance GHC.Show.Show [Agpl_syntax.CustomDataType]

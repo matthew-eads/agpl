@@ -10,5 +10,5 @@ src/Language/Haskell/TH/ReifyMany.hs:100:9: Warning:
     Deprecated: "Use reportError or reportWarning instead"
 In-place registering th-reify-many-0.1.3...
 Installing library in
-/home/kingcharles/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/th-reify-many-0.1.3-DQZsAlUgncFF5vR7f74cix
+/home/matt/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/th-reify-many-0.1.3-DQZsAlUgncFF5vR7f74cix
 Registering th-reify-many-0.1.3...

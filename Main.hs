@@ -7,16 +7,16 @@ import Data.Matrix as M hiding (trace)
 import Data.List as L
 import Data.List.Split
 import Data.Vector as V hiding (foldl)
-[agpl_f|ttt.agpl|]
+-- [agpl_f|ttt.agpl|]
 --[agpl_f|chess.agpl|]
-
+[agpl_f|connect4.agpl|]
 
 getMove :: GameState -> IO Move
 getMove gs = do {
                putStrLn ("Player " L.++ (show (currentTurn gs)) L.++ "'s turn." L.++
                          "Please enter a move:");
                m <- getLine;
-               return (fromString m);
+               (trace ("got move: " L.++ (show (fromString m))) (return (fromString m)));
              }
 
 won :: Player -> IO ()
@@ -52,4 +52,5 @@ main = let gs = GameState{board = (boardInitF), currentTurn=turn} in
        do{
          playGame gs;
          return ();
+
        }

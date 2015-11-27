@@ -16,11 +16,11 @@ version :: Version
 version = Version [0,1,0,0] []
 bindir, libdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/bin"
-libdir     = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/Agpl-0.1.0.0-ARbgTy7wgrRJtlloTDRArE"
-datadir    = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/share/x86_64-linux-ghc-7.10.2/Agpl-0.1.0.0"
-libexecdir = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/libexec"
-sysconfdir = "/home/kingcharles/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/etc"
+bindir     = "/home/matt/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/bin"
+libdir     = "/home/matt/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/Agpl-0.1.0.0-01dT6SXeKAJ0RDOHBmKHBU"
+datadir    = "/home/matt/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/share/x86_64-linux-ghc-7.10.2/Agpl-0.1.0.0"
+libexecdir = "/home/matt/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/libexec"
+sysconfdir = "/home/matt/compsci/150PLD/agpl/.stack-work/install/x86_64-linux/lts-3.13/7.10.2/etc"
 
 getBinDir, getLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "Agpl_bindir") (\_ -> return bindir)

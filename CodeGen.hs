@@ -8,13 +8,13 @@ import Language.Haskell.TH.Syntax
 import Debug.Trace
 import Language.Haskell.Meta.Parse
 import Data.Matrix as M hiding (trace) 
-import Data.Vector hiding ((++), foldl)
+import Data.Vector hiding ((++), foldl, zipWith, drop, head, last)
 nilD = (DataD [] (mkName "NULL") [] [NormalC (mkName "NULL") []] [])
 
 makeAGPLDecs :: Game -> Q [Dec]
 makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd, imports)) = 
     do {
-      (trace "\nmaking agpl decs\n" doNothing);
+      (trace ("\nmaking agpl decs from:\n" ++ (show (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd, [])))) doNothing);
       gsdecs <- gamestateDec gs;
       (trace ("\ngsDecs:" ++ (show gsdecs)) doNothing);
       ttype <- turnTypeDec;
@@ -31,8 +31,9 @@ makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd, imports)) =
       fromS <- fromStringDec fs;
       inBounds <- inBoundsDec (board gs);
       isEmpty <- emptyDec (board gs);
+      place <- placeDec;
       -- (trace ("\ninBounds: " ++ (show inBounds)) doNothing);
-      return (imports ++ gsdecs ++ initStateDecs ++ ttype ++ move ++ player ++ isValid ++ gsdec ++ outcome ++ possMoves ++ fromS ++ cd ++ inBounds ++ isEmpty);
+      return (imports ++ gsdecs ++ initStateDecs ++ ttype ++ move ++ player ++ isValid ++ gsdec ++ outcome ++ possMoves ++ fromS ++ cd ++ inBounds ++ isEmpty ++ place);
     }
 makeAGPLDecs x = (trace ("Error." ++ (show x)) undefined)
 doNothing :: Q ()
@@ -98,9 +99,26 @@ isValidDec (IsValidFun e) =
     in do {return [f]}
       
 outcomeDec :: OutcomeFun -> Q [Dec]
-outcomeDec (OutcomeFun e) =
+outcomeDec (CustOutcomeFun e) =
     let f = ValD (VarP (mkName "outcome")) (NormalB (e)) []
     in do {return [f]}
+
+outcomeDec outcome = let winc = FunD (mkName "winc") [Clause [VarP (mkName "game")] (NormalB (wincon outcome)) []] 
+                         tiec = FunD (mkName "tiec") [Clause [VarP (mkName "game")] (NormalB (tiecon outcome)) []] 
+                         elsec = FunD (mkName "elsec") 
+                                 [Clause [(VarP (mkName "game")), (VarP (mkName "move"))]
+                                  (NormalB (elsecon outcome)) []] 
+                     in case parseDecs ("outcome game move = if (winc game) then (Win (currentTurn game), 1)"
+                                        ++ " else if (tiec game) then (Tie, 1)"
+                                        ++ " else let g = elsec game move" 
+                                        ++ " in if (winc g) then (Win (currentTurn game), 1)"
+                                        ++ " else if (tiec g) then (Tie, 1) else (g, 1)") of
+                          (Left err) -> do {return (trace err undefined)}
+                          (Right ds) -> do {return ([elsec, winc, tiec] ++ ds)}
+
+                       -- outcome game move = if ($(winc) (currentTurn game) (board game)) then (Win (currentTurn game), 1) else (Tie, 1) 
+
+
 
 possmovesDec :: PossMovesFun -> Q [Dec]
 possmovesDec (PossMovesFun e) =
@@ -118,7 +136,27 @@ moveDec :: Move -> Q [Dec]
 moveDec (Move d) = do {return [d]}
 
 playerDec :: Player -> Q [Dec]
-playerDec (Player d) = do {return [d]}
+playerDec (Player (d, n)) = do {
+                            otherPlayer <- otherPlayerDec d n;
+                            return ([d] ++ otherPlayer);
+                          }
+
+conToName :: Con -> Name
+conToName (NormalC name _) = name
+conToName (RecC name _) = name
+conToName (InfixC _ name _) = name
+conToName _ = undefined
+
+otherPlayerDec :: Dec -> Int -> Q [Dec]
+otherPlayerDec player n = case player of 
+                            (DataD [] _ [] players _) -> 
+                                let playerNames = Prelude.map conToName players
+                                    clauses = zipWith otherPlayerClause playerNames (drop 1 playerNames) 
+                                              ++ [otherPlayerClause (last playerNames) (head playerNames)]
+                                in do {return [FunD (mkName "otherPlayer") clauses]}
+
+otherPlayerClause :: Name -> Name -> Clause
+otherPlayerClause p1 p2 = Clause [ConP p1 []] (NormalB (ConE p2)) []
 
 customDataDec :: CustomDataType -> Q [Dec]
 customDataDec (CustomDataType d) = do {return [d]}
@@ -129,6 +167,13 @@ inBoundsDec (Matrix (d, (x, y))) =
 inBoundsDec (Array (d, x)) =
     [d| inBounds x = (x <= x && x > 0) |]
 inBoundsDec _ = do {return []}
+
+placeDec :: Q [Dec]
+placeDec  = case parseDecs ("place game piece coord = let b = setElem piece coord (board game)\n"
+                         ++ "                             t = (otherPlayer (currentTurn game)\n"
+                         ++ "                         in (GameState{board=b, currentTurn=t})") of
+                             (Right ds) -> do {return ds}
+                             (Left err) -> do {(trace ("fuckup: " ++ err) (return []))}
 
 emptyDec :: Board -> Q [Dec]
 emptyDec (Matrix _) = case parseDecs "isEmpty (i, j) game = (((board game) M.! (i,j)) == Nil)"

@@ -9,5 +9,5 @@ src/Language/Haskell/TH/Instances.hs:57:1: Warning:
     To import instances alone, use: import Data.Monoid()
 In-place registering th-orphans-0.12.2...
 Installing library in
-/home/kingcharles/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/th-orphans-0.12.2-F2ydVTxLKgeFDUDEpwpENC
+/home/matt/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/th-orphans-0.12.2-F2ydVTxLKgeFDUDEpwpENC
 Registering th-orphans-0.12.2...

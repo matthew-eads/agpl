@@ -29,6 +29,7 @@ library
 executable main
   GHC-Options: -ddump-splices
   default-extensions: TemplateHaskell, QuasiQuotes
+  other-modules: CodeGen, Quote, Parser, Agpl_syntax
   main-is:	Main.hs
   build-depends:       base >=4.6, parsec >=3.1, template-haskell >=2.8, haskell-src-meta >=0.6, transformers >=0.4, array, matrix, vector, split
 

@@ -10,7 +10,7 @@
            `Move:{' <Dec> `}'\\
            `isVailid:{' <Exp> `}'\\
            `possMoves:{' <Exp> `}'\\
-           `outcome:{' <Exp> `}'\\
+           `outcome:{' <Outcome> `}'\\
            `initialState:{' <InitState> `}'\\
            `fromString:{' <Exp> `}'\\
            `$' [<Dec>] `$' (Custom declarations)
@@ -29,6 +29,11 @@
 <BoardDec> ::= `{Matrix['<int>`]['<int>`]}'
 \alt `{Array['<int>`]'
 \alt `<<' <Dec> `>>' (Custom Type)
+
+<Outcome> ::= `{winCondition:{' <Exp> `}'\\
+               `tieCondition:{' <Exp> `}'\\
+               `else:{' <Exp> `}'
+\alt `<<' <Exp> `>>'
 
 <InitState> ::= `Board:' <BoardInitDec>\\
                 `Turn:{' <Exp> `}'

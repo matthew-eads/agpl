@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2015-11-20 03:41:39.359162 UTC
+2015-11-27 19:33:52.901148 UTC
 
 interface main@main:Quote 7102
-  interface hash: d3e813abfff11c4ff5d59e0e7d3ff69f
-  ABI hash: 365c18ac848a46ba4abd63d50b386502
+  interface hash: ce2fa6aa4481bc2df8cf3318045a8011
+  ABI hash: 02d47184a5742249c4c51270286bc0c9
   export-list hash: d0ec02e763329704e7da15c6df5027d3
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 1e433d0ebc6754f04665631962e57d78
@@ -62,18 +62,18 @@ family instance modules: base-4.8.1.0:Control.Applicative
 import  -/  base-4.8.1.0:Debug.Trace 7cf679861c4b1d69175105437aae1212
 import  -/  base-4.8.1.0:GHC.Base 1db77db5dae73d8c424c85b09fbadb89
 import  -/  base-4.8.1.0:Prelude 518f762991bc287d78f21a73c974da1f
-import  -/  Agpl_syntax 530416e562a45301176b3789d180fa9e
-  exports: f7de5df4ff3847065957407f09eefadf
-import  -/  CodeGen 13b1fb3bc8e0d7bc161b305a747ebb1f
-  exports: fe4587af2ae0bf953c9bc749b661cc39
-  makeAGPLDecs 0f62ada3ae8895fc881fc96cd366b2ca
-import  -/  Parser c25f636d10a6b8d3ee162938673e72ed
-  exports: 1f9ec8c56c5e3b4aa932d4bab54c92c1
-  parseGame e9bd983e9880c52d03385ac4210a3b22
+import  -/  Agpl_syntax d05bf7e6fa7fbb68e60c1d4d9bf005ed
+  exports: 4205051c493e95e2869d33ce21432354
+import  -/  CodeGen cf6dfe81e710ded4b9569120dc6bd45d
+  exports: 05c7fd34c2f84b5b997dd6f1669f8235
+  makeAGPLDecs 10ff2d3f4fdc1b18a6f3f376da09b360
+import  -/  Parser 30742a53d1fa0d51e79b033c36970d21
+  exports: 27a1bcc305332993e3a8d79c4b37cae6
+  parseGame 4fb2da2223736be3a7127727a3715b3b
 import  -/  template-haskell-2.10.0.0:Language.Haskell.TH cce81ae8a1596a0252bdcb72179c2937
 import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Quote 7a74e3dce88866c160fffb1503661817
 import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Syntax afcf64bad3773d231089a8ce432131ab
-7bc8515c29a6c61e349d925e6b817353
+44a3fdd9c2da54b52610b6aab3493b5f
   agpl :: Language.Haskell.TH.Quote.QuasiQuoter
   {- Strictness: m,
      Unfolding: (Language.Haskell.TH.Quote.QuasiQuoter
@@ -87,7 +87,7 @@ import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Syntax afcf64bad3773d2
                       @ (GHC.Base.String
                          -> Language.Haskell.TH.Syntax.Q Language.Haskell.TH.Syntax.Type))
                    Quote.aparse) -}
-012b9890e3255b17ac214ba12045992c
+45f078c7fa148e713eca014c7dbecce3
   agpl_f :: Language.Haskell.TH.Quote.QuasiQuoter
   {- Strictness: m,
      Unfolding: (Language.Haskell.TH.Quote.QuasiQuoter
@@ -111,7 +111,7 @@ import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Syntax afcf64bad3773d2
                    (<GHC.Base.String>_R
                     ->_R Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
                                   <[Language.Haskell.TH.Syntax.Dec]>_N))) -}
-2e5b20d53871dda7337e71c9be34ade3
+34d136c0373ed72e856b00fff23ff27e
   agpl_f1 ::
     GHC.Base.String
     -> forall (m :: * -> *).
@@ -160,7 +160,7 @@ import  -/  template-haskell-2.10.0.0:Language.Haskell.TH.Syntax afcf64bad3773d2
                       @ (GHC.Base.String
                          -> Language.Haskell.TH.Syntax.Q
                               Language.Haskell.TH.Syntax.Exp))) -}
-8c716996378622d175f254670d7c00d6
+e81d6ada7daaba660d6a37a389f0d0e7
   aparse ::
     GHC.Base.String
     -> Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]

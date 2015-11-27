@@ -261,5 +261,5 @@ src/Text/Parse.hs:389:1: Warning: Tab character
 [18 of 18] Compiling Text.ParserCombinators.HuttonMeijer ( src/Text/ParserCombinators/HuttonMeijer.hs, .stack-work/dist/x86_64-linux/Cabal-1.22.4.0/build/Text/ParserCombinators/HuttonMeijer.o )
 In-place registering polyparse-1.11...
 Installing library in
-/home/kingcharles/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/polyparse-1.11-5gbM4m6k3rhGIQyEboR1bR
+/home/matt/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/polyparse-1.11-5gbM4m6k3rhGIQyEboR1bR
 Registering polyparse-1.11...

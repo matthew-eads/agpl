@@ -1,5 +1,5 @@
 import Agpl_lib
-import test_lib
+
 TicTacToe: Game
 
 Gamestate: {
@@ -18,31 +18,16 @@ isValid: { (\(Move (i, j)) -> ((inBounds (i,j)) && (isEmpty (i,j) game)))}
 possMoves: {mfold (\((i, j), piece, acc) -> if piece == Nil then (Move(i, j):acc)
                                                         else acc) [] (board game)}
 
-outcome: {\(Move move) -> 
-  let t = otherPlayer (currentTurn game)
-      b = if isFull (board game) 
-            then (board game) 
-            else setElem (playerToPiece (currentTurn game)) move (board game)
-      g = (GameState{board=b, currentTurn = t})
-  in 
-    if (inRow 3 (currentTurn game) b) || (inCol 3 (currentTurn game) b) || (inDiag 3 (currentTurn game) b)
-    then (Win (currentTurn game), 1)
-    else if isFull b then (Tie, 1)
-    else (g, 1) 
-} 
-{-
 outcome: {
-         winCondition: { (inRow 3 (currentTurn game)) || (inCol 3 (currentTurn game)) ||
-                         (inDiag 3 (currentTurn game))}
+         winCondition: { (inRowColOrDiag 3 PX (board game)) || (inRowColOrDiag 3 PO (board game))}
          tieCondition: {isFull (board game)}
-         else: {place (playerToPiece (currentTurn game)) move}}
+         else: {place game (playerToPiece (currentTurn game)) (mtoc move)}
+         }
 
--}
 
 
-initialState:{Board: {[[Nil, Nil, Nil],
-                       [Nil, Nil, Nil],
-                       [Nil, Nil, Nil]]}
+
+initialState:{Board: {all Nil}
               Turn: {PX}}
 --Board: <<matrix 3 3 (\(i,j) -> Nil)>>
 --Board: {all Nil}
@@ -59,8 +44,7 @@ pieceToPlayer O = PO
 playerToPiece :: Player -> Piece
 playerToPiece PX = X
 playerToPiece PO = O
-otherPlayer :: Player -> Player
-otherPlayer PX = PO
-otherPlayer PO = PX
+mtoc :: Move -> (Int, Int)
+mtoc (Move c) = c
 $
 

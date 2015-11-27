@@ -12,12 +12,15 @@ data Board = Matrix (Dec, (Integer, Integer))
            | Array (Dec, Integer)
            | Board (Dec) deriving Show
 
+data OutcomeFun = CustOutcomeFun (Exp) 
+                | OutcomeFun {wincon :: Exp, tiecon :: Exp, elsecon :: Exp} deriving Show
+
 type GameID = String
 data Move = Move (Dec) deriving Show
-data Player = Player (Dec) deriving Show
+data Player = Player (Dec, Int) deriving Show
 data IsValidFun = IsValidFun (Exp) deriving Show
 data PossMovesFun = PossMovesFun (Exp) | PMNil deriving Show
-data OutcomeFun = OutcomeFun (Exp) deriving Show
+-- data OutcomeFun = OutcomeFun (Exp) deriving Show
 data FromString = FromString (Exp) deriving Show
 data CustomDataType = CustomDataType (Dec) deriving Show
 -- data InitState = InitState (Exp) deriving Show

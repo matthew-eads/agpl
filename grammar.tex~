@@ -1,9 +1,0 @@
-\documentclass{article}
-\usepackage{syntax}
-
-\begin{document}
-\paragraph{AGPL Syntax}
-\begin{grammar}
-halp
-\end{grammar}
-\end{document}

@@ -34,5 +34,5 @@ Data/Matrix.hs:1216:1: Warning:
     Probable fix: add an INLINE[n] or NOINLINE[n] pragma on ‘detLU’
 In-place registering matrix-0.3.4.4...
 Installing library in
-/home/kingcharles/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/matrix-0.3.4.4-AtloKBQ0sJh0fVbfwJdXPl
+/home/matt/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/matrix-0.3.4.4-AtloKBQ0sJh0fVbfwJdXPl
 Registering matrix-0.3.4.4...

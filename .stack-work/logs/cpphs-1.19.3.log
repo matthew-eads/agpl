@@ -28,7 +28,7 @@ Preprocessing executable 'cpphs' for cpphs-1.19.3...
 [12 of 12] Compiling Main             ( cpphs.hs, .stack-work/dist/x86_64-linux/Cabal-1.22.4.0/build/cpphs/cpphs-tmp/Main.o )
 Linking .stack-work/dist/x86_64-linux/Cabal-1.22.4.0/build/cpphs/cpphs ...
 Installing library in
-/home/kingcharles/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/cpphs-1.19.3-HTebNkKFYOCAqQG2KzButo
+/home/matt/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/cpphs-1.19.3-HTebNkKFYOCAqQG2KzButo
 Installing executable(s) in
-/home/kingcharles/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/bin
+/home/matt/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/bin
 Registering cpphs-1.19.3...

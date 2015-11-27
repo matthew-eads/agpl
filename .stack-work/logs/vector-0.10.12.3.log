@@ -37,5 +37,5 @@ Data/Vector/Storable.hs:1398:1: Warning:
 [19 of 19] Compiling Data.Vector      ( Data/Vector.hs, .stack-work/dist/x86_64-linux/Cabal-1.22.4.0/build/Data/Vector.o )
 In-place registering vector-0.10.12.3...
 Installing library in
-/home/kingcharles/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/vector-0.10.12.3-JrQt7SYKOQF2foH4Ugm8MQ
+/home/matt/.stack/snapshots/x86_64-linux/lts-3.13/7.10.2/lib/x86_64-linux-ghc-7.10.2/vector-0.10.12.3-JrQt7SYKOQF2foH4Ugm8MQ
 Registering vector-0.10.12.3...
