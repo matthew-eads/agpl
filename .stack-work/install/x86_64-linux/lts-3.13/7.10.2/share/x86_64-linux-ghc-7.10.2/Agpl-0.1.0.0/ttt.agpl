@@ -20,8 +20,8 @@ possMoves: {mfold (\((i, j), piece, acc) -> if piece == Nil then (Move(i, j):acc
 
 outcome: {
          winCondition: { (inRowColOrDiag 3 PX (board game)) || (inRowColOrDiag 3 PO (board game))}
-         tieCondition: {(trace "checking for tie" (isFull (board game)))}
-         else: {(trace "placing" (place game (playerToPiece (currentTurn game)) (mtoc move)))}
+         tieCondition: {isFull (board game)}
+         else: {place game (playerToPiece (currentTurn game)) (mtoc move)}
          }
 
 

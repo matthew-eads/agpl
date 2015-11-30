@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2015-11-27 19:33:35.519414 UTC
+2015-11-30 16:47:13.600993 UTC
 
 interface Agpl_01dT6SXeKAJ0RDOHBmKHBU:CodeGen 7102
-  interface hash: a2740cacac062b2d7183f9e5a0d49bba
-  ABI hash: bf82513eb578bf4a414c693d29195034
+  interface hash: 40af3ad9a6124b5dc579c15db6ff1e77
+  ABI hash: 678dc687d685ca5e7e0cb004fef986e0
   export-list hash: acce175c2f5df579122936ae82cdb5b1
   orphan hash: ab876434d53120bef7ce39f90b5e9748
   flag hash: b66090cf17f4cc751c68c8377d24c28f
@@ -116,7 +116,7 @@ import  -/  Agpl_syntax 6e54cfe657c092e4f217d654caacdd85
   turn 3bf320bf15c8260db9c1a64ddc880aff
   turnInit 40f33898b60bb1d95ca0635a1258fdd7
   wincon 807686047d65c4f03f925e7bdf9b6ad4
-import  -/  Parser 76cfebc0436cd69b024a066bb9e59159
+import  -/  Parser ef6affb2f8fc3cbaf43c333e984853f1
   exports: 8c9a4297d157f81e9e9950d9fcfba6cf
 import  -/  base-4.8.1.0:Data.Either bc9482e78cc431fce439b593377aa2e6
 import  -/  base-4.8.1.0:Data.Foldable 2e5acb797cfda6b3b7fabd7052abe290
@@ -1790,7 +1790,7 @@ a325e6adea33de5a84772776db95290c
 fccbb9806dcdd0765fac21d79eef2d84
   pieceT5 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "piece"#) -}
-8057d57ed4316a47073754317e06a8f0
+86da808a5ee7dcd1c8ab6789caffab54
   placeDec ::
     Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec]
   {- Unfolding: (case Language.Haskell.Meta.Parse.parseResultToEither
@@ -1799,7 +1799,7 @@ fccbb9806dcdd0765fac21d79eef2d84
                    Data.Either.Left x1
                    -> Debug.Trace.trace
                         @ (Language.Haskell.TH.Syntax.Q [Language.Haskell.TH.Syntax.Dec])
-                        (GHC.CString.unpackAppendCString# "fuckup: "# x1)
+                        (GHC.CString.unpackAppendCString# "placeDec error: "# x1)
                         CodeGen.placeDec1
                           `cast`
                         (Sym (Language.Haskell.TH.Syntax.NTCo:Q[0]
@@ -1837,18 +1837,18 @@ fa66dd4ee51a3959258039ce10815b77
                    (Language.Haskell.TH.Syntax.$p1Quasi @ m $dQuasi)
                    @ [Language.Haskell.TH.Syntax.Dec]
                    (GHC.Types.[] @ Language.Haskell.TH.Syntax.Dec)) -}
-aaec32bd88632911607f9d4f330199e6
+5e79055e08a582104f850de384f13468
   placeDec2 ::
     Language.Haskell.Exts.ParseMonad.ParseResult
       Language.Haskell.Exts.Syntax.Module
   {- Unfolding: (Language.Haskell.Meta.Parse.parseDecs1
                    CodeGen.placeDec3) -}
-129f499f40f0ebf3f64d907d8029a07a
+d39486d6b57d6117d3e095f69e879735
   placeDec3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
-                   "place game piece coord = let b = (trace (\"setting at: \" L.++ (show coord)) (setElem piece coord (board game)))\n\
-                   \                             t = (trace (\"set the piece \") (otherPlayer (currentTurn game)))\n\
-                   \                         in (GameState{board=b, currentTurn=t})"#) -}
+                   "place game piece coord = let b = setElem piece coord (board game)\n\
+                   \                             t = otherPlayer (currentTurn game)\n\
+                   \                         in GameState{board=b, currentTurn=t}"#) -}
 9cdade8ca5bb3bcdde251408f6ce78b8
   playerDec ::
     Agpl_syntax.Player

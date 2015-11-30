@@ -51,36 +51,36 @@ emptyDecL = do {return []}
 gameParser :: Parser Game
 gameParser = do {
                ws;
-               importsL <- many parseImports; -- <|> emptyDecL; ws;
-               (trace "got imports" ws);
+               importsL <- many parseImports; ws; -- <|> emptyDecL; ws;
+               -- (trace "got imports" ws);
                let imports = foldl (++) [] importsL in do {
-               (trace ("parsed imports: " ++ (show imports)) ws);
+               -- (trace ("parsed imports: " ++ (show imports)) ws);
                id <- gameIDParser; ws; 
-               (trace ("id is: " ++ id) ws);
+               -- (trace ("id is: " ++ id) ws);
                
                m_reserved "Gamestate"; ws;
                m_reservedOp ":"; ws;
                m_reservedOp "{";
 --               gamestate <- (manyTill parseGameState (m_reserved "}"));
-               gamestate <- parseGameState;
-               (trace ("gs: " ++ (show gamestate)) ws);
+               gamestate <- parseGameState; ws;
+               -- (trace ("gs: " ++ (show gamestate)) ws);
                m_reservedOp "}"; ws;
-               player <- parsePlayer; 
-               (trace ("\n\nplayer: " ++ (show player)) ws);
-               move <- parseMove; 
-               (trace ("\n\nmove: " ++ (show move)) ws);
-               isValid <- parseIsValid; 
-               (trace ("\n\nisValid: " ++ (show isValid)) ws);
-               possMoves <- try parsePossMoves <|> nilPM; 
-               (trace ("\n\npossmoves: " ++ (show possMoves)) ws);
-               outcome <- parseOutcome;
-               (trace ("\n\noutcome: " ++ (show outcome)) ws);
-               initState <- parseInitState gamestate;
-               (trace ("init: " ++ (show initState)) ws);
-               fromString <- parseFromString;
-               (trace ("\n\nfromstring: " ++ (show fromString)) ws);
-               customData <- parseCustomData;
-               (trace ("custData" ++ (show customData)) ws);
+               player <- parsePlayer; ws;
+               -- (trace ("\n\nplayer: " ++ (show player)) ws);
+               move <- parseMove; ws;
+               -- (trace ("\n\nmove: " ++ (show move)) ws);
+               isValid <- parseIsValid; ws;
+               -- (trace ("\n\nisValid: " ++ (show isValid)) ws);
+               possMoves <- try parsePossMoves <|> nilPM; ws; 
+               -- (trace ("\n\npossmoves: " ++ (show possMoves)) ws);
+               outcome <- parseOutcome; ws;
+               -- (trace ("\n\noutcome: " ++ (show outcome)) ws);
+               initState <- parseInitState gamestate; ws;
+               -- (trace ("init: " ++ (show initState)) ws);
+               fromString <- parseFromString; ws;
+               -- (trace ("\n\nfromstring: " ++ (show fromString)) ws);
+               customData <- parseCustomData; ws;
+               -- (trace ("custData" ++ (show customData)) ws);
                return (Game (id, gamestate, move, isValid, possMoves, outcome, 
                             initState, player, fromString, customData, imports));
              }}
@@ -102,11 +102,11 @@ parseCustomData = do {
 parseImports :: Parser [Dec]
 parseImports = do {
                  ws; 
-                 m_reserved "import"; (trace "read import" ws);
-                 file <- many (noneOf " \n\r\t"); 
-                 (trace ("filename: " ++ file) ws);
+                 m_reserved "import"; ws;
+                 file <- many (noneOf " \n\r\t"); ws;
+                 -- (trace ("filename: " ++ file) ws);
                  decs <- (parseDecsFromFile (file ++ ".hs"));
-                 (trace ("importDecs: " ++ (show decs)) ws);
+                 -- (trace ("importDecs: " ++ (show decs)) ws);
                  -- moredecs <- try parseImports;
                  -- (trace "moreDecs..." ws);
                  -- return (decs ++ moredecs);
@@ -176,20 +176,20 @@ parseOutcome =  do {
 
 parseCustomOutcome :: Parser OutcomeFun
 parseCustomOutcome = do {
-                       (trace "outcomming" ws); m_reservedOp "<<"; (trace "parsing outcome" ws);
+                       m_reservedOp "<<"; ws;
                        e <- (manyTill anyChar (try (string ">>")));
                           -- m_reservedOp ">>";
                        case parseExp ("(\\game -> " ++ e ++ ")") of
-                         (Left err) -> do {trace ("fack " ++ e ++ "\nerror: " ++ err) (return undefined)}
-                         (Right exp) -> do {(trace "success" (return (CustOutcomeFun exp)))}}
+                         (Left err) -> do {trace ("error1: " ++ e ++ "\nerror: " ++ err) (return undefined)}
+                         (Right exp) -> do {return (CustOutcomeFun exp)}}
 
 parseOutcome' :: Parser OutcomeFun
 parseOutcome' = do {
-                  (trace "parsing better outcome" ws);
+                  ws;
                   m_reservedOp "{";
                   winc <- winConditionParser;
-                  tiec <- (trace ("parsed win: " ++ (show winc)) tieConditionParser);
-                  elsec <- (trace ("parsed tie: " ++ (show tiec)) elseConditionParser);
+                  tiec <- tieConditionParser;
+                  elsec <- elseConditionParser;
                   m_reservedOp "}";
                   return (OutcomeFun {wincon=winc, tiecon=tiec, elsecon=elsec})}
 
@@ -197,7 +197,7 @@ winConditionParser :: Parser Exp
 winConditionParser = do {
                        ws;
                        m_reserved "winCondition"; ws;
-                       m_reservedOp ":"; (trace "winnin" ws);
+                       m_reservedOp ":"; 
                        e <- simpleExpParser "";
                        return e;
                      }
@@ -238,7 +238,7 @@ parseInitState gs = do {
                    m_reservedOp "{"; ws;
                    m_reserved "Board"; ws;
                    m_reservedOp ":"; ws;
-                   boardDec <- parseInitBoard (board gs); (trace "parsed boarddec" ws);
+                   boardDec <- parseInitBoard (board gs); ws;
                    m_reserved "Turn"; ws;
                    m_reservedOp ":"; ws;
                    turnDec <- simpleExpParser "Player"; ws;
@@ -250,9 +250,9 @@ parseInitState gs = do {
 
 
 parseInitBoard :: Board -> Parser Exp
-parseInitBoard board = (trace "trying all" (try (parseBoardAll board))) <|> 
-                       (trace "trying lit" (try (parseBoardLit board))) <|> 
-                       (trace "trying custom" parseCustomBoard)
+parseInitBoard board = try (parseBoardAll board) <|>
+                       try (parseBoardLit board) <|> 
+                       parseCustomBoard
 
 parseCustomBoard :: Parser Exp 
 parseCustomBoard = do {
@@ -260,7 +260,7 @@ parseCustomBoard = do {
                           e <- (manyTill anyChar (try (string ">>")));
                           -- m_reservedOp ">>";
                           case parseExp e {-++ " :: " ++ typeS-} of
-                            (Left err) -> do {trace ("fack " ++ e ++ "\nerror: " ++ err) (return undefined)}
+                            (Left err) -> do {trace ("error1 " ++ e ++ "\nerror: " ++ err) (return undefined)}
                             (Right exp) -> do {return exp}
                         }               
 
@@ -269,12 +269,12 @@ parseBoardAll (Matrix (d, (i, j))) = let s = "matrix " ++ (show i) ++ " " ++
                                              (show j) ++ " (\\(i,j) -> "
                                      in do {
                                           ws; m_reservedOp "{"; ws;
-                                          m_reserved "all"; (trace "here" ws);
+                                          m_reserved "all"; ws;
                                           piece <- (many (noneOf "}"));
                                           m_reservedOp "}";
                                           case parseExp (s ++ piece ++ ")") of
-                                            (Right e) -> do {(trace ("returning: " ++ (show e)) (return e))}
-                                            (Left err) -> do {(trace ("fuck: " ++ err)(return undefined))}}
+                                            (Right e) -> do {return e}
+                                            (Left err) -> do {(trace ("error: " ++ err)(return undefined))}}
 parseBoardAll (Array (d, i)) = let s = "generate " ++ (show i) ++ " (\\i -> "
                                in do {
                                     ws; m_reservedOp "{"; ws;

@@ -99,8 +99,7 @@ Main.hs:1:1: Splicing declarations
            fdiags
              = (\ acc -> (\ diag -> (foldl fdiag 0 diag) >= n || acc)) ::
                  Bool -> [Piece] -> Bool
-         in
-           (trace ("diags: " L.++ (show diags)) (foldl fdiags False diags)),
+         in (foldl fdiags False diags),
      inRowColOrDiag :: Int -> Player -> Board -> Bool,
      inRowColOrDiag n player board
        = (inDiag n player board) || inCol n player board
@@ -166,14 +165,12 @@ Main.hs:1:1: Splicing declarations
      playerToPiece :: Player -> Piece,
      playerToPiece PX = X
      playerToPiece PO = O,
-     inBounds_a6aa (x1_a6ab, y1_a6ac)
-       = ((x1_a6ab <= 7)
-          && ((x1_a6ab > 0) && ((y1_a6ac <= 6) && (y1_a6ac > 0)))),
+     inBounds_aVdx (x1_aVdy, y1_aVdz)
+       = ((x1_aVdy <= 7)
+          && ((x1_aVdy > 0) && ((y1_aVdz <= 6) && (y1_aVdz > 0)))),
      isEmpty (i, j) game = (((board game) M.! (i, j)) == Nil),
      place game piece coord
        = let
-           b = (trace
-                  ("setting at: " L.++ (show coord))
-                  (setElem piece coord (board game)))
-           t = (trace ("set the piece ") (otherPlayer (currentTurn game)))
-         in (GameState {board = b, currentTurn = t})]
+           b = setElem piece coord (board game)
+           t = otherPlayer (currentTurn game)
+         in GameState {board = b, currentTurn = t}]

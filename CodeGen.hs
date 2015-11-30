@@ -14,24 +14,33 @@ nilD = (DataD [] (mkName "NULL") [] [NormalC (mkName "NULL") []] [])
 makeAGPLDecs :: Game -> Q [Dec]
 makeAGPLDecs (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd, imports)) = 
     do {
-      (trace ("\nmaking agpl decs from:\n" ++ (show (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd, [])))) doNothing);
+      -- (trace ("\nmaking agpl decs from:\n" ++ (show (Game (id, gs, m, ivf, pmf, ocf, is, p, fs, cd, [])))) doNothing);
       gsdecs <- gamestateDec gs;
-      (trace ("\ngsDecs:" ++ (show gsdecs)) doNothing);
+      -- (trace ("\ngsDecs:" ++ (show gsdecs)) doNothing);
       ttype <- turnTypeDec;
-      (trace ("\nturntypeDecs:" ++ (show ttype)) doNothing);
+      -- (trace ("\nturntypeDecs:" ++ (show ttype)) doNothing);
       gsdec <- gsDec [boardT,turnT];
-      (trace ("\ngameStateDec:" ++ (show gsdec)) doNothing);
+      -- (trace ("\ngameStateDec:" ++ (show gsdec)) doNothing);
       initStateDecs <- initStateDec is;
-      (trace ("\ninitStateDecs:" ++ (show initStateDecs)) doNothing);
+      -- (trace ("\ninitStateDecs:" ++ (show initStateDecs)) doNothing);
       move <- moveDec m;
+      -- (trace ("\nmoveDecs:" ++ (show move)) doNothing);
       player <- playerDec p;
+      -- (trace ("\nplayerDecs:" ++ (show player)) doNothing);
       isValid <- isValidDec ivf;
+      -- (trace ("\nisvalidDecs:" ++ (show isValid)) doNothing);
       possMoves <- possmovesDec pmf;
+      -- (trace ("\npossmovesDecs:" ++ (show possMoves)) doNothing);
       outcome <- outcomeDec ocf;
+      -- (trace ("\noutcomeDecs:" ++ (show outcome)) doNothing);
       fromS <- fromStringDec fs;
+      -- (trace ("\nfromstringDecs:" ++ (show fromS)) doNothing);
       inBounds <- inBoundsDec (board gs);
+      -- (trace ("\ninboundsDecs:" ++ (show inBounds)) doNothing);
       isEmpty <- emptyDec (board gs);
+      -- (trace ("\nisemptyDecs:" ++ (show isEmpty)) doNothing);
       place <- placeDec;
+      -- (trace ("\nplaceDec:" ++ (show place)) doNothing);
       -- (trace ("\ninBounds: " ++ (show inBounds)) doNothing);
       return (imports ++ gsdecs ++ initStateDecs ++ ttype ++ move ++ player ++ isValid ++ gsdec ++ outcome ++ possMoves ++ fromS ++ cd ++ inBounds ++ isEmpty ++ place);
     }
@@ -170,10 +179,10 @@ inBoundsDec _ = do {return []}
 
 placeDec :: Q [Dec]
 placeDec  = case parseDecs ("place game piece coord = let b = setElem piece coord (board game)\n"
-                         ++ "                             t = (otherPlayer (currentTurn game)\n"
-                         ++ "                         in (GameState{board=b, currentTurn=t})") of
+                         ++ "                             t = otherPlayer (currentTurn game)\n"
+                         ++ "                         in GameState{board=b, currentTurn=t}") of
                              (Right ds) -> do {return ds}
-                             (Left err) -> do {(trace ("fuckup: " ++ err) (return []))}
+                             (Left err) -> do {(trace ("placeDec error: " ++ err) (return []))}
 
 emptyDec :: Board -> Q [Dec]
 emptyDec (Matrix _) = case parseDecs "isEmpty (i, j) game = (((board game) M.! (i,j)) == Nil)"

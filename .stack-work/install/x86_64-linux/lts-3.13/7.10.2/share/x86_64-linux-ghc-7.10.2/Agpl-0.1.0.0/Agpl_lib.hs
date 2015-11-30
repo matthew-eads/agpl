@@ -73,7 +73,7 @@ inDiag n player board =
         diags = getDiags board :: [[Piece]]
         fdiag = (\c -> (\x -> if c == n then c else if x == piece then (c + 1) else 0)) :: Int -> Piece -> Int
         fdiags = (\acc -> (\diag -> (foldl fdiag 0 diag) >= n || acc)) :: Bool -> [Piece] -> Bool
-    in (trace ("diags: " L.++ (show diags)) (foldl fdiags False diags))
+    in (foldl fdiags False diags)
 
 inRowColOrDiag :: Int -> Player -> Board -> Bool
 inRowColOrDiag n player board = inDiag n player board || inCol n player board || inRow n player board
