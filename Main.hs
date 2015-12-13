@@ -9,7 +9,7 @@ import Data.List.Split
 import Data.Vector as V hiding (foldl)
 [agpl_f|ttt.agpl|]
 --[agpl_f|chess.agpl|]
--- [agpl_f|connect4.agpl|]
+--[agpl_f|connect4.agpl|]
 
 getMove :: GameState -> IO Move
 getMove gs = do {
